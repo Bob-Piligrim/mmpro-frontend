@@ -1,0 +1,42 @@
+.header-container {
+  width: 80vw;
+  max-width: 1199px;
+  /*     height: 44px; */
+  display: grid;
+  grid-template-columns: auto 2fr auto;
+  align-items: center;
+  overflow: hidden;
+  color: white;
+}
+
+.logoword {
+  display: flex;
+  align-items: center;
+}
+
+.headerTitle-container {
+  text-align: center;
+  height: 25px;
+}
+
+.header-title {
+  font-weight: 400;
+  line-height: 16.8px;
+  font-size: 14px;
+  /* font-size: 0.75vw; */
+  letter-spacing: 4px;
+  margin: 12px 0 9px 0;
+}
+
+.header-button {
+  min-width: 181px;
+  /* width: 9.6vw; */
+  padding: 15px 26px;
+  outline: unset;
+  background: none;
+  border: 1px solid white;
+  color: white;
+  border-radius: 26px;
+  font-weight: 500;
+  font-size: 12px;
+}

@@ -1,3 +1,12 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
 .App {
   text-align: center;
+  width: 1920px;
+  min-width: 1200px;
+  height: 1080px;
+  padding: 63px 18.75vw 101px;
 }

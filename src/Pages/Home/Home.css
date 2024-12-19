@@ -1,0 +1,41 @@
+.home-container {
+  width: 80vw;
+  max-width: 1199px;
+  /* display: flex;
+  flex-wrap: nowrap;
+  margin: 0 auto;
+  width: 100%; */
+  display: grid;
+  grid-template-columns: auto 2fr auto;
+  align-items: center;
+  overflow: hidden;
+  padding-top: 408px;
+}
+
+.home-container div {
+  padding: 0;
+  flex: 0 0 45%;
+}
+
+.portfolio {
+  max-width: 365px;
+  display: flex;
+  align-items: start;
+}
+
+.about {
+  max-width: 190px;
+  justify-self: flex-end;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.portfolio a,
+.about a {
+  text-decoration: none;
+  margin: 0;
+  padding: 0;
+  font-weight: 600;
+  font-size: 48px;
+  color: white;
+}
