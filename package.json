@@ -1,0 +1,60 @@
+{
+  "name": "mmpro-frontend",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@monaco-editor/react": "^4.6.0",
+    "@testing-library/react": "^16.1.0",
+    "axios": "^1.7.9",
+    "cra-template-typescript": "1.2.0",
+    "css-select": "^5.1.0",
+    "json-server": "^1.0.0-beta.3",
+    "monaco-editor": "^0.52.2",
+    "nth-check": "^2.1.1",
+    "postcss": "^8.4.49",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-monaco-editor": "^0.56.2",
+    "react-scripts": "5.1.0-next.14",
+    "web-vitals": "^4.2.4"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "overrides": {
+    "cra-template-typescript": "1.2.0",
+    "css-select": "^5.1.0",
+    "nth-check": "^2.1.1",
+    "postcss": "^8.4.49",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-scripts": "5.1.0-next.14"
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "^6.6.3",
+    "@types/jest": "^29.5.14",
+    "@types/react": "^18.3.16",
+    "@types/react-dom": "^18.0.0"
+  }
+}
