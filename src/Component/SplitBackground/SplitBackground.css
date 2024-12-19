@@ -1,0 +1,36 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.split-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+}
+
+.left-half {
+  flex: 1;
+  background-image: url("/src/Assets/Header/portfolio.png");
+  background-size: cover;
+  background-position: center;
+  transition: background-image 0.3s ease;
+}
+
+.left-half:hover  {
+  background-image: url("/src/Assets/Header/portfolioHover.png");
+}
+
+
+
+.right-half {
+  flex: 1;
+  background-image: url("/src/Assets/Header/aboutUs.png");
+  background-size: cover;
+  background-position: center;
+}
