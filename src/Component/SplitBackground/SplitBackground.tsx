@@ -1,5 +1,5 @@
 import React from "react";
-import "./SplitBackground.css"; // Импортируйте стили
+import "./SplitBackground.css";
 
 const SplitBackground: React.FC = () => {
   return (

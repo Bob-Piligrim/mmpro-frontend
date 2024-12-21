@@ -1,37 +1,42 @@
 .header-container {
-  width: 80vw;
-  max-width: 1199px;
-  /*     height: 44px; */
+  position: relative;
+  z-index: 2;
+  width: 62.5vw;
   display: grid;
   grid-template-columns: auto 2fr auto;
   align-items: center;
   overflow: hidden;
   color: white;
+  margin-left: 18.75vw;
 }
 
 .logoword {
   display: flex;
   align-items: center;
+  width: 118px;
+  width: 6.14vw;
+  height: 2.2vw;
 }
 
 .headerTitle-container {
   text-align: center;
-  height: 25px;
+  height: 45px;
+  margin-left: 5vw;
+  margin-right: 3vw;
 }
 
 .header-title {
   font-weight: 400;
   line-height: 16.8px;
   font-size: 14px;
-  /* font-size: 0.75vw; */
   letter-spacing: 4px;
   margin: 12px 0 9px 0;
 }
 
 .header-button {
-  min-width: 181px;
-  /* width: 9.6vw; */
-  padding: 15px 26px;
+  width: 181px; 
+  height: 44px;
+  padding: 15px 32px;
   outline: unset;
   background: none;
   border: 1px solid white;
@@ -39,4 +44,73 @@
   border-radius: 26px;
   font-weight: 500;
   font-size: 12px;
+  border-radius: 134px;
+  box-sizing: border-box;
+}
+
+.header-button {
+  display: flex;
+  align-items: center;
+}
+
+.arrow-icon {
+  margin-left: 12px;
+  width: 8px;
+  height: auto;
+}
+
+@media (max-width: 331px) {
+  .header-container {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    grid-template-columns: auto auto;
+    align-items: center;
+    overflow: hidden;
+    color: white;
+    width: 88vw;
+  }
+
+  .logoword > img {
+    width: 71px;
+  }
+
+  .headerTitle-container {
+    display: none;
+  }
+
+  .header-button {
+    justify-self: end;
+    max-width: 100px;
+    height: 23px;
+    padding: 7px 10px;
+    outline: unset;
+    background: none;
+    border: 1px solid white;
+    color: white;
+    border-radius: 26px;
+    font-weight: 500;
+    font-size: 6.25px;
+  }
+}
+
+@media (max-width: 1050px) {
+  .header-container {
+    grid-template-columns: auto auto;
+    align-items: center;
+  }
+  
+  .headerTitle-container {
+    order: 2;
+    margin: 0;
+  }
+
+  .header-title {
+    flex-wrap: nowrap;
+  }
+
+
+  .header-button {
+    justify-self: end;
+  }
 }
