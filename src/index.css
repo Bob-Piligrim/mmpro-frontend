@@ -8,6 +8,8 @@ body {
   font-family: -apple-system, Gilroy, serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: #020202;
+  overflow: hidden;
 }
 
 code {

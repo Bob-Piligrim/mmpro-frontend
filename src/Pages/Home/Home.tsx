@@ -12,7 +12,7 @@ const Home: React.FC = () => {
         <div className="home-container">
           <div className="portfolio">
             <a
-              href="#"
+              href="/portfolio"
               className="portfolio-link"
               onMouseEnter={() => setIsLeftHovered(true)}
               onMouseLeave={() => setIsLeftHovered(false)}
@@ -22,7 +22,7 @@ const Home: React.FC = () => {
           </div>
           <div className="about">
             <a
-              href="#"
+              href="/aboutus"
               className="about-link"
               onMouseEnter={() => setIsRightHovered(true)}
               onMouseLeave={() => setIsRightHovered(false)}

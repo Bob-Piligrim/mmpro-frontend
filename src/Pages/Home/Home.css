@@ -3,7 +3,7 @@
   height: 115vh;
   width: 100vw;
   overflow: hidden;
-  margin-top: -12vh;
+  margin-top: -10vh;
 }
 
 @media (max-width: 1050px) and (max-height: 1100px) {
@@ -89,7 +89,7 @@
   background-image: url("/src/Assets/Header/portfolioHover.png");
 }
 
-@media (max-width: 331px) {
+@media (max-width: 656px) { /* 331px */
   .home-background {
     position: relative;
     overflow: hidden;

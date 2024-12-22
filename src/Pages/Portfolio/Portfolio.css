@@ -1,0 +1,154 @@
+.portfolio-container {
+  position: relative;
+  z-index: 1;
+  height: 100vh;
+  width: 76vw;
+  overflow: hidden;
+  margin-left: 18.75vw;
+  text-align: start;
+  display: flex;
+  flex-direction: column;
+}
+
+.link-container {
+  margin-top: 12vh;
+  display: flex;
+  flex-wrap: nowrap;
+  white-space: nowrap;
+  overflow-x: hidden;
+}
+
+.link-container img {
+  width: 18.52px;
+  height: 15.3px;
+  margin-right: 27px;
+  align-self: center;
+}
+
+.category {
+  text-decoration: none;
+  color: white;
+  font-size: 12px;
+  font-weight: 500;
+  border: 1px solid white;
+  border-radius: 116px;
+  padding: 20px 27.5px;
+  display: flex;
+  align-items: center;
+  margin-right: 9px;
+  opacity: 40%;
+  height: 25px;
+  background-color: black;
+}
+
+.category:hover,
+.active {
+  opacity: 1;
+}
+
+.content-container {
+  margin-top: 9vh;
+  height: 47vh;
+}
+
+.posterKino-container {
+  display: flex;
+}
+
+.posterOther-container {
+  height: 510px;
+  display: flex;
+}
+
+.poster-kino {
+  width: 130px;
+  height: 45vh;
+  margin-right: 10px;
+}
+
+/* Доработать (уточнить) hover для постеров "КИНО"  */
+
+.poster-other {
+  width: 290px;
+  height: 214px;
+  margin-right: 12px;
+}
+
+.other-discription {
+  width: 290px;
+  margin-top: 14px;
+  margin-right: 12px;
+  color: white;
+}
+
+.footer-link {
+  width: 62.5vw;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 12vh;
+  align-items: center;
+}
+
+.footer-link a {
+  text-decoration: none;
+  color: white;
+}
+
+.footer-link-img {
+  margin-right: 12px;
+  height: 12px;
+}
+
+.btn {
+  justify-self: end;
+}
+
+.btn > button {
+  text-decoration: none;
+  width: 35px;
+  height: 35px;
+  border: 1px solid white;
+  border-radius: 50%;
+  background-color: black;
+  opacity: 40%;
+  padding: 10px 0px;
+  margin-right: 5px;
+}
+
+.btn > button:hover {
+  opacity: 1;
+}
+
+.btn > button img {
+  width: auto;
+  height: 8px;
+}
+
+@media (max-width: 656px) {
+  /* 331px */
+  .portfolio-container {
+    margin-left: 0;
+    width: 90vw;
+  }
+
+  .link-container {
+    margin-top: 12vh;
+    display: flex;
+    flex-wrap: nowrap;
+    white-space: nowrap;
+    overflow: auto;
+  }
+
+  .category {
+    margin-right: 6px;
+  }
+
+  .content-container {
+    margin-left: 46px;
+  }
+
+  .footer-link {
+    width: 90vw;
+    align-items: center;
+  }
+}

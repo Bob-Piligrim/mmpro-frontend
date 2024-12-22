@@ -1,6 +1,7 @@
 * {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
 }
 
 .App {
@@ -9,11 +10,11 @@
   height: 100vh;
   position: relative;
   z-index: 1;
-  padding-top: 20px ;
+  padding-top: 0;
 }
 
-@media (max-width: 331px) {
+@media (max-width: 656px) { /* 331px */
   .App {
-    padding: 21px 23px;
+    padding: 0 23px;
   }
 }
