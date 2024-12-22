@@ -8,6 +8,7 @@
   overflow: hidden;
   color: white;
   margin-left: 18.75vw;
+  margin-top: 24px;
 }
 
 .logoword {
@@ -21,7 +22,7 @@
 .headerTitle-container {
   text-align: center;
   height: 45px;
-  margin-left: 5vw;
+  margin-left: 7vw;
   margin-right: 3vw;
 }
 
@@ -34,9 +35,9 @@
 }
 
 .header-button {
-  width: 181px; 
+  width: 181px;
   height: 44px;
-  padding: 15px 32px;
+  padding: 15px 22px;
   outline: unset;
   background: none;
   border: 1px solid white;
@@ -59,7 +60,8 @@
   height: auto;
 }
 
-@media (max-width: 331px) {
+@media (max-width: 656px) {
+  /* 331px */
   .header-container {
     position: relative;
     z-index: 2;
@@ -69,28 +71,16 @@
     overflow: hidden;
     color: white;
     width: 88vw;
-  }
-
-  .logoword > img {
-    width: 71px;
+    margin-left: 0;
   }
 
   .headerTitle-container {
     display: none;
   }
 
-  .header-button {
-    justify-self: end;
-    max-width: 100px;
-    height: 23px;
-    padding: 7px 10px;
-    outline: unset;
-    background: none;
-    border: 1px solid white;
-    color: white;
-    border-radius: 26px;
-    font-weight: 500;
-    font-size: 6.25px;
+  .arrow-icon {
+    width: 6px;
+    height: 3px;
   }
 }
 
@@ -99,7 +89,7 @@
     grid-template-columns: auto auto;
     align-items: center;
   }
-  
+
   .headerTitle-container {
     order: 2;
     margin: 0;
@@ -108,7 +98,6 @@
   .header-title {
     flex-wrap: nowrap;
   }
-
 
   .header-button {
     justify-self: end;
