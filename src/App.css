@@ -10,11 +10,28 @@
   height: 100vh;
   position: relative;
   z-index: 1;
-  padding-top: 0;
+  padding-top: 62px;
+  padding-bottom: 62px;
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
 }
 
-@media (max-width: 656px) { /* 331px */
+.App::-webkit-scrollbar {
+  display: none;
+}
+
+.contentWrapper {
+  /* flex: 1 0 auto; */
+}
+
+@media (max-width: 656px) {
+  /* 331px */
   .App {
-    padding: 0 23px;
+    padding: 0 0;
+  }
+
+  .contentWrapper {
+    margin-top: 14vh;
   }
 }

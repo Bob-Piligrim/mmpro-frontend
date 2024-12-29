@@ -1,10 +1,7 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import MMPRO from "../../Assets/Header/MMPRO.png";
 import "./Header.css";
 import arrowButton from "../../Assets/Header/arrowButton.png";
-import Home from "../../Pages/Home/Home";
-import Portfolio from "../../Pages/Portfolio/Portfolio";
 
 const Header: React.FC = () => {
   return (
@@ -23,12 +20,6 @@ const Header: React.FC = () => {
           <img src={arrowButton} alt="Arrow" className="arrow-icon" />
         </button>
       </div>
-      <Router>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/portfolio" element={<Portfolio />} />
-        </Routes>
-      </Router>
     </>
   );
 };

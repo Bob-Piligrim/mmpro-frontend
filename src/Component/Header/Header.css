@@ -8,7 +8,7 @@
   overflow: hidden;
   color: white;
   margin-left: 18.75vw;
-  margin-top: 24px;
+  flex: 0 0 auto;
 }
 
 .logoword {
@@ -63,15 +63,16 @@
 @media (max-width: 656px) {
   /* 331px */
   .header-container {
-    position: relative;
-    z-index: 2;
+    position: fixed;
+    z-index: 999;
     display: grid;
     grid-template-columns: auto auto;
     align-items: center;
     overflow: hidden;
     color: white;
     width: 88vw;
-    margin-left: 0;
+    margin-left: 28px;
+    margin-top: 24px;
   }
 
   .headerTitle-container {

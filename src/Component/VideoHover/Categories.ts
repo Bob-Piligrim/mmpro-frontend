@@ -41,8 +41,8 @@ const categories: Category[] = [
   {
     name: "РЕПОРТАЖ",
     content: [
-      { poster: example1, videoUrl: example1, description: "Курс по IT" },
       { poster: example2, videoUrl: example2, description: "Курс по IT" },
+      { poster: example3, videoUrl: example3, description: "Курс по IT" },
     ],
   },
   {

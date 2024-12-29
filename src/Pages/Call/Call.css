@@ -1,0 +1,73 @@
+.mail {
+  margin-top: 27px;
+  font-weight: 500;
+  font-size: 40px;
+  line-height: 48px;
+  letter-spacing: 1;
+}
+
+.btn-title {
+  margin-top: 42px;
+}
+
+.btn-title button {
+  text-decoration: none;
+  background-color: unset;
+  border: 1px solid white;
+  border-radius: 199px;
+  color: white;
+  font-size: 20px;
+  line-height: 24px;
+  letter-spacing: 1;
+  text-align: center;
+  padding: 21px 80px;
+  margin-right: 20px;
+}
+
+.btn-title button:hover {
+  background-color: white;
+  color: black;
+}
+
+@media (max-width: 656px) {
+  .mail {
+    margin-top: 28px;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 24px;
+    letter-spacing: 1.5;
+  }
+
+  .btn-title {
+    margin-top: 22px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .btn-title button {
+    text-decoration: none;
+    background-color: unset;
+    border: 1px solid white;
+    border-radius: 173px;
+    color: white;
+    font-size: 14px;
+    line-height: 17px;
+    letter-spacing: 1.5;
+    text-align: center;
+    margin-right: 20px;
+    width: 215px;
+    display: flex;
+    justify-content: center;
+  }
+
+  .btn-title button:nth-child(1) {
+    margin-bottom: 10px;
+  }
+
+
+  .btn-title button:hover {
+    background-color: white;
+    color: black;
+  }
+}
