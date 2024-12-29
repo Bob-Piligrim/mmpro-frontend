@@ -1,0 +1,299 @@
+.about-background {
+  position: relative;
+  height: 80vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+}
+
+.about-background {
+  scrollbar-width: none;
+}
+
+.about-background:-webkit-scrollbar {
+  display: none;
+}
+
+#background-video {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100%;
+  object-fit: cover;
+  z-index: -1;
+}
+
+.about-content-container {
+  position: relative;
+  z-index: 1;
+  color: white;
+  margin-left: 18.75vw;
+  text-align: start;
+  margin-top: 140px;
+  flex: 1 0 auto;
+  position: relative;
+  overflow-y: auto;
+  -ms-overflow-style: auto; /* Показать стандартные ползунки */
+  scrollbar-width: auto; /* Показать стандартные ползунки */
+  padding-bottom: 20px;
+  width: 100vw;
+}
+
+.about-content-container::-webkit-scrollbar {
+  width: 0;
+  background: transparent;
+}
+
+.component {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+}
+
+.component::-webkit-scrollbar {
+  display: none;
+}
+
+.component.active {
+  opacity: 1;
+}
+
+.main-count {
+  font-weight: 500;
+  font-size: 35px;
+}
+
+.count span {
+  margin-right: 6px;
+}
+
+.title-who {
+  margin-top: 1.8vw;
+  font-weight: 600;
+  font-size: 120px;
+  font-size: 6.25vw;
+  white-space: pre-line;
+}
+
+.about-footer {
+  flex: 0 0 auto;
+  margin-top: auto;
+  margin-left: 18.75vw;
+  text-align: start;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 62.5vw;
+}
+
+.footer-prev {
+  text-decoration: none;
+  background: none;
+  border: none;
+  color: white;
+  display: flex;
+  cursor: pointer;
+}
+.footer-prev img {
+  margin-right: 11px;
+}
+
+.messanger {
+  height: 32px;
+  /* margin-left: 447px; */
+}
+
+.messanger a img {
+  width: 31px;
+  height: 31px;
+  margin-right: 10px;
+  opacity: 20%;
+}
+
+.messanger a img:hover {
+  opacity: 100%;
+  transition: opacity 0.5s ease-in-out;
+}
+
+.next-button {
+  height: 100vh;
+  width: 155px;
+  right: 0;
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(116, 116, 116, 0.1);
+  color: white;
+  border: none;
+  font-size: 2rem;
+  cursor: pointer;
+  z-index: 2;
+}
+
+.next-button img {
+  width: 25px;
+  height: 50px;
+}
+
+.info-links a {
+  text-decoration: none;
+  margin-right: 12px;
+  color: rgba(134, 134, 134, 1);
+}
+
+.info-links a:hover {
+  color: white;
+  transition: color 1s ease;
+}
+
+.next-button-mobile {
+  display: none;
+}
+
+.about-link-mobile {
+  display: none;
+}
+
+@media (max-width: 656px) {
+  /* 331px */
+  .about-background {
+    height: 100%;
+  }
+
+  .about-content-container {
+    text-align: center;
+    width: 100vw;
+    margin-left: 0;
+    margin-top: 0;
+    overflow: visible;
+  }
+
+  .count {
+    padding: 0 20px;
+  }
+
+  .main-count {
+    font-weight: 500;
+    font-size: 35px;
+  }
+
+  .count span {
+    margin-right: 6px;
+  }
+
+  .title-who {
+    margin-top: 27px;
+    margin-top: 7.7vw;
+    font-weight: 600;
+    font-size: 45px;
+  }
+
+  .component {
+    position: relative;
+    display: none;
+    opacity: 0;
+    transition: display 1s ease-in-out;
+  }
+
+  .component.active {
+    display: block;
+    opacity: 1;
+  }
+
+ /*  .component {
+    position: relative;
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition: max-height 1s ease-in-out, opacity 1s ease-in-out;
+  }
+
+  .component.active {
+    max-height: 100vh;
+    opacity: 1;
+  } */
+
+/*   .component {
+    position: absolute;
+    width: 100%;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+    transform: translateX(100%);
+  }
+
+  .component.active {
+    opacity: 1;
+    transform: translateX(0);
+  } */
+
+  .next-button {
+    display: none;
+  }
+
+  .about-footer {
+    margin-left: 0;
+    width: 88vw;
+    margin-top: 6vh;
+    margin-bottom: 0;
+    margin-bottom: 9.7vw;
+    margin-bottom: 34px;
+    flex: 0 0 auto;
+  }
+
+  .about-link-mobile {
+    display: block;
+  }
+
+  .about-link-mobile {
+    margin-bottom: 58px;
+    display: flex;
+    justify-content: center;
+  }
+
+  .about-link-mobile img {
+    width: 28px;
+    height: 28px;
+    margin-right: 9px;
+  }
+
+  .about-btn-mobile {
+    display: flex;
+    justify-content: space-between;
+    width: 100vw;
+    height: 87px;
+    align-items: center;
+    background-color: rgba(116, 116, 116, 0.1);
+    padding: 0 30px;
+  }
+
+  .next-button-mobile {
+    text-decoration: none;
+    background: none;
+    border: none;
+    color: white;
+    display: flex;
+    cursor: pointer;
+  }
+
+  .next-button-mobile span {
+    margin-right: 10px;
+    color: rgba(255, 209, 47, 1);
+  }
+
+  #last-page {
+    display: none;
+  }
+
+  .messanger {
+    display: none;
+  }
+
+  .info-links {
+    display: none;
+  }
+}

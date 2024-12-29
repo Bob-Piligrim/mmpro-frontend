@@ -1,0 +1,86 @@
+.descript-who {
+  margin-top: 12px;
+  font-weight: 600;
+  font-size: 1.6vw;
+  width: 590px;
+  height: 105px;
+  letter-spacing: 1px;
+  line-height: 1.3;
+  text-wrap: nowrap;
+}
+
+.descript-who-mobile {
+  display: none;
+}
+
+.info-who {
+  margin-top: 1vw;
+  display: flex;
+}
+
+@media (min-width: 2100px) {
+  .info-who {
+    margin-top: 2vw;
+  }
+}
+
+.info-who-1,
+.info-who-2,
+.info-who-3 {
+  display: flex;
+  flex-direction: column;
+}
+
+.info-who-main {
+  font-weight: 500;
+  font-size: 44px;
+  font-size: 2.2vw;
+  line-height: 60px;
+  letter-spacing: 1;
+  margin-right: 39px;
+}
+
+@media (max-width: 656px) {
+  .descript-who {
+    display: none;
+  }
+
+  .descript-who-mobile {
+    display: block;
+    margin-top: 12px;
+    width: 100vw;
+    font-weight: 600;
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    line-height: 15px;
+    text-wrap: nowrap;
+  }
+
+  .info-who {
+    display: flex;
+    flex-direction: column;
+  }
+  .info-who-1 {
+    margin-top: 32px;
+  }
+
+  .info-who-2,
+  .info-who-3 {
+    margin-top: 26px;
+  }
+
+  .info-who-1,
+  .info-who-2,
+  .info-who-3 {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .info-who-main {
+    font-weight: 500;
+    font-size: 32px;
+    line-height: 44px;
+    letter-spacing: 1.5;
+    margin-right: 0;
+  }
+}
