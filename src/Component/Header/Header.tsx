@@ -1,9 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import MMPRO from "../../Assets/Header/MMPRO.png";
 import "./Header.css";
 import arrowButton from "../../Assets/Header/arrowButton.png";
+import Modal from "../Modal/Modal";
 
 const Header: React.FC = () => {
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+
+  const toggleModal = () => {
+    setIsModalOpen(!isModalOpen);
+  };
+
   return (
     <>
       <div className="header-container">
@@ -15,10 +22,11 @@ const Header: React.FC = () => {
         <div className="headerTitle-container">
           <h1 className="header-title"> МЕДИАПРОИЗВОДСТВО ПОЛНОГО ЦИКЛА</h1>
         </div>
-        <button className="header-button">
+        <button onClick={toggleModal} className="header-button">
           ОСТАВИТЬ ЗАЯВКУ
           <img src={arrowButton} alt="Arrow" className="arrow-icon" />
         </button>
+        {isModalOpen && <Modal onClose={toggleModal} />}
       </div>
     </>
   );

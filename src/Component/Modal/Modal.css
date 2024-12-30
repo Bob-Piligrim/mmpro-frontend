@@ -1,0 +1,297 @@
+.modal-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 99999;
+  background: rgba(68, 68, 68, 0.9); /* ? */
+}
+
+.modal-container-background {
+  width: 90vw;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  background: rgba(116, 116, 116, 0.1);
+  border-radius: 20px;
+  padding: 50px 95px;
+  display: flex;
+  justify-content: center;
+}
+
+.modal-container {
+  position: relative;
+  border-radius: 8px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 80vw;
+}
+
+/* углы */
+
+.corner {
+  position: absolute;
+  width: 70px; /* Ширина изображения угла */
+  height: 70px; /* Высота изображения угла */
+}
+
+.top-left {
+  top: 6px; /* Сдвигаем вверх на 30px */
+  left: 10px; /* Сдвигаем влево на 30px */
+  border-top: 1px solid rgba(255, 255, 255, 1);
+  border-left: 1px solid rgba(255, 255, 255, 1);
+  padding-left: 2px;
+  padding-top: 5px;
+}
+
+.top-left img {
+  width: 45px;
+  height: 45px;
+}
+
+.top-right {
+  top: 6px;
+  right: 10px;
+  border-top: 1px solid rgba(255, 255, 255, 1);
+  border-right: 1px solid rgba(255, 255, 255, 1);
+  padding-top: 10px;
+}
+
+.top-right img {
+  width: 100%;
+  height: auto;
+}
+
+.bottom-left {
+  bottom: 0px;
+  left: 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 1);
+  border-left: 1px solid rgba(255, 255, 255, 1);
+  padding-top: 40px;
+  padding-left: 5px;
+}
+
+.bottom-left div {
+  font-family: Druk Cyr;
+  font-size: 18px;
+  line-height: 24px;
+  letter-spacing: 0.1;
+  font-weight: 500;
+}
+
+.bottom-right {
+  bottom: 0px;
+  right: 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 1);
+  border-right: 1px solid rgba(255, 255, 255, 1);
+  padding-top: 40px;
+}
+
+.bottom-right img {
+  width: 107px;
+  height: 30px;
+  position: absolute;
+  right: 10px;
+}
+
+/* углы */
+
+.modal-container h2 {
+  text-align: center;
+  font-weight: 600;
+  font-size: 35px;
+  font-size: clamp(30px, 1.8vw, 38px);
+  line-height: 42px;
+  color: rgba(255, 27, 27, 1);
+  text-shadow: 0px 4.13px 107.44px rgba(0, 0, 0, 1);
+  margin-bottom: 12px;
+}
+
+.modal-container div {
+  font-size: 20px;
+  font-size: clamp(16px, 1vw, 23px);
+}
+
+.modal-form {
+  margin-top: 50px;
+  display: flex;
+  flex-direction: column;
+  width: 25vw;
+  min-width: 368px;
+}
+
+.modal-form input,
+.modal-form textarea {
+  text-decoration: none;
+  background: transparent;
+  border: none;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 16px;
+  color: rgba(255, 255, 255, 0.4);
+  padding-left: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 1);
+  text-shadow: 0px 4.13px 107.44px rgba(0, 0, 0, 1);
+}
+
+.modal-form input {
+  margin-bottom: 32px;
+}
+
+.modal-form textarea {
+  margin-top: 60px;
+  margin-bottom: 43px;
+  resize: none;
+}
+
+.modal-form input:focus,
+.modal-form textarea:focus {
+  outline: none;
+  border: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 1);
+  background: none;
+  box-shadow: none;
+}
+
+.modal-form button {
+  width: 181px;
+  height: 44px;
+  background: none;
+  border: 1px solid rgba(255, 255, 255, 1);
+  border-radius: 134px;
+  color: rgba(255, 255, 255, 1);
+  text-align: center;
+  align-self: center;
+  cursor: pointer;
+}
+
+@media (max-width: 656px) {
+  .modal-container-background {
+    width: 100vw;
+    padding: 30px 23px;
+    display: flex;
+    justify-content: center;
+  }
+
+  .modal-container {
+    width: 90vw;
+  }
+
+  /* углы */
+
+  .corner {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+  }
+
+  .top-left {
+    top: 6px;
+    left: 10px;
+    padding-left: 2px;
+    padding-top: 5px;
+  }
+
+  .top-left img {
+    width: 22px;
+    height: 22px;
+  }
+
+  .top-right {
+    top: 6px;
+    right: 10px;
+    padding-top: 10px;
+  }
+
+  .top-right img {
+    width: 100%;
+    height: auto;
+  }
+
+  .bottom-left {
+    bottom: 0px;
+    left: 10px;
+    padding-top: 6px;
+    padding-left: 5px;
+  }
+
+  .bottom-left div {
+    font-family: Druk Cyr;
+    font-size: 18px;
+    line-height: 24px;
+    letter-spacing: 0.1;
+    font-weight: 500;
+  }
+
+  .bottom-right {
+    bottom: 0px;
+    right: 10px;
+    padding-top: 0;
+  }
+
+  .bottom-right img {
+    width: 107px;
+    height: 30px;
+    position: absolute;
+    right: 10px;
+  }
+
+  /* углы */
+
+  .modal-container h2 {
+    font-size: 18px;
+    font-size: clamp(18px, 5.8vw, 23px);
+    margin-top: 63px;
+    margin-bottom: 0;
+  }
+
+  .modal-container div {
+    font-size: 11px;
+    font-size: clamp(9px, 3.3vw, 15px);
+  }
+
+  .modal-form {
+    margin-top: 35px;
+    display: flex;
+    flex-direction: column;
+    width: 72vw;
+    min-width: auto;
+    width: clamp(230px, 72vw, 370px);
+  }
+
+  .modal-form input,
+  .modal-form textarea {
+    text-decoration: none;
+    background: transparent;
+    border: none;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 16px;
+    color: rgba(255, 255, 255, 0.4);
+    padding-left: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(255, 255, 255, 1);
+    text-shadow: 0px 4.13px 107.44px rgba(0, 0, 0, 1);
+  }
+
+  .modal-form input {
+    margin-bottom: 32px;
+  }
+
+  .modal-form textarea {
+    margin-top: 50px;
+    margin-bottom: 24px;
+  }
+
+  .modal-form button {
+    width: 149px;
+    height: 36px;
+    margin-bottom: 80px;
+  }
+}
