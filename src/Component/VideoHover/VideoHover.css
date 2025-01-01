@@ -1,0 +1,298 @@
+.video-container {
+  position: fixed;
+  display: block;
+  z-index: 9999999;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+#video {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100%;
+  object-fit: cover;
+  z-index: -1;
+}
+
+.showInfo {
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+}
+.notShowInfo {
+  opacity: 1;
+  transition: 0.5s ease-in-out;
+}
+
+.on-off {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background-color: white;
+  border: none;
+  width: 60px;
+  width: clamp(55px, 3.6vw, 65px);
+  height: 60px;
+  height: clamp(55px, 3.6vw, 65px);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.on-off span {
+  font-size: 30px;
+  font-weight: bold;
+  color: black;
+}
+
+.video-title {
+  margin-left: 18.75vw;
+  position: absolute;
+  bottom: 140px;
+  left: 0;
+  height: 125px;
+  color: rgba(255, 209, 47, 1);
+  font-family: ASPHALTIC;
+}
+
+.video-description {
+  font-size: 25px;
+  font-size: clamp(20px, 1.5vw, 30px);
+  font-weight: 400;
+  line-height: 24.79px;
+  letter-spacing: 0.05em;
+  text-align: left;
+  text-underline-position: from-font;
+  text-decoration-skip-ink: none;
+  margin-bottom: -10px;
+}
+
+.video-videoName {
+  padding: 0;
+  font-size: 124px;
+  font-size: clamp(110px, 7vw, 140px);
+  /* font-size: 6.5vw; */
+  font-weight: 400;
+  line-height: 124.1px;
+  letter-spacing: 0.04em;
+  text-align: left;
+  text-underline-position: from-font;
+  text-decoration-skip-ink: none;
+}
+
+.information-container {
+  position: absolute;
+  bottom: 50px;
+  right: 180px;
+  right: 9.3vw;
+}
+
+.information-container div {
+  font-weight: 400;
+  font-size: 18px;
+  font-size: clamp(14px, 1vw, 20px);
+  line-height: 21.6px;
+  color: rgba(255, 255, 255, 1);
+}
+
+.information-image {
+  margin-top: 10px;
+  display: flex;
+  justify-content: start;
+  align-content: center;
+  margin-bottom: 20px;
+}
+
+.information-image img {
+  width: 197px;
+  width: clamp(150px, 10vw, 200px);
+  height: auto;
+  margin-right: 8px;
+}
+
+.ageLimit {
+  align-self: center;
+  border: 1px solid rgba(255, 255, 255, 1);
+  border-radius: 50%;
+  color: rgba(255, 255, 255, 1);
+  padding: 10px;
+}
+
+.lineProgress {
+  margin-top: 16px;
+  height: 5px;
+  background: #ddd;
+  border-radius: 5px;
+  overflow: hidden;
+  position: relative;
+}
+
+.progressTime {
+  margin-top: 15px;
+  display: flex;
+  justify-content: space-between;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 19.2px;
+  color: rgba(255, 255, 255, 1);
+}
+
+.lineProgress,
+.progressTime {
+  width: 331px;
+  width: clamp(300px, 17vw, 360px);
+}
+
+.video-footerPrev {
+  margin-left: 18.75vw;
+  position: absolute;
+  bottom: 9.5%;
+  left: 0;
+  text-decoration: none;
+  color: rgba(255, 255, 255, 1);
+  display: flex;
+  align-content: center;
+  width: auto;
+  height: 14px;
+}
+
+.video-footerPrev img {
+  margin-right: 9px;
+  padding-top: 5px;
+}
+
+@media (max-width: 810px) {
+  .video-container {
+    padding: 0 auto;
+  }
+
+  .on-off {
+    position: absolute;
+    top: 40vh;
+    left: 400px;
+    left: 50vw;
+    width: 60px;
+    width: clamp(55px, 3.6vw, 65px);
+    height: 60px;
+    height: clamp(55px, 3.6vw, 65px); /* width, height difference */
+  }
+
+  .on-off span {
+    font-size: 15px; /* change */
+  }
+
+  .video-title {
+    margin-left: 0;
+    position: absolute;
+    width: 100vw;
+    bottom: 37vh;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 125px; /* надо изменить? */
+  }
+
+  .video-description {
+    font-size: 16px;
+    font-size: clamp(); /* изменить */
+    line-height: 16px;
+    margin-bottom: 0px; /* изменить */
+  }
+
+  .video-videoName {
+    font-size: 81px;
+    font-size: clamp(); /* изменить */
+    font-weight: 400;
+    line-height: 81px;
+  }
+
+  .information-container {
+    position: absolute;
+    bottom: 10vh;
+    left: 0;
+    right: 9.3vw;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+  }
+
+  .information-container1 {
+    order: 2;
+  }
+
+  .information-container div {
+    font-size: 18px;
+    font-size: clamp(14px, 1vw, 20px); /* изменить */
+    text-align: center;
+  }
+
+  .information-image img {
+    width: 110px;
+    width: clamp(90px, 30vw, 120px); /* изменил */
+  }
+
+  .lineProgress {
+    margin-top: 16px;
+    height: 5px;
+    background: #ddd;
+    border-radius: 5px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .progressTime {
+    margin-top: 15px;
+    display: flex;
+    justify-content: space-between;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 19.2px;
+    color: rgba(255, 255, 255, 1);
+  }
+
+  .lineProgress,
+  .progressTime {
+    width: 263px;
+    width: clamp(230px, 79vw, 300px);
+  }
+
+  .video-footerPrev {
+    bottom: 7%;
+  }
+}
+
+@media (max-width: 656px) {
+  .video-footerPrev {
+    margin-left: 28px;
+  }
+}
+
+@media (max-height: 652px) and (max-width: 810px) {
+  .video-container {
+    padding: 0 auto;
+  }
+
+  .on-off {
+    top: 30vh;
+  }
+
+  .video-title {
+    bottom: 44vh;
+  }
+
+  .information-container {
+    bottom: 15vh;
+  }
+}

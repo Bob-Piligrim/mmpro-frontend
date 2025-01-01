@@ -1,86 +1,102 @@
 import React, { useEffect, useRef, useState } from "react";
+import "./VideoHover.css";
+import VideoHoverInterface from "./VideoHoverInterface";
+import btn_prev from "../../Assets/Portfolio/btn-prev.png";
 
-interface VideoHoverProps {
-  videoSrc: string;
-  posterSrc: string;
-  projectInfo: {
-    description: string;
-    ageLimit: number;
-  };
-}
+/* Как пример: */
 
-const VideoHover: React.FC<VideoHoverProps> = ({
-  videoSrc,
-  posterSrc,
-  projectInfo,
+import image1 from "../../Assets/VideoHover/image 2259.png";
+import image2 from "../../Assets/VideoHover/image 42.png";
+
+const VideoHover: React.FC<VideoHoverInterface> = ({
+  videoUrl,
+  poster,
+  description,
+  ageLimit,
+  videoName,
 }) => {
   const videoRef = useRef<HTMLVideoElement | null>(null);
-  const [isPlaying, setIsPlaying] = useState(false);
+  const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [progress, setProgress] = useState(0);
+  const [duration, setDuration] = useState(0);
+  const [currentTime, setCurrentTime] = useState(0);
+  const [showInfo, setShowInfo] = useState<boolean>(true); // Состояние для видимости информации
 
-  // Нажали на мышку, видео включилось
   const handleMouseEnter = () => {
     if (videoRef.current) {
-      videoRef.current.play();
-      setIsPlaying(true);
+      setShowInfo(!showInfo);
     }
   };
 
-  // Нажали мышкой, видео выключили
   const handleMouseLeave = () => {
     if (videoRef.current) {
-      videoRef.current.pause();
-      videoRef.current.currentTime = 0; // сбрасываем видео
-      setIsPlaying(false);
+      setShowInfo(!showInfo);
     }
   };
 
   const handleTouchStart = () => {
     if (videoRef.current) {
-      if (videoRef.current.paused) {
-        videoRef.current.play();
-        setIsPlaying(true);
-      } else {
-        videoRef.current.pause();
-        setIsPlaying(false);
-        videoRef.current.currentTime = 0; // останавливаем и сбрасываем
-      }
+      setShowInfo(!showInfo);
     }
   };
 
-  // Кнопка play
+  const handlePlayPause = () => {
+    const videoElement = videoRef.current;
 
-  const handleButtonClick = () => {
-    if(videoRef.current) {
-        if(isPlaying) {
-            videoRef.current.pause()
+    if (videoElement) {
+        if (isPlaying) {
+            videoElement.pause();
         } else {
-            videoRef.current.play()
-        };
-        setIsPlaying(!isPlaying)
+            videoElement.play();
+        }
+        setIsPlaying(true);
     }
-  }
+};
+
+  const handleLoadedMetadata = () => {
+    if (videoRef.current) {
+      setDuration(videoRef.current.duration);
+    }
+  };
 
   // Узнаем продолжительность для линии
   const handleTimeUpdate = () => {
     if (videoRef.current) {
-      setProgress(
-        (videoRef.current.currentTime / videoRef.current.duration) * 100
-      );
+      const current = videoRef.current.currentTime;
+      setCurrentTime(current);
+      setProgress((current / duration) * 100);
     }
   };
 
   useEffect(() => {
+    console.log(`Состояние isPlaying изменилось на: ${isPlaying}`);
+  }, [isPlaying]);
+
+  useEffect(() => {
     const videoElement = videoRef.current;
     if (videoElement) {
+      videoElement.addEventListener("loadedmetadata", handleLoadedMetadata);
       videoElement.addEventListener("timeupdate", handleTimeUpdate);
+      videoElement.play();
     }
     return () => {
       if (videoElement) {
+        videoElement.removeEventListener(
+          "loadedmetadata",
+          handleLoadedMetadata
+        );
         videoElement.removeEventListener("timeupdate", handleTimeUpdate);
       }
     };
-  }, [videoRef]);
+    // разобраться в чем проблема!!!
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const formatTime = (time: number) => {
+    const minutes = Math.floor(time / 60);
+    const seconds = Math.floor(time % 60);
+    return `${minutes}:${seconds < 10 ? `0${seconds}` : seconds}`;
+  };
 
   return (
     <div
@@ -90,94 +106,70 @@ const VideoHover: React.FC<VideoHoverProps> = ({
       onTouchStart={handleTouchStart}
     >
       <video
-        className="video"
+        preload="auto"
+        loop
+        muted
+        id="video"
         ref={videoRef}
-        style={{ display: isPlaying ? "block" : "none" }} // Показываем или скрываем видео
-        poster={posterSrc}
-        preload="metadata"
+        poster={poster}
+        onPause={() => setIsPlaying(false)}
+        onPlay={() => setIsPlaying(true)}
       >
-        <source src={videoSrc} type="video/mp4" />
+        <source src={videoUrl} type="video/mp4" />
         Ваш браузер не поддерживает видео
       </video>
 
       {/* Кнопка Play */}
-      {!isPlaying && (
-        <button
-          onClick={handleButtonClick}
-          style={{
-            position: "absolute",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-            borderRadius: "50%",
-            backgroundColor: "white",
-            border: "none",
-            width: "60px",
-            height: "60px",
-            cursor: "pointer",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            boxShadow: "0 2px 10px rgba(0,0,0,0.3)",
-          }}
-        >
-          <span
-            style={{ fontSize: "30px", fontWeight: "bold", color: "black" }}
-          >
-            ▶
-          </span>
-        </button>
-      )}
 
-      {/* Информационный контейнер */}
-      <div
-        style={{
-          position: "absolute",
-          bottom: "10px",
-          right: "10px",
-          backgroundColor: "rgba(0, 0, 0, 0.7)",
-          color: "#fff",
-          padding: "10px",
-          borderRadius: "5px",
-        }}
-      >
-        <p>{projectInfo.description}</p>
-        <div style={{ display: "flex", alignItems: "center" }}>
-          <span
-            style={{
-              borderRadius: "50%",
-              width: "20px",
-              height: "20px",
-              backgroundColor: "red",
-              color: "#fff",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              marginRight: "5px",
-            }}
-          >
-            {projectInfo.ageLimit}+
-          </span>
-          <div
-            style={{
-              width: "100px",
-              height: "5px",
-              background: "#ddd",
-              borderRadius: "5px",
-              overflow: "hidden",
-              position: "relative",
-            }}
-          >
-            <div
-              style={{
-                width: `${progress}%`,
-                height: "100%",
-                background: "green",
-              }}
-            />
+      <div className={showInfo ? "showInfo" : "notShowInfo"}>
+        <button
+          onClick={(e) => {
+            e.stopPropagation(); // Останавливаем всплытие события, чтобы информация не скрылась
+            handlePlayPause();
+          }}
+          className="on-off"
+        >
+          <span>{isPlaying ? "❚❚" : "▶"}</span>
+        </button>
+
+        {/* Информационный контейнер */}
+
+        <div className="video-title">
+          <div className="video-description">{description.toUpperCase()}</div>
+          <div className="video-videoName">{videoName}</div>
+        </div>
+
+        <div className="information-container">
+          <div className="information-container1">
+            <div>Подробнее узнать о проекте:</div>
+            <div className="information-image">
+              <img src={image1} alt="" />
+              <img src={image2} alt="" />
+              <div className="ageLimit">{ageLimit}+</div>
+            </div>
+          </div>
+          <div className="information-container2">
+            <div>Продолжительность:</div>
+            <div className="lineProgress">
+              <div
+                style={{
+                  width: `${progress}%`,
+                  height: "100%",
+                  background: "rgba(255, 209, 47, 1)",
+                }}
+              />
+            </div>
+            <div className="progressTime">
+              <div>{formatTime(duration - currentTime)}</div>
+              <div>{formatTime(duration)}</div>
+            </div>
           </div>
         </div>
       </div>
+
+      <a href="/portfolio" className="video-footerPrev">
+        <img src={btn_prev} alt="" /> <span>Назад</span>
+      </a>
     </div>
   );
 };

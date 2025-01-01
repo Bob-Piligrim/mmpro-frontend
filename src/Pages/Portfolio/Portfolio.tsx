@@ -1,52 +1,76 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import "./Portfolio.css";
 import format from "../../Assets/Portfolio/format.png";
 import btn_prev from "../../Assets/Portfolio/btn-prev.png";
 import btn_next from "../../Assets/Portfolio/btn-next.png";
 import categories from "../../Component/VideoHover/Categories";
+import VideoHover from "../../Component/VideoHover/VideoHover";
+import VideoHoverInterface from "../../Component/VideoHover/VideoHoverInterface";
+
 
 const Portfolio: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState(categories[0]);
   const [offset, setOffset] = useState(0);
   const linkContainerRef = useRef<HTMLDivElement>(null);
-  const touchStartRef = useRef<number>(0);
 
-  // пересчет ширины
-  useEffect(() => {
+  const [selectedVideo, setSelectedVideo] = useState<VideoHoverInterface | null>(
+    null
+  );
+  /*   const touchStartRef = useRef<number>(0);
+  const currentIndexRef = useRef(0); */
+
+  const handleCategoryClick = (category: (typeof categories)[number]) => {
+    setSelectedCategory(category);
     setOffset(0);
-  }, [selectedCategory]);
-
-  const getVisibleElementWidth = (index: number): number => {
-    if (linkContainerRef.current) {
-      const element = linkContainerRef.current.children[index] as HTMLElement;
-      return element ? element.getBoundingClientRect().width : 0; // Получаем ширину элемента по индексу
-    }
-    return 0; // Если элемента нет, вернуть 0
   };
 
-  const handleNext = () => {
+  const handleVideoClick = (video: VideoHoverInterface) => {
+    setSelectedVideo(video); // Устанавливаем выбранное видео
+  };
+
+  /* const handleCloseVideo = () => {
+    setSelectedVideo(null); // Закрываем видео
+  }; */
+
+  /* const handleNext = () => {
     const container = linkContainerRef.current;
     if (container) {
-      const currentIndex = Math.floor(
-        Math.abs(offset) / getVisibleElementWidth(0)
+      const widths: number[] = Array.from(container.children).map(
+        (child) => child.getBoundingClientRect().width
       );
-      const nextIndex = currentIndex + 1;
+      const currentIndex = currentIndexRef.current;
 
-      if (nextIndex < container.children.length) {
-        const elementWidth = getVisibleElementWidth(nextIndex);
-        setOffset((prev) => prev - elementWidth);
+      // Проверяем, можем ли мы перейти к следующему элементу
+      if (currentIndex < widths.length - 1) {
+        const nextButtonWidth = widths[currentIndex]; // Ширина текущего элемента
+        setOffset((prev) => {
+          const newOffset = prev - nextButtonWidth; // Сдвиг влево
+          currentIndexRef.current += 1; // Увеличиваем индекс
+          return newOffset;
+        });
+      } else {
+        console.log("Достигнут конец элементов");
       }
     }
   };
-
   const handlePrev = () => {
-    if (offset < 0) {
-      const currentIndex = Math.floor(
-        Math.abs(offset) / getVisibleElementWidth(0)
+    const container = linkContainerRef.current;
+    if (container) {
+      const widths: number[] = Array.from(container.children).map(
+        (child) => child.getBoundingClientRect().width
       );
+      const currentIndex = currentIndexRef.current;
+
+      // Проверяем, можем ли мы вернуться к предыдущему элементу
       if (currentIndex > 0) {
-        const elementWidth = getVisibleElementWidth(currentIndex - 1);
-        setOffset((prev) => Math.min(0, prev + elementWidth));
+        const prevButtonWidth = widths[currentIndex - 1]; // Ширина предыдущего элемента
+        setOffset((prev) => {
+          const newOffset = Math.min(0, prev + prevButtonWidth); // Сдвиг вправо
+          currentIndexRef.current -= 1; // Уменьшаем индекс
+          return newOffset;
+        });
+      } else {
+        console.log("Достигнут начало элементов");
       }
     }
   };
@@ -65,20 +89,7 @@ const Portfolio: React.FC = () => {
     } else if (touchEnd - touchStartRef.current > threshold) {
       handlePrev(); // Свайп вправо
     }
-  };
-
-  const handleCategoryClick = (category: (typeof categories)[number]) => {
-    setSelectedCategory(category);
-  };
-
-  const isNextDisabled = () => {
-    const container = linkContainerRef.current;
-    return container
-      ? Math.abs(offset) >= container.scrollWidth - container.clientWidth
-      : true;
-  };
-
-  const isPrevDisabled = () => offset === 0;
+  }; */
 
   return (
     <>
@@ -87,8 +98,8 @@ const Portfolio: React.FC = () => {
         <div
           className="link-container"
           ref={linkContainerRef}
-          onTouchStart={handleTouchStart}
-          onTouchMove={handleTouchMove}
+          /* onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove} */
           style={{
             transform: `translateX(${offset}px)`,
           }}
@@ -108,8 +119,8 @@ const Portfolio: React.FC = () => {
         </div>
         <div
           className="content-container"
-          onTouchStart={handleTouchStart}
-          onTouchMove={handleTouchMove}
+          /* onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove} */
         >
           <div
             className={
@@ -120,7 +131,18 @@ const Portfolio: React.FC = () => {
           >
             {selectedCategory.content.map((video) => (
               <div key={video.poster}>
-                <a href={`${video.videoUrl}`}>
+                <button
+                className="poster-button"
+                  onClick={() =>
+                    handleVideoClick({
+                      videoUrl: video.videoUrl,
+                      poster: video.poster,
+                      description: video.description,
+                      ageLimit: video.ageLimit,
+                      videoName: video.videoName
+                    })
+                  } 
+                >
                   <img
                     src={video.poster}
                     alt={video.poster}
@@ -130,7 +152,7 @@ const Portfolio: React.FC = () => {
                         : "poster-other"
                     }
                   />{" "}
-                </a>{" "}
+                </button>{" "}
                 {selectedCategory.name !== "КИНО" && (
                   <div className="other-discription">{video.description}</div>
                 )}
@@ -145,21 +167,37 @@ const Portfolio: React.FC = () => {
           </a>
           <div className="btn">
             <button
-              onClick={handlePrev} /* Доработать, уточнить */
-              disabled={isPrevDisabled()}
+              /* onClick={handlePrev} */
+              disabled={offset === 0}
               className="btn-prev"
             >
               <img src={btn_prev} alt="Назад" />
             </button>
             <button
-              onClick={handleNext} /* Доработать, уточнить */
-              disabled={isNextDisabled()}
+              /* onClick={handleNext} */
+              disabled={
+                linkContainerRef.current
+                  ? Math.abs(offset) >=
+                    linkContainerRef.current.scrollWidth -
+                      linkContainerRef.current.clientWidth
+                  : true
+              }
               className="btn-next"
             >
               <img src={btn_next} alt="Вперед" />
             </button>
           </div>
         </div>
+        {/* Условный рендеринг VideoPlayer */}
+        {selectedVideo && (
+          <VideoHover
+            videoUrl={selectedVideo.videoUrl}
+            poster={selectedVideo.poster}
+            description={selectedVideo.description}
+            ageLimit={selectedVideo.ageLimit}
+            videoName={selectedVideo.videoName}
+          />
+        )}
       </div>
     </>
   );
