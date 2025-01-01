@@ -4,9 +4,22 @@
   font-display: swap;
 }
 
+@font-face {
+  font-family: "ASPHALTIC";
+  src: local("Gilroy-Light"),
+    url(./Fonts/asphalticgrainrusbylyajka_bold.ttf) format("truetype"); /* 400 */
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "DrukCyr";
+  src: local("Gilroy-Light"), url(./Fonts/DrukCyrSuper.ttf) format("truetype"); /* 400 */
+  font-display: swap;
+}
+
 body {
   margin: 0;
-  font-family: -apple-system, Gilroy, serif;
+  font-family: -apple-system, Gilroy, ASPHALTIC, DrukCyr, serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: #020202;

@@ -7,6 +7,8 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true,
+    "allowJs": true, // Разрешить использование JavaScript
+    "checkJs": false, // Отключить проверку для JavaScript файлов
     "jsx": "react",
     "types": ["jest", "@testing-library/jest-dom"]
   },
