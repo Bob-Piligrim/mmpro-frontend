@@ -17,21 +17,21 @@ const categories: Category[] = [
     content: [
       {
         poster: "/posters/ХОРОР ЧАСТЬ 1.png",
-        videoUrl: "/videos/ХОРОР ЧАСТЬ 1.mp4",
+        videoUrl: "/videos/kino/ХОРОР ЧАСТЬ 1.mp4",
         description: "короткометражный хоррор",
         ageLimit: "18",
         videoName: "СОСЕД",
       },
       {
         poster: "/posters/ХОРОР ЧАСТЬ 2.png",
-        videoUrl: "/videos/ХОРОР ЧАСТЬ 2.mp4",
+        videoUrl: "/videos/kino/ХОРОР ЧАСТЬ 2.mp4",
         description: "короткометражный хоррор",
         ageLimit: "28",
         videoName: "РОДСТВЕННИК",
       },
       {
         poster: "/posters/ХОРОР ЧАСТЬ 3.png",
-        videoUrl: "/videos/ХОРОР ЧАСТЬ 3.mp4",
+        videoUrl: "/videos/kino/ХОРОР ЧАСТЬ 3.mp4",
         description: "короткометражный хоррор",
         ageLimit: "38",
         videoName: "БРАТ",
@@ -105,15 +105,17 @@ const categories: Category[] = [
     name: "КУРСЫ",
     content: [
       {
-        poster: example3,
-        videoUrl: example3,
-        description: "Оксана Халваши. Лекция",
+        poster: example1,
+        videoUrl: "/videos/kursi/ОКСАНА ХАЛВАШИ.mp4" ,
+        description: "Оксана Халваши",
+        contentType: "Лекция",
         ageLimit: "18",
       },
       {
         poster: example4,
-        videoUrl: example4,
-        description: "Курс по IT",
+        videoUrl: "/videos/kursi/СЕРГЕЙ ДЕГТЯРЕВ.mp4",
+        description: "Сергей Дегтярев",
+        contentType: "Курс",
         ageLimit: "18",
       },
     ],
@@ -122,8 +124,8 @@ const categories: Category[] = [
     name: "ИНТЕРВЬЮ",
     content: [
       {
-        poster: example1,
-        videoUrl: example1,
+        poster: example3,
+        videoUrl: example3,
         description: "Курс по IT",
         ageLimit: "18",
       },

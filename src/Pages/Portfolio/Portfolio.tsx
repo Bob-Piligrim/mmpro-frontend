@@ -6,16 +6,15 @@ import btn_next from "../../Assets/Portfolio/btn-next.png";
 import categories from "../../Component/VideoHover/Categories";
 import VideoHover from "../../Component/VideoHover/VideoHover";
 import VideoHoverInterface from "../../Component/VideoHover/VideoHoverInterface";
-
+import VideoOtherHover from "../../Component/VideoHover/VideoOtherHover";
 
 const Portfolio: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState(categories[0]);
   const [offset, setOffset] = useState(0);
   const linkContainerRef = useRef<HTMLDivElement>(null);
 
-  const [selectedVideo, setSelectedVideo] = useState<VideoHoverInterface | null>(
-    null
-  );
+  const [selectedVideo, setSelectedVideo] =
+    useState<VideoHoverInterface | null>(null);
   /*   const touchStartRef = useRef<number>(0);
   const currentIndexRef = useRef(0); */
 
@@ -132,16 +131,17 @@ const Portfolio: React.FC = () => {
             {selectedCategory.content.map((video) => (
               <div key={video.poster}>
                 <button
-                className="poster-button"
+                  className="poster-button"
                   onClick={() =>
                     handleVideoClick({
                       videoUrl: video.videoUrl,
                       poster: video.poster,
                       description: video.description,
                       ageLimit: video.ageLimit,
-                      videoName: video.videoName
+                      videoName: video.videoName,
+                      contentType: video.contentType,
                     })
-                  } 
+                  }
                 >
                   <img
                     src={video.poster}
@@ -154,7 +154,9 @@ const Portfolio: React.FC = () => {
                   />{" "}
                 </button>{" "}
                 {selectedCategory.name !== "КИНО" && (
-                  <div className="other-discription">{video.description}</div>
+                  <div className="other-discription">
+                    {`${video.description}. ${video.contentType}`}
+                  </div>
                 )}
               </div>
             ))}
@@ -188,14 +190,26 @@ const Portfolio: React.FC = () => {
             </button>
           </div>
         </div>
-        {/* Условный рендеринг VideoPlayer */}
-        {selectedVideo && (
+
+        {selectedCategory.name === "КИНО" && selectedVideo && (
           <VideoHover
-            videoUrl={selectedVideo.videoUrl}
             poster={selectedVideo.poster}
+            videoUrl={selectedVideo.videoUrl}
             description={selectedVideo.description}
             ageLimit={selectedVideo.ageLimit}
             videoName={selectedVideo.videoName}
+            contentType={selectedVideo.contentType}
+          />
+        )}
+
+        {selectedCategory.name !== "КИНО" && selectedVideo && (
+          <VideoOtherHover
+            poster={selectedVideo.poster}
+            videoUrl={selectedVideo.videoUrl}
+            description={selectedVideo.description}
+            ageLimit={selectedVideo.ageLimit}
+            videoName={selectedVideo.videoName}
+            contentType={selectedVideo.contentType}
           />
         )}
       </div>

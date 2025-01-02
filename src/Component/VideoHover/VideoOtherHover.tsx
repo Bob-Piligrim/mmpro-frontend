@@ -1,19 +1,16 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
+import "./VideoOtherHover.css";
 import "./VideoHover.css";
 import VideoHoverInterface from "./VideoHoverInterface";
 import btn_prev from "../../Assets/Portfolio/btn-prev.png";
 
-/* Как пример: */
-
-import image1 from "../../Assets/VideoHover/image 2259.png";
-import image2 from "../../Assets/VideoHover/image 42.png";
-
-const VideoHover: React.FC<VideoHoverInterface> = ({
+const VideoOtherHover: React.FC<VideoHoverInterface> = ({
   videoUrl,
   poster,
   description,
   ageLimit,
   videoName,
+  contentType,
 }) => {
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
@@ -24,7 +21,7 @@ const VideoHover: React.FC<VideoHoverInterface> = ({
 
   const handleMouseEnter = () => {
     if (videoRef.current) {
-      setShowInfo(false);
+      setShowInfo(!showInfo);
     }
   };
 
@@ -41,7 +38,7 @@ const VideoHover: React.FC<VideoHoverInterface> = ({
 
   const handleTouchStart = (e: React.TouchEvent) => {
     const target = e.target as HTMLElement;
-    if (target.classList.contains("on-off")) {
+    if (target.classList.contains("OtherHover-on-off")) {
       return;
     }
     if (videoRef.current) {
@@ -70,7 +67,6 @@ const VideoHover: React.FC<VideoHoverInterface> = ({
     }
   };
 
-  // Узнаем продолжительность для линии
   const handleTimeUpdate = useCallback(() => {
     if (videoRef.current) {
       const current = videoRef.current.currentTime;
@@ -80,10 +76,6 @@ const VideoHover: React.FC<VideoHoverInterface> = ({
       }
     }
   }, [duration]);
-
-  useEffect(() => {
-    console.log(`Состояние isPlaying изменилось на: ${isPlaying}`);
-  }, [isPlaying]);
 
   useEffect(() => {
     const videoElement = videoRef.current;
@@ -129,50 +121,41 @@ const VideoHover: React.FC<VideoHoverInterface> = ({
         Ваш браузер не поддерживает видео
       </video>
 
-      <div className={showInfo ? "showInfo" : "notShowInfo"}>
+      <div
+        id="OtherHoverMain"
+        className={showInfo ? "showInfo" : "notShowInfo"}
+      >
         <button
           onClick={(e) => {
             e.stopPropagation();
             handlePlayPause(e);
           }}
-          className="on-off"
+          className="OtherHover-on-off"
         >
           <span>{isPlaying ? "❚❚" : "▶"}</span>
         </button>
 
-        <div className="video-title">
-          <div className="video-description">{description.toUpperCase()}</div>
-          <div className="video-videoName">{videoName}</div>
-        </div>
-
-        <div className="information-container">
-          <div className="information-container1">
-            <div>Подробнее узнать о проекте:</div>
-            <div className="information-image">
-              <img src={image1} alt="" />
-              <img src={image2} alt="" />
-              <div className="ageLimit">{ageLimit}+</div>
-            </div>
-          </div>
-          <div className="information-container2">
-            <div>Продолжительность:</div>
-            <div className="lineProgress">
-              <div
-                style={{
-                  width: `${progress}%`,
-                  height: "100%",
-                  background: "rgba(255, 209, 47, 1)",
-                }}
-              />
-            </div>
-            <div className="progressTime">
+        <div className="videoOtherInformation-container">
+          <div>Продолжительность:</div>
+          <div className="videoOtherLineProgress">
+            <div
+              style={{
+                width: `${progress}%`,
+                height: "100%",
+                background: "rgba(255, 209, 47, 1)",
+              }}
+            />
+            <div className="videoOtherProgressTime">
               <div>{formatTime(duration - currentTime)}</div>
               <div>{formatTime(duration)}</div>
             </div>
           </div>
         </div>
+        <div className="videoOther-title">
+          <div className="videoOther-videoName">{description}</div>
+          <div className="videoOther-contentType">{contentType}</div>
+        </div>
       </div>
-
       <a href="/portfolio" className="video-footerPrev">
         <img src={btn_prev} alt="" /> <span>Назад</span>
       </a>
@@ -180,4 +163,4 @@ const VideoHover: React.FC<VideoHoverInterface> = ({
   );
 };
 
-export default VideoHover;
+export default VideoOtherHover;
