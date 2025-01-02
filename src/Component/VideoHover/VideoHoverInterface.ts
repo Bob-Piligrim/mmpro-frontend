@@ -4,6 +4,7 @@ interface VideoHoverInterface {
   description: string;
   ageLimit?: string;
   videoName?: string;
+  contentType?: string;
 }
 
 export default VideoHoverInterface;
