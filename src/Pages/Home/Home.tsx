@@ -7,8 +7,15 @@ const Home: React.FC = () => {
   return (
     <>
       <div className="home-background">
-        <div className={`left-half ${isLeftHovered ? "leftHovered" : ""}`} />
-        <div className={`right-half ${isRightHovered ? "rightHovered" : ""}`} />
+        <a href="/portfolio">
+          <div className={`left-half ${isLeftHovered ? "leftHovered" : ""}`} />
+        </a>
+
+        <a href="/aboutus">
+          <div
+            className={`right-half ${isRightHovered ? "rightHovered" : ""}`}
+          />
+        </a>
         <div className="home-container">
           <div className="portfolio">
             <a

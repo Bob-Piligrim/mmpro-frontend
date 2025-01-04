@@ -3,17 +3,21 @@ import MMPRO from "../../Assets/Header/MMPRO.png";
 import "./Header.css";
 import arrowButton from "../../Assets/Header/arrowButton.png";
 import Modal from "../Modal/Modal";
+import { useHeader } from "./HeaderContext";
 
 const Header: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const { isVisible } = useHeader();
 
   const toggleModal = () => {
     setIsModalOpen(!isModalOpen);
   };
 
+  /* if (!isVisible) return null; */
+
   return (
     <>
-      <div className="header-container">
+      <div id={isVisible ? "isVisible" : "notVisible"} className="header-container">
         <div className="logoword">
           <a href="/">
             <img src={MMPRO} alt="MMPRO" className="logoimage" />

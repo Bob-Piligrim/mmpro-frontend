@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import "./VideoHover.css";
 import VideoHoverInterface from "./VideoHoverInterface";
 import btn_prev from "../../Assets/Portfolio/btn-prev.png";
+import { useHeader } from "../Header/HeaderContext";
 
 /* Как пример: */
 
@@ -21,10 +22,12 @@ const VideoHover: React.FC<VideoHoverInterface> = ({
   const [duration, setDuration] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
   const [showInfo, setShowInfo] = useState<boolean>(true); // Состояние для видимости информации
+  const { hideHeader, showHeader } = useHeader();
 
   const handleMouseEnter = () => {
     if (videoRef.current) {
-      setShowInfo(false);
+      setShowInfo(true);
+      showHeader();
     }
   };
 
@@ -34,8 +37,17 @@ const VideoHover: React.FC<VideoHoverInterface> = ({
         e.relatedTarget &&
         (e.relatedTarget as HTMLElement).className !== "on-off"
       ) {
-        setShowInfo(true);
+        setShowInfo(false);
+        hideHeader();
       }
+    }
+  };
+
+  const forHeader = (e: React.TouchEvent) => {
+    if (e.target) {
+      hideHeader();
+    } else {
+      showHeader();
     }
   };
 
@@ -44,8 +56,10 @@ const VideoHover: React.FC<VideoHoverInterface> = ({
     if (target.classList.contains("on-off")) {
       return;
     }
+
     if (videoRef.current) {
       setShowInfo((prev) => !prev);
+      forHeader(e);
     }
   };
 
@@ -116,20 +130,23 @@ const VideoHover: React.FC<VideoHoverInterface> = ({
       onMouseLeave={handleMouseLeave}
       onTouchStart={handleTouchStart}
     >
-      <video
-        preload="auto"
-        loop
-        id="video"
-        ref={videoRef}
-        poster={poster}
-        onPause={() => setIsPlaying(false)}
-        onPlay={() => setIsPlaying(true)}
-      >
-        <source src={videoUrl} type="video/mp4" />
-        Ваш браузер не поддерживает видео
-      </video>
+      <div className="video-size">
+        <video
+          playsInline
+          preload="auto"
+          loop
+          id="video"
+          ref={videoRef}
+          poster={poster}
+          onPause={() => setIsPlaying(false)}
+          onPlay={() => setIsPlaying(true)}
+        >
+          <source src={videoUrl} type="video/mp4" />
+          Ваш браузер не поддерживает видео
+        </video>
+      </div>
 
-      <div className={showInfo ? "showInfo" : "notShowInfo"}>
+      <div id={showInfo ? "showInfo" : "notShowInfo"}>
         <button
           onClick={(e) => {
             e.stopPropagation();
@@ -173,7 +190,11 @@ const VideoHover: React.FC<VideoHoverInterface> = ({
         </div>
       </div>
 
-      <a href="/portfolio" className="video-footerPrev">
+      <a
+        href="/portfolio"
+        id={showInfo ? "showInfo" : "notShowInfo"}
+        className="video-footerPrev"
+      >
         <img src={btn_prev} alt="" /> <span>Назад</span>
       </a>
     </div>
