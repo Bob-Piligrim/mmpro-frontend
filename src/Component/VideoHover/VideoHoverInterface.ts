@@ -1,5 +1,5 @@
 interface VideoHoverInterface {
-  poster: string;
+  poster?: string;
   videoUrl: string;
   description: string;
   ageLimit?: string;

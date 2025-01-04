@@ -3,6 +3,7 @@ import "./VideoOtherHover.css";
 import "./VideoHover.css";
 import VideoHoverInterface from "./VideoHoverInterface";
 import btn_prev from "../../Assets/Portfolio/btn-prev.png";
+import { useHeader } from "../Header/HeaderContext";
 
 const VideoOtherHover: React.FC<VideoHoverInterface> = ({
   videoUrl,
@@ -18,10 +19,12 @@ const VideoOtherHover: React.FC<VideoHoverInterface> = ({
   const [duration, setDuration] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
   const [showInfo, setShowInfo] = useState<boolean>(true); // Состояние для видимости информации
+  const { hideHeader, showHeader } = useHeader();
 
   const handleMouseEnter = () => {
     if (videoRef.current) {
-      setShowInfo(!showInfo);
+      setShowInfo(true);
+      showHeader();
     }
   };
 
@@ -31,7 +34,8 @@ const VideoOtherHover: React.FC<VideoHoverInterface> = ({
         e.relatedTarget &&
         (e.relatedTarget as HTMLElement).className !== "on-off"
       ) {
-        setShowInfo(true);
+        setShowInfo(false);
+        hideHeader();
       }
     }
   };
@@ -156,7 +160,11 @@ const VideoOtherHover: React.FC<VideoHoverInterface> = ({
           <div className="videoOther-contentType">{contentType}</div>
         </div>
       </div>
-      <a href="/portfolio" className="video-footerPrev">
+      <a
+        href="/portfolio"
+        className="video-footerPrev"
+        id={showInfo ? "showInfo" : "notShowInfo"}
+      >
         <img src={btn_prev} alt="" /> <span>Назад</span>
       </a>
     </div>

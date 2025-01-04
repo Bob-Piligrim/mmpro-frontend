@@ -1,30 +1,39 @@
 .video-container {
   position: fixed;
-  display: block;
+  display: flex; /* Используем Flexbox для центровки содержимого */
+  align-content: center; /* Центровка по вертикали */
+  justify-content: center; /* Центровка по горизонтали */
   z-index: 9999999;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
+  overflow: hidden;
+}
+
+.video-size {
+  position: relative;
+  width: 100vw; /* Занимает 100% ширины родителя */
+  height: 100vh; /* Занимает 100% высоты родителя */
 }
 
 #video {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100%;
-  object-fit: cover;
-  z-index: -1;
+  position: absolute;
+  top: 50%; /* Центровка по вертикали */
+  left: 50%; /* Центровка по горизонтали */
+  height: 100%; /* Занимает 100% высоты контейнера */
+  width: 100%; /* Занимает 100% ширины контейнера */
+  object-fit: cover; /* Обеспечивает заполнение контейнера, сохраняя соотношение сторон */
+  transform: translate(-50%, -50%) scale(1.1);
 }
 
-.showInfo {
-  opacity: 0;
-  transition: opacity 0.5s ease-in-out;
-}
-.notShowInfo {
+#showInfo {
   opacity: 1;
-  transition: 0.5s ease-in-out;
+  transition: opacity 1s ease-in-out;
+}
+#notShowInfo {
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
 }
 
 .on-off {
@@ -47,7 +56,7 @@
 }
 
 .on-off span {
-  font-size: 30px;
+  font-size: 15px;
   font-weight: bold;
   color: black;
 }
@@ -168,7 +177,7 @@
   padding-top: 5px;
 }
 
-@media (max-width: 810px) {
+@media (max-width: 850px) and (height > 500px) {
   .video-container {
     padding: 0 auto;
   }
@@ -279,20 +288,61 @@
   }
 }
 
-@media (max-height: 652px) and (max-width: 810px) {
+@media (max-width: 1240px) and (max-height: 500px) {
   .video-container {
     padding: 0 auto;
   }
 
   .on-off {
-    top: 30vh;
+    top: 50vh;
   }
 
   .video-title {
-    bottom: 44vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    bottom: 7vh;
+    margin-left: 0;
+    width: 40vw;
   }
 
   .information-container {
-    bottom: 15vh;
+    bottom: 12vh;
+    right: 5px;
+    display: flex;
+    flex-direction: column;
+    width: 35vw;
+    justify-content: end;
+  }
+
+  .information-container1 {
+    order: 0;
+  }
+
+  .information-image img {
+    width: 13vw;
+  }
+
+  .lineProgress,
+  .progressTime {
+    margin-top: 3px;
+  }
+
+  .information-container2,
+  .lineProgress,
+  .progressTime {
+    width: clamp(240px, 255px, 260px);
+  }
+
+  .video-videoName {
+    padding: 0;
+    font-size: clamp(70px, 81px, 85px);
+    font-weight: 400;
+    line-height: 81px;
+  }
+
+  .video-footerPrev {
+    margin-left: 28px;
   }
 }

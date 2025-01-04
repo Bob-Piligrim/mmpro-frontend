@@ -36,3 +36,10 @@
     margin-top: 14vh;
   }
 }
+
+
+@media (max-width: 1240px) and (max-height: 500px) {
+  .App {
+    padding: 0;
+  }
+}
