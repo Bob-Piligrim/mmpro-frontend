@@ -14,7 +14,7 @@
   text-decoration: none;
   background-color: unset;
   border: 1px solid white;
-  border-radius: 199px;
+  border-radius: 100px;
   color: white;
   font-size: 20px;
   line-height: 24px;
@@ -22,6 +22,7 @@
   text-align: center;
   padding: 21px 80px;
   margin-right: 20px;
+  cursor: pointer;
 }
 
 .btn-title button:hover {
@@ -29,7 +30,7 @@
   color: black;
 }
 
-@media (max-width: 656px) {
+@media (orientation: portrait) and (max-width: 656px) {
   .mail {
     margin-top: 28px;
     font-weight: 500;
@@ -70,4 +71,23 @@
     background-color: white;
     color: black;
   }
+}
+
+@media (orientation:landscape) and (max-width: 1240px) and (max-height: 500px) {
+  .mail  {
+    margin-top: 0px;
+    font-size: clamp(26px, 4vw, 42px);
+  }
+
+  .btn-title {
+    margin-top: 15px;
+  }
+
+  .btn-title > button {
+    font-size: 10px;
+    width: auto;
+    padding: 15px 50px;
+  }
+
+  
 }

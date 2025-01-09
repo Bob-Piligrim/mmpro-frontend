@@ -11,7 +11,7 @@
   position: relative;
   z-index: 1;
   padding-top: 62px;
-  padding-bottom: 62px;
+  /* padding-bottom: 62px; */
   display: flex;
   flex-direction: column;
   overflow-y: auto;
@@ -22,24 +22,23 @@
   display: none;
 }
 
-.contentWrapper {
-  /* flex: 1 0 auto; */
-}
-
-@media (max-width: 656px) {
+@media (orientation: portrait) and (width < 656px) {
   /* 331px */
   .App {
     padding: 0 0;
   }
 
   .contentWrapper {
-    margin-top: 14vh;
+    margin-top: clamp(70px, 15vh, 90px);
   }
 }
 
-
-@media (max-width: 1240px) and (max-height: 500px) {
+@media (orientation: landscape) and (max-width: 1240px) and (max-height: 500px) {
   .App {
     padding: 0;
+  }
+
+  .contentWrapper {
+    margin-top: 0;
   }
 }

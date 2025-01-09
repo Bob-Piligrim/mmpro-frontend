@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import MMPRO from "../../Assets/Header/MMPRO.png";
 import "./Header.css";
-import arrowButton from "../../Assets/Header/arrowButton.png";
 import Modal from "../Modal/Modal";
 import { useHeader } from "./HeaderContext";
 
@@ -17,7 +16,10 @@ const Header: React.FC = () => {
 
   return (
     <>
-      <div id={isVisible ? "isVisible" : "notVisible"} className="header-container">
+      <div
+        id={isVisible ? "isVisible" : "notVisible"}
+        className="header-container"
+      >
         <div className="logoword">
           <a href="/">
             <img src={MMPRO} alt="MMPRO" className="logoimage" />
@@ -27,8 +29,8 @@ const Header: React.FC = () => {
           <h1 className="header-title"> МЕДИАПРОИЗВОДСТВО ПОЛНОГО ЦИКЛА</h1>
         </div>
         <button onClick={toggleModal} className="header-button">
-          ОСТАВИТЬ ЗАЯВКУ
-          <img src={arrowButton} alt="Arrow" className="arrow-icon" />
+          ОСТАВИТЬ ЗАЯВКУ 
+          <div className="arrow-up">↑</div>
         </button>
         {isModalOpen && <Modal onClose={toggleModal} />}
       </div>

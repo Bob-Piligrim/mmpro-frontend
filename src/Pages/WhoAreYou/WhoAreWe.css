@@ -3,7 +3,9 @@
   font-weight: 600;
   font-size: 1.6vw;
   width: 590px;
+  width: 30vw;
   height: 105px;
+  height: 5.4vw;
   letter-spacing: 1px;
   line-height: 1.3;
   text-wrap: nowrap;
@@ -40,7 +42,7 @@
   margin-right: 39px;
 }
 
-@media (max-width: 656px) {
+@media (orientation: portrait) and (max-width: 656px) {
   .descript-who {
     display: none;
   }
@@ -83,4 +85,25 @@
     letter-spacing: 1.5;
     margin-right: 0;
   }
+}
+
+@media (orientation: landscape) and (max-width: 1240px) and (max-height: 500px) {
+
+.descript-who {
+  width: auto;
+  height: auto;
+}
+ .info-who-1, .info-who-2 {
+  margin-right: 18px ;
+ }
+
+ .info-who-main {
+  line-height: 40px;
+ }
+
+ .info-who-belong {
+  text-wrap: wrap !important;
+  font-size: clamp(10px, 14px, 16px);
+  width: 30px;
+ }
 }

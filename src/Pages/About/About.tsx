@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./About.css";
-import btn_prev from "../../Assets/Portfolio/btn-prev.png";
 import btn_next from "../../Assets/About/next.png";
 import btn_next_mob from "../../Assets/About/nextMobile.png";
 import link2 from "../../Assets/About/link2.png";
@@ -96,7 +95,7 @@ const About: React.FC = () => {
               <div className="count">
                 <span className="main-count">{`0${currentIndex + 1}`}</span>
                 <span>/</span>
-                <span>04</span>
+                <span className="main-count_1">04</span>
                 <h2 className="title-who">{item.title}</h2>
               </div>
               <div>{item.component}</div>
@@ -125,7 +124,7 @@ const About: React.FC = () => {
             </div>
             <div className="about-btn-mobile">
               <button onClick={handlePrevSlide} className="footer-prev">
-                <img src={btn_prev} alt="" /> <span>Назад</span>
+                <div className="circle">←</div> <span>Назад</span>
               </button>
               <button
                 onClick={handleNextSlide}

@@ -8,21 +8,37 @@ import { useHeader } from "../Header/HeaderContext";
 
 import image1 from "../../Assets/VideoHover/image 2259.png";
 import image2 from "../../Assets/VideoHover/image 42.png";
+import categories from "./Categories";
+import ProjectInformation from "../ProjectInformation/ProjectInformation";
 
-const VideoHover: React.FC<VideoHoverInterface> = ({
-  videoUrl,
-  poster,
-  description,
-  ageLimit,
-  videoName,
+interface VideoHoverProps {
+  video: VideoHoverInterface;
+  onBack: () => void;
+  currentCat: string;
+}
+
+const VideoHover: React.FC<VideoHoverProps> = ({
+  video,
+  onBack,
+  currentCat,
 }) => {
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [progress, setProgress] = useState(0);
   const [duration, setDuration] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
-  const [showInfo, setShowInfo] = useState<boolean>(true); // Состояние для видимости информации
+  const [showInfo, setShowInfo] = useState<boolean>(true);
   const { hideHeader, showHeader } = useHeader();
+
+  // для страницы с подробностями, не проработан
+  const [selectedProject, setSelectedProject] =
+    useState<VideoHoverInterface | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  // для страницы с подробностями, не проработан
+
+  // lazy loading
+  const [shouldPlay, setShouldPlay] = useState<boolean>(false);
+  // lazy loading
 
   const handleMouseEnter = () => {
     if (videoRef.current) {
@@ -117,11 +133,54 @@ const VideoHover: React.FC<VideoHoverInterface> = ({
     };
   }, [handleTimeUpdate]);
 
+  useEffect(() => {
+    const videoElement = videoRef.current;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            console.log(
+              "Видео работает, ентри заработало: ",
+              entry.isIntersecting
+            );
+            setShouldPlay(true);
+            observer.unobserve(videoElement!);
+          }
+        });
+      },
+      { threshold: 0.5 }
+    );
+
+    if (videoElement) {
+      observer.observe(videoElement);
+    }
+
+    return () => {
+      if (videoElement) {
+        observer.unobserve(videoElement);
+      }
+    };
+  }, []);
+
   const formatTime = (time: number) => {
     const minutes = Math.floor(time / 60);
     const seconds = Math.floor(time % 60);
     return `${minutes}:${seconds < 10 ? `0${seconds}` : seconds}`;
   };
+
+  const handleProjectClick = (project: VideoHoverInterface) => {
+    setSelectedProject(project);
+  };
+
+  const handleCategoryClick = (categoryName: string) => {
+    setSelectedCategory(categoryName);
+    setSelectedProject(null);
+  };
+
+  // Фильтруем категории в зависимости от выбранной категории
+  const currentCategory = categories.find(
+    (category) => category.name === selectedCategory
+  );
 
   return (
     <div
@@ -133,20 +192,21 @@ const VideoHover: React.FC<VideoHoverInterface> = ({
       <div className="video-size">
         <video
           playsInline
-          preload="auto"
-          loop
+          preload={shouldPlay ? "auto" : "none"}
+          /* loop */
           id="video"
           ref={videoRef}
-          poster={poster}
+          poster={video.poster}
           onPause={() => setIsPlaying(false)}
           onPlay={() => setIsPlaying(true)}
+          
         >
-          <source src={videoUrl} type="video/mp4" />
-          Ваш браузер не поддерживает видео
+          {shouldPlay && <source src={video.videoUrl} type="video/mp4" />}
+          Ваш браузер не поддерживает видео.
         </video>
       </div>
 
-      <div id={showInfo ? "showInfo" : "notShowInfo"}>
+      <div id={!showInfo ? "showInfo" : "notShowInfo"}>
         <button
           onClick={(e) => {
             e.stopPropagation();
@@ -158,17 +218,47 @@ const VideoHover: React.FC<VideoHoverInterface> = ({
         </button>
 
         <div className="video-title">
-          <div className="video-description">{description.toUpperCase()}</div>
-          <div className="video-videoName">{videoName}</div>
+          <div className="video-description">
+            {video.description.toUpperCase()}
+          </div>
+          <div className="video-videoName">{video.videoName}</div>
         </div>
 
         <div className="information-container">
           <div className="information-container1">
-            <div>Подробнее узнать о проекте:</div>
+            {/*  {categories.map((category) => (
+              <div>
+                {category.content.map((project, index) => (
+                  <button
+                    className="handleProject"
+                    key={index}
+                    onClick={() =>
+                      handleProjectClick({
+                        videoUrl: project.videoUrl,
+                        poster: project.poster,
+                        description: project.description,
+                        ageLimit: project.ageLimit,
+                        videoName: project.videoName,
+                        contentType: project.contentType,
+                      })
+                    }
+                  >
+                    Подробнее узнать о проекте:{" "}
+                  </button>
+                ))}
+              </div>
+            ))} */}
+            {
+              <div>
+                <button className="handleProject" onClick={() => ({})}>
+                  Подробнее узнать о проекте:{" "}
+                </button>
+              </div>
+            }
             <div className="information-image">
               <img src={image1} alt="" />
               <img src={image2} alt="" />
-              <div className="ageLimit">{ageLimit}+</div>
+              <div className="ageLimit">{video.ageLimit}+</div>
             </div>
           </div>
           <div className="information-container2">
@@ -190,13 +280,15 @@ const VideoHover: React.FC<VideoHoverInterface> = ({
         </div>
       </div>
 
-      <a
-        href="/portfolio"
+      <button
+        onClick={onBack}
         id={showInfo ? "showInfo" : "notShowInfo"}
         className="video-footerPrev"
       >
-        <img src={btn_prev} alt="" /> <span>Назад</span>
-      </a>
+        <div className="arrow-left">←</div> <span>Назад</span>
+      </button>
+
+      {selectedProject && <ProjectInformation project={selectedProject} />}
     </div>
   );
 };

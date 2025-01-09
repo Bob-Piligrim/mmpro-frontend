@@ -5,13 +5,16 @@ import VideoHoverInterface from "./VideoHoverInterface";
 import btn_prev from "../../Assets/Portfolio/btn-prev.png";
 import { useHeader } from "../Header/HeaderContext";
 
-const VideoOtherHover: React.FC<VideoHoverInterface> = ({
-  videoUrl,
-  poster,
-  description,
-  ageLimit,
-  videoName,
-  contentType,
+interface VideoOtherHoverProps {
+  video: VideoHoverInterface;
+  onBack: () => void;
+  currentCat: string;
+}
+
+const VideoOtherHover: React.FC<VideoOtherHoverProps> = ({
+  video,
+  onBack,
+  currentCat,
 }) => {
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
@@ -117,11 +120,11 @@ const VideoOtherHover: React.FC<VideoHoverInterface> = ({
         loop
         id="video"
         ref={videoRef}
-        poster={poster}
+        poster={video.poster}
         onPause={() => setIsPlaying(false)}
         onPlay={() => setIsPlaying(true)}
       >
-        <source src={videoUrl} type="video/mp4" />
+        <source src={video.videoUrl} type="video/mp4" />
         Ваш браузер не поддерживает видео
       </video>
 
@@ -156,17 +159,17 @@ const VideoOtherHover: React.FC<VideoHoverInterface> = ({
           </div>
         </div>
         <div className="videoOther-title">
-          <div className="videoOther-videoName">{description}</div>
-          <div className="videoOther-contentType">{contentType}</div>
+          <div className="videoOther-videoName">{video.description}</div>
+          <div className="videoOther-contentType">{video.contentType}</div>
         </div>
       </div>
-      <a
-        href="/portfolio"
+      <button
+        onClick={onBack}
         className="video-footerPrev"
         id={showInfo ? "showInfo" : "notShowInfo"}
       >
-        <img src={btn_prev} alt="" /> <span>Назад</span>
-      </a>
+        <div>←</div> <span>Назад</span>
+      </button>
     </div>
   );
 };

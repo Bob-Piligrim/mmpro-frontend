@@ -65,7 +65,7 @@ const Modal: React.FC<ModalProps> = ({ onClose }) => {
   };
 
   // Обработчик клика для фона модального окна
-  const handleBackgroundClick = (event: React.MouseEvent<HTMLDivElement>) => {
+  const handleBackgroundClick = (event: React.MouseEvent<HTMLDivElement> | React.TouchEvent<HTMLDivElement>) => {
     // Закрываем модальное окно только, если клик был не на контейнере
     if (event.currentTarget === event.target) {
       onClose();
