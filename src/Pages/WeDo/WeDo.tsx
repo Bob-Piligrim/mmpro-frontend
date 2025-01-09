@@ -20,7 +20,9 @@ const WeDo: React.FC = () => {
           <div>ОНЛАЙН ТРАНСЛЯЦИЯ</div>
           <div>CG</div>
           <div>СВАДЬБА</div>
-          <a href="/" className="services-link"> {/* доработать ссылку */}
+          <a href="/" className="services-link">
+            {" "}
+            {/* доработать ссылку */}
             ЗАКАЗАТЬ СЪЕМКУ <img src={arrow} alt="стрелка" />{" "}
           </a>{" "}
           {/* ВРЕМЕННО!!! */}

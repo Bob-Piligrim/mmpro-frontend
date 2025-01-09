@@ -1,7 +1,3 @@
-import example1 from "../../Assets/Portfolio/example1.png";
-import example2 from "../../Assets/Portfolio/example2.png";
-import example3 from "../../Assets/Portfolio/example3.png";
-import example4 from "../../Assets/Portfolio/example4.png";
 import VideoHoverInterface from "./VideoHoverInterface";
 
 interface Category {
@@ -191,22 +187,22 @@ const categories: Category[] = [
     name: "ИНТЕРВЬЮ",
     content: [
       {
-        poster: "/posters/interv'u/ВАДИМ РЫДКИН.png",
-        videoUrl: "/videos/interv'u/ВАДИМ РЫДКИН.mp4",
+        poster: "/posters/interviu/ВАДИМ РЫДКИН.png",
+        videoUrl: "/videos/interviu/ВАДИМ РЫДКИН.mp4",
         description: "Вадим Рыдкин",
         contentType: "",
         ageLimit: "18",
       },
       {
-        poster: "/posters/interv'u/ВЛАД ЧИЖОВ.png",
-        videoUrl: "/videos/interv'u/ВЛАД ЧИЖОВ.mp4",
+        poster: "/posters/interviu/ВЛАД ЧИЖОВ.png",
+        videoUrl: "/videos/interviu/ВЛАД ЧИЖОВ.mp4",
         description: "Влад Чижов",
         contentType: "",
         ageLimit: "18",
       },
       {
-        poster: "/posters/interv'u/КОСМОЭНЕРГЕТИКА.png",
-        videoUrl: "/videos/interv'u/КОСМОЭНЕРГЕТИКА.mp4",
+        poster: "/posters/interviu/КОСМОЭНЕРГЕТИКА.png",
+        videoUrl: "/videos/interviu/КОСМОЭНЕРГЕТИКА.mp4",
         description: "Космоэнергетика",
         contentType: "",
         ageLimit: "18",
@@ -384,15 +380,15 @@ const categories: Category[] = [
     name: "СВАДЬБЫ",
     content: [
       {
-        poster: "/posters/svad'ba/СВАДЬБА 1.png",
-        videoUrl: "/videos/svad'ba/СВАДЬБА 1",
+        poster: "/posters/svadba/СВАДЬБА 1.png",
+        videoUrl: "/videos/svadba/СВАДЬБА 1",
         description: "Свадьба",
         contentType: "",
         ageLimit: "18",
       },
       {
-        poster: "/posters/svad'ba/СВАДЬБА 2.png",
-        videoUrl: "/videos/svad'ba/СВАДЬБА 2",
+        poster: "/posters/svadba/СВАДЬБА 2.png",
+        videoUrl: "/videos/svadba/СВАДЬБА 2",
         description: "Свадьба",
         contentType: "",
         ageLimit: "18",

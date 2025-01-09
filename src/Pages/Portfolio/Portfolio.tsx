@@ -1,22 +1,28 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./Portfolio.css";
 import format from "../../Assets/Portfolio/format.png";
-import btn_prev from "../../Assets/Portfolio/btn-prev.png";
-import btn_next from "../../Assets/Portfolio/btn-next.png";
 import categories from "../../Component/VideoHover/Categories";
 import VideoHover from "../../Component/VideoHover/VideoHover";
 import VideoHoverInterface from "../../Component/VideoHover/VideoHoverInterface";
 import VideoOtherHover from "../../Component/VideoHover/VideoOtherHover";
 
 const Portfolio: React.FC = () => {
-  const [selectedCategory, setSelectedCategory] = useState(categories[0]);
-  const [offset, setOffset] = useState(0);
+  /* const [selectedCategory, setSelectedCategory] = useState(categories[0]); */
+  const [selectedCategoryIndex, setSelectedCategoryIndex] = useState<number>(0);
+  const selectedCategory = categories[selectedCategoryIndex];
+  const [offset, setOffset] = useState<number>(0);
   const linkContainerRef = useRef<HTMLDivElement>(null);
+  const linksRef = useRef<(HTMLButtonElement | null)[]>([]);
+  const portfolioContainerRef = useRef<HTMLDivElement>(null);
+  const [linkItemWidth, setLinkItemWidth] = useState(0);
+  const [containerWidth, setContainerWidth] = useState(0);
+
   const [selectedVideo, setSelectedVideo] =
     useState<VideoHoverInterface | null>(null);
 
   const handleCategoryClick = (category: (typeof categories)[number]) => {
-    setSelectedCategory(category);
+    const index = categories.findIndex((cat) => cat.name === category.name);
+    setSelectedCategoryIndex(index);
     setOffset(0);
   };
 
@@ -24,21 +30,95 @@ const Portfolio: React.FC = () => {
     setSelectedVideo(video);
   };
 
+  // Получаем(изменяем) ширину каждого button (категории)
+  useEffect(() => {
+    if (linkContainerRef.current) {
+      const linkItems = linkContainerRef.current.children;
+      if (linkItems.length > 0) {
+        setLinkItemWidth(linkItems[1].getBoundingClientRect().width);
+      }
+    }
+  }, [linkItemWidth]);
+
+  // Получаем ширину каждого link-container'a (всех ссылок)
+  useEffect(() => {
+    if (linkContainerRef.current) {
+      setContainerWidth(linkContainerRef.current.getBoundingClientRect().width);
+    }
+  }, [containerWidth]);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            console.log(`${entry.target.textContent} is in view`);
+          } else {
+            console.log(`${entry.target.textContent} is out of view`);
+          }
+        });
+      },
+      {
+        threshold: 0.1, // 10%
+      }
+    );
+
+    const currentLinks = linksRef.current;
+
+    currentLinks.forEach((link) => {
+      if (link) {
+        observer.observe(link);
+      }
+    });
+
+    return () => {
+      currentLinks.forEach((link) => {
+        if (link) {
+          observer.unobserve(link);
+        }
+      });
+    };
+  }, [linkContainerRef]);
+
+  const scrollToCategory = (index: number) => {
+    setSelectedCategoryIndex(index);
+
+    const portfolioContainerWidth = portfolioContainerRef.current?.clientWidth;
+    if (portfolioContainerWidth) {
+      if (portfolioContainerWidth > linkItemWidth * categories.length) {
+        setOffset(0);
+      } else {
+        setOffset(-index * linkItemWidth);
+      }
+    }
+  };
+
+  const nextCategory = () => {
+    if (selectedCategoryIndex < categories.length - 1) {
+      scrollToCategory(selectedCategoryIndex + 1);
+    }
+  };
+
+  const prevCategory = () => {
+    if (selectedCategoryIndex > 0) {
+      scrollToCategory(selectedCategoryIndex - 1);
+    }
+  };
+
   return (
     <>
-      <div className="portfolio-container">
+      <div ref={portfolioContainerRef} className="portfolio-container">
         <div className="linkfixed-container">
-          <div
-            className="link-container"
-            ref={linkContainerRef}
-            style={{
-              transform: `translateX(${offset}px)`,
-            }}
-          >
-            <img src={format} alt="format" />
-            {categories.map((category) => (
+          <img src={format} alt="format" />
+          <div className="link-container" ref={linkContainerRef}>
+            {categories.map((category, index) => (
               <button
                 key={category.name}
+                ref={(el) => (linksRef.current[index] = el)}
+                style={{
+                  transform: `translateX(${offset}px)`,
+                  transition: "transform 0.6s ease",
+                }}
                 onClick={() => handleCategoryClick(category)}
                 className={`category ${
                   selectedCategory.name === category.name ? "active" : ""
@@ -54,6 +134,8 @@ const Portfolio: React.FC = () => {
             className={
               selectedCategory.name === "КИНО"
                 ? "posterKino-container"
+                : selectedCategory.name === "РИЛС"
+                ? "posterRils-container"
                 : "posterOther-container"
             }
           >
@@ -98,48 +180,56 @@ const Portfolio: React.FC = () => {
           </div>
         </div>
         <div className="footer-link">
+          {" "}
           <a href="/">
-            <img src={btn_prev} alt="" className="footer-link-img" />
-            Назад
+            <div className="circle">←</div>
+            <span>Назад</span>
           </a>
           <div className="btn">
-            <button disabled={offset === 0} className="btn-prev">
-              <img src={btn_prev} alt="Назад" />
+            <button
+              onClick={prevCategory}
+              disabled={selectedCategoryIndex === 0}
+              className="btn-prev"
+            >
+              ←
             </button>
             <button
-              disabled={
-                linkContainerRef.current
-                  ? Math.abs(offset) >=
-                    linkContainerRef.current.scrollWidth -
-                      linkContainerRef.current.clientWidth
-                  : true
-              }
+              onClick={nextCategory}
+              disabled={selectedCategoryIndex >= categories.length - 1}
               className="btn-next"
             >
-              <img src={btn_next} alt="Вперед" />
+              →
             </button>
           </div>
         </div>
 
         {selectedCategory.name === "КИНО" && selectedVideo && (
           <VideoHover
-            poster={selectedVideo.poster}
-            videoUrl={selectedVideo.videoUrl}
-            description={selectedVideo.description}
-            ageLimit={selectedVideo.ageLimit}
-            videoName={selectedVideo.videoName}
-            contentType={selectedVideo.contentType}
+            video={{
+              videoUrl: selectedVideo.videoUrl,
+              description: selectedVideo.description,
+              poster: selectedVideo.poster,
+              ageLimit: selectedVideo.ageLimit,
+              videoName: selectedVideo.videoName,
+              contentType: selectedVideo.contentType,
+            }}
+            onBack={() => setSelectedVideo(null)}
+            currentCat={categories[selectedCategoryIndex].name}
           />
         )}
 
         {selectedCategory.name !== "КИНО" && selectedVideo && (
           <VideoOtherHover
-            poster={selectedVideo.poster}
-            videoUrl={selectedVideo.videoUrl}
-            description={selectedVideo.description}
-            ageLimit={selectedVideo.ageLimit}
-            videoName={selectedVideo.videoName}
-            contentType={selectedVideo.contentType}
+            video={{
+              videoUrl: selectedVideo.videoUrl,
+              description: selectedVideo.description,
+              poster: selectedVideo.poster,
+              ageLimit: selectedVideo.ageLimit,
+              videoName: selectedVideo.videoName,
+              contentType: selectedVideo.contentType,
+            }}
+            onBack={() => setSelectedVideo(null)}
+            currentCat={categories[selectedCategoryIndex].name}
           />
         )}
       </div>

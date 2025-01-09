@@ -3,16 +3,33 @@
   z-index: 1;
   width: 76vw;
   margin-left: 18.75vw;
+  margin-left: 14vw;
   text-align: start;
   display: flex;
   flex-direction: column;
-  flex: 1 0 auto;
-  height: 100vh;
+  min-height: 80vh;
+}
+
+.linkfixed-container {
+  margin-top: 7vh;
+  padding-bottom: 2vh;
+  display: flex;
+  align-items: center;
+  overflow: auto;
+  -ms-overflow-style: auto;
+  scrollbar-width: auto;
+  -webkit-overflow-scrolling: touch;
+  min-height: 70px;
+}
+
+.linkfixed-container img {
+  width: 20px;
+  height: 16px;
+  margin-right: 27px;
+  align-items: end;
 }
 
 .link-container {
-  flex: 0 0 auto;
-  margin-top: 7vh;
   display: flex;
   flex-wrap: nowrap;
   white-space: nowrap;
@@ -20,19 +37,13 @@
   -ms-overflow-style: auto;
   scrollbar-width: auto;
   -webkit-overflow-scrolling: touch;
-  padding-bottom: 1vh;
   transition: "transform 0.3s ease";
+  margin-left: 40px;
 }
 
-.link-container::-webkit-scrollbar {
+.link-container::-webkit-scrollbar,
+.linkfixed-container::-webkit-scrollbar {
   display: none; /* Скрываем полосу прокрутки для WebKit */
-}
-
-.link-container img {
-  width: 18.52px;
-  height: 15.3px;
-  margin-right: 27px;
-  align-self: center;
 }
 
 .category {
@@ -57,9 +68,14 @@
 }
 
 .content-container {
-  /* flex: 1 0 auto; */
+  flex: 1 0 auto;
   margin-top: 7vh;
   width: 80vw;
+  margin-bottom: auto;
+}
+
+.content-container::-webkit-scrollbar {
+  display: none;
 }
 
 .posterKino-container {
@@ -69,6 +85,14 @@
 .posterOther-container {
   display: flex;
   flex-wrap: wrap;
+  overflow-y: auto;
+  -ms-overflow-style: auto;
+  scrollbar-width: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.posterOther-container:-webkit-scrollbar {
+  display: none;
 }
 
 .poster-button {
@@ -82,8 +106,10 @@
   height: 45vh;
   margin-right: 10px;
   transition: transform 0.3s ease, filter 0.3s ease;
+
   filter: grayscale(100%); /* Черно-белое изображение */
   cursor: pointer;
+  object-fit: cover;
 }
 
 .poster-kino:hover {
@@ -135,25 +161,29 @@
 .footer-link {
   flex: 1 0 auto;
   width: 62.5vw;
+  width: 74vw;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-top: 5vh;
+  margin-top: 7vh;
+  margin-bottom: 1vh;
 }
 
 .footer-link a {
   text-decoration: none;
   color: white;
   display: flex;
-  align-content: center;
-  width: auto;
-  height: 14px;
 }
 
-.footer-link-img {
-  margin-right: 9px;
-  padding-top: 5px;
+.footer-link a div {
+  padding-right: 5px;;
 }
+
+/* .footer-link-img {
+  margin-right: 9px;
+  width: 14px;
+  height: auto;
+} */
 
 .btn {
   justify-self: end;
@@ -170,6 +200,7 @@
   padding: 10px 0px;
   margin-right: 5px;
   cursor: pointer;
+  color: white;
 }
 
 .btn > button:hover {
@@ -181,7 +212,7 @@
   height: auto;
 }
 
-@media (max-width: 656px) {
+@media (orientation: portrait) and (max-width: 656px) {
   /* 331px */
   .portfolio-container {
     margin-left: 0;
@@ -195,11 +226,11 @@
     z-index: 999;
     width: 100%;
     overflow: auto;
+    margin-left: 26px;
+    margin-top: 1vh;
   }
 
   .link-container {
-    margin-top: 1vh;
-    margin-left: 26px;
     display: flex;
     flex-wrap: nowrap;
     white-space: nowrap;
@@ -211,7 +242,12 @@
     width: auto;
     overflow-y: auto;
     margin-top: 100px;
+    margin-bottom: 80px;
     padding: 0 auto;
+  }
+
+  .content-container::-webkit-scrollbar {
+    display: none;
   }
 
   .posterKino-container {
@@ -239,8 +275,8 @@
   }
 
   .poster-other {
-    width: 225px;
-    height: 167px;
+    width: 300px;
+    height: auto;
   }
 
   .other-discription {
@@ -254,37 +290,51 @@
   }
 
   .footer-link {
-    margin-top: 3vh;
+    /* margin-top: 3vh;
     margin-left: 28px;
     width: 85vw;
     align-items: center;
-    margin-bottom: 30px;
+    margin-bottom: 30px; */
+    position: fixed;
+    margin-left: 28px;
+    bottom: 30px;
+    width: 85vw;
+    margin-top: 0;
   }
 }
 
-@media (max-width: 1240px) and (max-height: 500px) {
+@media (orientation: landscape) and (max-width: 1240px) and (max-height: 500px) {
   .portfolio-container {
-    margin-top: 22vh;
+    margin-top: 0;
     margin-left: 10vh;
     width: 100vw;
+    overflow: auto;
+    -ms-overflow-style: auto;
+    scrollbar-width: auto;
+    -webkit-overflow-scrolling: touch;
   }
 
   .linkfixed-container {
-    margin-top: 20px;
-    position: fixed;
+    margin-top: 6px;
     z-index: 999;
     width: 100%;
     overflow: auto;
+    overflow-y: auto;
+    -ms-overflow-style: auto;
+    scrollbar-width: auto;
+    -webkit-overflow-scrolling: touch;
   }
 
   .content-container {
     width: auto;
     overflow-y: auto;
-    margin-top: 120px;
+    margin-top: 10px;
   }
 
-  .posterOther-container {
+  .posterOther-container, .posterRils-container {
     display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
     width: 100vw;
     overflow-y: auto;
     -ms-overflow-style: auto;
@@ -292,12 +342,36 @@
     -webkit-overflow-scrolling: touch;
   }
 
+  .posterRils-container div button {
+    margin-right: 30px;
+  }
+
+  .poster-other {
+    width: 210px;
+    height: 130px;
+  }
+
+  .poster-rils {
+    height: auto;
+    width: 140px;
+  }
+
+  .other-discription {
+    width: 140px;
+    font-size: clamp(12px, 14px, 16px);
+    margin-bottom: 20px;
+
+  }
+
   .footer-link {
-    width: 95vw;
+    bottom: 30px;
+    width: 90vw;
+    margin-top: 10px;
+    margin-bottom: 10px;
   }
 
   .poster-kino {
-    width: 130px;
-    height: 70vh;
+    width: clamp(100px, 130px, 160px);
+    height: clamp(180px, 210px, 240px);
   }
 }

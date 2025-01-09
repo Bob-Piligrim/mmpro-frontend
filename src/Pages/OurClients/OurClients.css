@@ -17,12 +17,12 @@
 } */
 
 .clients img {
-  width: 8vw;
-  height: 4vw;
+  width: 9vw;
+  height: auto;
   display: inline-block;
 }
 
-@media (max-width: 656px) {
+@media (orientation: portrait) and (max-width: 656px) {
   .clients {
     display: none;
   }
@@ -38,7 +38,6 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    
   }
 
   .clients-mobile img {
@@ -47,3 +46,10 @@
     display: inline-block;
   }
 }
+
+/* @media (max-width: 1240px) and (max-height: 500px) {
+  .clients img {
+    height: auto;
+    width: 9vw;
+  }
+} */
