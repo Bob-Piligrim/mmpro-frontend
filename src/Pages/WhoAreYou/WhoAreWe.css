@@ -52,9 +52,12 @@
     margin-top: 12px;
     width: 100vw;
     font-weight: 600;
-    font-size: 11px;
+    font-size: 11px; /* перевести на vw */
+    font-size: 3.4vw;
     letter-spacing: 1.5px;
+    letter-spacing: 0.4vw;
     line-height: 15px;
+    line-height: 4.5vw;
     text-wrap: nowrap;
   }
 
@@ -81,29 +84,65 @@
   .info-who-main {
     font-weight: 500;
     font-size: 32px;
+    font-size: 9.6vw;
     line-height: 44px;
-    letter-spacing: 1.5;
+    line-height: 13vw;
+    letter-spacing: 1.5px;
+    letter-spacing: 0.4vw;
     margin-right: 0;
   }
 }
 
 @media (orientation: landscape) and (max-width: 1240px) and (max-height: 500px) {
+  .descript-who {
+    width: auto;
+    height: auto;
+  }
+  .info-who-1,
+  .info-who-2 {
+    margin-right: 18px;
+  }
 
-.descript-who {
-  width: auto;
-  height: auto;
-}
- .info-who-1, .info-who-2 {
-  margin-right: 18px ;
- }
+  .info-who-main {
+    line-height: 40px;
+  }
 
- .info-who-main {
-  line-height: 40px;
- }
+  .info-who-belong {
+    text-wrap: wrap !important;
+    font-size: clamp(10px, 14px, 16px);
+    width: 30px;
+  }
 
- .info-who-belong {
-  text-wrap: wrap !important;
-  font-size: clamp(10px, 14px, 16px);
-  width: 30px;
- }
+  @media (orientation: landscape) and (width < 656px) {
+    .descript-who {
+      display: block;
+      margin-top: 7px;
+      font-size: 2.3vw;
+      letter-spacing: 0.2vw;
+      line-height: 2.8vw;
+      text-wrap: nowrap;
+    }
+
+    .info-who {
+      margin-top: 3vw;
+      width: 40vw;
+      justify-content: space-between;
+    }
+
+    .info-who-1, .info-who-2 {
+      margin-right: 0;
+  }
+    
+    .info-who-main {
+      font-weight: 500;
+      font-size: 2.3vw;
+      line-height: 2.8vw;
+      letter-spacing: 0.2vw;
+      margin-right: 0;
+    }
+
+    .info-who-belong {
+      font-size: 1.8vw;
+    }
+  }
 }

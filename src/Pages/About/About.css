@@ -101,16 +101,14 @@
   border: none;
   color: white;
   display: flex;
+  align-content: center;
   cursor: pointer;
   width: auto;
   height: auto;
 }
 
-.footer-prev img {
-  margin-right: 9px;
-  width: 15px;
-  height: auto;
-  padding-top: 3px;
+.next-button-mobile {
+  display: none;
 }
 
 .messanger {
@@ -161,16 +159,13 @@
   transition: color 1s ease;
 }
 
-.next-button-mobile {
-  display: none;
-}
-
 .about-link-mobile {
   display: none;
 }
 
 .circle {
-  padding-right: 5px;
+  margin-right: 10px;
+  align-self: center;
 }
 
 @media (orientation: portrait) and (max-width: 656px) {
@@ -193,7 +188,13 @@
 
   .main-count {
     font-weight: 500;
-    font-size: 35px;
+    font-size: 21px; /* перевести на vw */
+    font-size: 6.3vw;
+  }
+
+  .main-count_1 {
+    font-size: 13px; /* перевести на vw */
+    font-size: 3.9vw;
   }
 
   .count span {
@@ -204,7 +205,8 @@
     margin-top: 27px;
     margin-top: 7.7vw;
     font-weight: 600;
-    font-size: 45px;
+    font-size: 45px; /* перевести на vw */
+    font-size: 13vw;
   }
 
   .component {
@@ -291,6 +293,7 @@
     border: none;
     color: white;
     display: flex;
+    align-content: center;
     cursor: pointer;
   }
 
@@ -365,7 +368,7 @@
   }
 
   .main-count {
-    font-size: clamp(20px, 3vw, 25px);
+    font-size: clamp(30px, 4.5vw, 40px);
   }
 
   .main-count_1 {
@@ -388,5 +391,31 @@
   .next-button img {
     width: 10px;
     height: auto;
+  }
+
+  @media (orientation: landscape) and (width < 656px) {
+    .about-content-container {
+      margin-top: 0;
+    }
+    .main-count {
+      font-weight: 500;
+      font-size: 21px; /* перевести на vw */
+      font-size: 6.3vw;
+    }
+
+    .main-count_1 {
+      font-size: 13px; /* перевести на vw */
+      font-size: 3vw;
+    }
+
+    .count span {
+      margin-right: 2px;
+    }
+
+    .title-who {
+      font-size: 45px; /* перевести на vw */
+      font-size: clamp(20px, 7vw, 30px);
+    }
+
   }
 }

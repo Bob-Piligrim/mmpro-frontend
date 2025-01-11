@@ -52,15 +52,44 @@
 
 @media (max-width: 1240px) and (max-height: 500px) {
   .services-content {
-    font-size: clamp(14px, 16px, 18px );
+    font-size: clamp(14px, 16px, 18px);
   }
 
-  .first-services, .second-services {
+  .first-services,
+  .second-services {
     width: clamp(170px, 210px, 240px);
   }
 
-
-  .first-services div, .second-services div {
+  .first-services div,
+  .second-services div {
     height: 30px;
+  }
+
+  @media (orientation: landscape) and (width < 656px) {
+    .services-content {
+      margin-top: 4px;
+      font-weight: 400;
+      font-size: clamp(8px, 2.5vw, 14px);
+      line-height: 26px;
+      letter-spacing: 0px;
+    }
+
+    .first-services div, .second-services div {
+      height: clamp(14px, 4vw, 40px);
+    }
+
+    .first-services, .second-services {
+      width: 30vw;
+    }
+
+    .second-services {
+      min-width: 160px;
+    }
+
+    .services-link img {
+      width: 16px;
+      padding: 0;
+      padding-bottom: 2px;
+    }
   }
 }

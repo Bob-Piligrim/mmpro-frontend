@@ -2,12 +2,14 @@ import VideoHoverInterface from "./VideoHoverInterface";
 
 interface Category {
   name: string;
+  route?: string;
   content: VideoHoverInterface[];
 }
 
 const categories: Category[] = [
   {
     name: "КИНО",
+    route: "kino",
     content: [
       {
         poster: "/posters/kino/ХОРОР ЧАСТЬ 1.png",
@@ -35,6 +37,7 @@ const categories: Category[] = [
   /* не сделал */
   {
     name: "РЕКЛАМА",
+    route: "reklama",
     content: [
       {
         poster: "/posters/reklama/СК ДЕВУШКИ.png",
@@ -88,6 +91,7 @@ const categories: Category[] = [
   },
   {
     name: "ОТЧЁТНЫЕ ВИДЕО",
+    route: "otchetnie_video",
     content: [
       {
         poster: "/posters/otchetnie_video/ДГП 143 - ДЕНЬ СЕМЬИ.png",
@@ -123,6 +127,7 @@ const categories: Category[] = [
   },
   {
     name: "РЕПОРТАЖ",
+    route: "reportazh",
     content: [
       {
         poster: "/posters/reportazh/АКЦИЯ ДОНОРСТВА.png",
@@ -153,6 +158,7 @@ const categories: Category[] = [
   },
   {
     name: "КУРСЫ",
+    route: "kursi",
     content: [
       {
         poster: "/posters/kursi/ГИМНАСТИКА.png",
@@ -185,6 +191,7 @@ const categories: Category[] = [
   },
   {
     name: "ИНТЕРВЬЮ",
+    route: "interviu",
     content: [
       {
         poster: "/posters/interviu/ВАДИМ РЫДКИН.png",
@@ -211,6 +218,7 @@ const categories: Category[] = [
   },
   {
     name: "РИЛС",
+    route: "rils",
     content: [
       {
         poster: "/posters/rils/БЕКСТЕЙДЖ С ТРАНСЛЯЦИИ.png",
@@ -272,6 +280,7 @@ const categories: Category[] = [
   },
   {
     name: "YOUTUBE",
+    route: "youtube",
     content: [
       {
         poster: "/posters/youtube/AITO M9.png",
@@ -291,6 +300,7 @@ const categories: Category[] = [
   },
   {
     name: "ОНЛАЙН ТРАНСЛЯЦИЯ",
+    route: "online",
     content: [
       {
         poster: "/posters/online/КОСМОЭНЕРГЕТИКА ТРАНСЛЯЦИЯ.png",
@@ -310,6 +320,7 @@ const categories: Category[] = [
   },
   {
     name: "CG",
+    route: "cg",
     content: [
       {
         poster: "/posters/cg/ГБОУ СШ 1.png",
@@ -378,6 +389,7 @@ const categories: Category[] = [
   },
   {
     name: "СВАДЬБЫ",
+    route: "svadbi",
     content: [
       {
         poster: "/posters/svadba/СВАДЬБА 1.png",

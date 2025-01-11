@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./Home.css";
+import { Helmet } from "react-helmet-async";
 import { supportsWebP } from "../../supportWebP";
 
 const Home: React.FC = () => {
@@ -37,6 +38,14 @@ const Home: React.FC = () => {
 
   return (
     <>
+      <Helmet>
+        <link rel="canonical" href="https://www.mmproduction.ru" />
+        <title>Студия MMPRO - Производство видеоконтента</title>
+        <meta
+          name="description"
+          content="MMRPO — ваша студия для создания качественного видеоконтента, включая рекламные ролики и корпоративные видео. Начните проект с нами на mmproduction.ru!"
+        />
+      </Helmet>
       <div className="home-background">
         <a href="/portfolio">
           <div

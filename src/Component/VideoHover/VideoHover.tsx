@@ -12,14 +12,14 @@ import ProjectInformation from "../ProjectInformation/ProjectInformation";
  */
 interface VideoHoverProps {
   video: VideoHoverInterface;
-  onBack: () => void;
+  onBack?: () => void;
   currentCat: string;
 }
 
 const VideoHover: React.FC<VideoHoverProps> = ({
   video,
-  onBack,
-  currentCat,
+  onBack
+/*   currentCat, */
 }) => {
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const [isPlaying, setIsPlaying] = useState<boolean>(false);

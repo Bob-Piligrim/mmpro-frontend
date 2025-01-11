@@ -11,6 +11,7 @@
 # production
 /build
 /public/videos
+/public/sitemap.xml
 
 # misc
 .DS_Store
