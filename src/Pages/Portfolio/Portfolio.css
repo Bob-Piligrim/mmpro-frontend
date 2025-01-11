@@ -38,11 +38,11 @@
   scrollbar-width: auto;
   -webkit-overflow-scrolling: touch;
   transition: "transform 0.3s ease";
-  margin-left: 40px;
 }
 
 .link-container::-webkit-scrollbar,
-.linkfixed-container::-webkit-scrollbar {
+.linkfixed-container::-webkit-scrollbar,
+.portfolio-container::-webkit-scrollbar {
   display: none; /* Скрываем полосу прокрутки для WebKit */
 }
 
@@ -82,7 +82,8 @@
   display: flex;
 }
 
-.posterOther-container, .posterRils-container {
+.posterOther-container,
+.posterRils-container {
   display: flex;
   flex-wrap: wrap;
   overflow-y: auto;
@@ -91,7 +92,10 @@
   -webkit-overflow-scrolling: touch;
 }
 
-.posterOther-container:-webkit-scrollbar {
+.posterOther-container::-webkit-scrollbar {
+  display: none;
+}
+.posterRils-container::-webkit-scrollbar {
   display: none;
 }
 
@@ -176,7 +180,7 @@
 }
 
 .footer-link a div {
-  padding-right: 5px;;
+  padding-right: 5px;
 }
 
 /* .footer-link-img {
@@ -187,6 +191,7 @@
 
 .btn {
   justify-self: end;
+  display: flex;
 }
 
 .btn > button {
@@ -197,16 +202,17 @@
   border-radius: 50%;
   background-color: black;
   opacity: 40%;
-  padding: 9px 0px;
   margin-right: 5px;
   cursor: pointer;
   color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .btn > button:hover {
   opacity: 1;
 }
-
 
 @media (orientation: portrait) and (max-width: 656px) {
   /* 331px */
@@ -226,6 +232,65 @@
     margin-top: 1vh;
   }
 
+  .poster-other {
+    width: 225px;
+    height: 166px;
+  }
+
+  .poster-rils {
+    height: auto;
+    width: 200px;
+  }
+
+  .poster-kino {
+    width: 158px;
+    height: 354px;
+  }
+
+  @media (orientation: portrait) and (width < 361px) {
+    .linkfixed-container img {
+      width: 20px;
+      height: 10px;
+      margin-right: 20px;
+      margin-bottom: 4px;
+    }
+
+    .link-container {
+      height: 30px;
+    }
+
+    .category {
+      font-size: 6px;
+      width: auto;
+      height: 25px;
+      padding: 10px 20px;
+      margin-right: 6px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .other-discription {
+      font-size: 12px;
+    }
+
+    .poster-other {
+      width: 200px;
+      height: 140px;
+    }
+  
+    .poster-rils {
+      width: 150px;
+      height: auto;
+      
+    }
+  
+    .poster-kino {
+      width: 110px;
+      height: 300px;
+    }
+  }
+
   .link-container {
     display: flex;
     flex-wrap: nowrap;
@@ -240,6 +305,9 @@
     margin-top: 100px;
     margin-bottom: 80px;
     padding: 0 auto;
+    @media (orientation: portrait) and (width < 310px) {
+      margin-left: 28px;
+    }
   }
 
   .content-container::-webkit-scrollbar {
@@ -270,24 +338,11 @@
     display: none; /* Скрываем полосу прокрутки для WebKit */
   }
 
-  .poster-other {
-    width: 300px;
-    height: auto;
-  }
-
-  .poster-rils {
-    height: auto;
-    width: 200px;
-  }
 
   .other-discription {
     margin-top: 4px;
     margin-bottom: 26px;
     margin-right: 0;
-  }
-
-  .category {
-    margin-right: 6px;
   }
 
   .footer-link {
@@ -299,7 +354,7 @@
     position: fixed;
     margin-left: 28px;
     bottom: 30px;
-    width: 85vw;
+    width: 89vw;
     margin-top: 0;
   }
 }
@@ -332,7 +387,8 @@
     margin-top: 10px;
   }
 
-  .posterOther-container, .posterRils-container {
+  .posterOther-container,
+  .posterRils-container {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -361,7 +417,6 @@
     width: 140px;
     font-size: clamp(12px, 14px, 16px);
     margin-bottom: 20px;
-
   }
 
   .footer-link {
@@ -374,5 +429,25 @@
   .poster-kino {
     width: clamp(100px, 130px, 160px);
     height: clamp(180px, 210px, 240px);
+  }
+
+  @media (orientation: landscape) and (width < 361px) {
+    .category {
+      font-size: 6px;
+      width: auto;
+      height: 25px;
+      padding: 10px 20px;
+      margin-right: 6px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .other-discription {
+      margin-top: 4px;
+      margin-bottom: 26px;
+      margin-right: 0;
+      font-size: 12px;
+    }
   }
 }

@@ -1,12 +1,17 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./Portfolio.css";
 import format from "../../Assets/Portfolio/format.png";
-import categories from "../../Component/VideoHover/Categories";
 import VideoHover from "../../Component/VideoHover/VideoHover";
 import VideoHoverInterface from "../../Component/VideoHover/VideoHoverInterface";
 import VideoOtherHover from "../../Component/VideoHover/VideoOtherHover";
+import { useParams, useNavigate } from "react-router-dom";
+import Category from "../../Component/VideoHover/CategoryInterface";
 
-const Portfolio: React.FC = () => {
+interface PortfolioProps {
+  categories: Category[];
+}
+
+const Portfolio: React.FC<PortfolioProps> = ({ categories }) => {
   /* const [selectedCategory, setSelectedCategory] = useState(categories[0]); */
   const [selectedCategoryIndex, setSelectedCategoryIndex] = useState<number>(0);
   const selectedCategory = categories[selectedCategoryIndex];
@@ -17,6 +22,20 @@ const Portfolio: React.FC = () => {
   const [linkItemWidth, setLinkItemWidth] = useState(0);
   const [containerWidth, setContainerWidth] = useState(0);
 
+  // для маршрутизации
+  const { categoryName } = useParams<{ categoryName: string }>();
+  const navigate = useNavigate();
+  useEffect(() => {
+    const index = categories.findIndex((cat) => cat.route === categoryName);
+    if (index !== -1) {
+      setSelectedCategoryIndex(index);
+    } else {
+      // Если категория не найдена, перенаправляем на первую категорию по умолчанию
+      setSelectedCategoryIndex(0);
+      navigate(`/portfolio/${categories[0].route}`);
+    }
+  }, [categoryName, categories, navigate]);
+
   const [selectedVideo, setSelectedVideo] =
     useState<VideoHoverInterface | null>(null);
 
@@ -24,6 +43,8 @@ const Portfolio: React.FC = () => {
     const index = categories.findIndex((cat) => cat.name === category.name);
     setSelectedCategoryIndex(index);
     setOffset(0);
+    // для маршрутизации
+    navigate(`/portfolio/${category.route}`);
   };
 
   const handleVideoClick = (video: VideoHoverInterface) => {
@@ -95,13 +116,19 @@ const Portfolio: React.FC = () => {
 
   const nextCategory = () => {
     if (selectedCategoryIndex < categories.length - 1) {
+      const newIndex = selectedCategoryIndex + 1;
       scrollToCategory(selectedCategoryIndex + 1);
+      setSelectedCategoryIndex(newIndex);
+      navigate(`/portfolio/${categories[newIndex].route}`)
     }
   };
 
   const prevCategory = () => {
     if (selectedCategoryIndex > 0) {
+      const newIndex = selectedCategoryIndex - 1; 
       scrollToCategory(selectedCategoryIndex - 1);
+      setSelectedCategoryIndex(newIndex);
+      navigate(`/portfolio/${categories[newIndex].route}`)
     }
   };
 
