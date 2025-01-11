@@ -1,16 +1,15 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import "./VideoHover.css";
 import VideoHoverInterface from "./VideoHoverInterface";
-import btn_prev from "../../Assets/Portfolio/btn-prev.png";
 import { useHeader } from "../Header/HeaderContext";
 
 /* Как пример: */
 
 import image1 from "../../Assets/VideoHover/image 2259.png";
 import image2 from "../../Assets/VideoHover/image 42.png";
-import categories from "./Categories";
+/* import categories from "./Categories";
 import ProjectInformation from "../ProjectInformation/ProjectInformation";
-
+ */
 interface VideoHoverProps {
   video: VideoHoverInterface;
   onBack: () => void;
@@ -31,9 +30,9 @@ const VideoHover: React.FC<VideoHoverProps> = ({
   const { hideHeader, showHeader } = useHeader();
 
   // для страницы с подробностями, не проработан
-  const [selectedProject, setSelectedProject] =
+  /*   const [selectedProject, setSelectedProject] =
     useState<VideoHoverInterface | null>(null);
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null); */
   // для страницы с подробностями, не проработан
 
   // lazy loading
@@ -111,9 +110,9 @@ const VideoHover: React.FC<VideoHoverProps> = ({
     }
   }, [duration]);
 
-  useEffect(() => {
+  /*  useEffect(() => {
     console.log(`Состояние isPlaying изменилось на: ${isPlaying}`);
-  }, [isPlaying]);
+  }, [isPlaying]); */
 
   useEffect(() => {
     const videoElement = videoRef.current;
@@ -139,10 +138,10 @@ const VideoHover: React.FC<VideoHoverProps> = ({
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            console.log(
+            /* console.log(
               "Видео работает, ентри заработало: ",
               entry.isIntersecting
-            );
+            ); */
             setShouldPlay(true);
             observer.unobserve(videoElement!);
           }
@@ -168,7 +167,8 @@ const VideoHover: React.FC<VideoHoverProps> = ({
     return `${minutes}:${seconds < 10 ? `0${seconds}` : seconds}`;
   };
 
-  const handleProjectClick = (project: VideoHoverInterface) => {
+  /* Для подробностей */
+  /* const handleProjectClick = (project: VideoHoverInterface) => {
     setSelectedProject(project);
   };
 
@@ -180,7 +180,7 @@ const VideoHover: React.FC<VideoHoverProps> = ({
   // Фильтруем категории в зависимости от выбранной категории
   const currentCategory = categories.find(
     (category) => category.name === selectedCategory
-  );
+  ); */
 
   return (
     <div
@@ -189,44 +189,42 @@ const VideoHover: React.FC<VideoHoverProps> = ({
       onMouseLeave={handleMouseLeave}
       onTouchStart={handleTouchStart}
     >
-      <div className="video-size">
-        <video
-          playsInline
-          preload={shouldPlay ? "auto" : "none"}
-          /* loop */
-          id="video"
-          ref={videoRef}
-          poster={video.poster}
-          onPause={() => setIsPlaying(false)}
-          onPlay={() => setIsPlaying(true)}
-          
-        >
-          {shouldPlay && <source src={video.videoUrl} type="video/mp4" />}
-          Ваш браузер не поддерживает видео.
-        </video>
-      </div>
+      <video
+        preload={shouldPlay ? "auto" : "none"}
+        /* loop */
+        id="video"
+        ref={videoRef}
+        poster={video.poster}
+        onPause={() => setIsPlaying(false)}
+        onPlay={() => setIsPlaying(true)}
+      >
+        {shouldPlay && <source src={video.videoUrl} type="video/mp4" />}
+        Ваш браузер не поддерживает видео.
+      </video>
 
-      <div id={!showInfo ? "showInfo" : "notShowInfo"}>
-        <button
-          onClick={(e) => {
-            e.stopPropagation();
-            handlePlayPause(e);
-          }}
-          className="on-off"
-        >
-          <span>{isPlaying ? "❚❚" : "▶"}</span>
-        </button>
+      <div id={showInfo ? "showInfo" : "notShowInfo"}>
+        <div className="contentShow">
+          <div className="emptyContent"></div>
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              handlePlayPause(e);
+            }}
+            className="on-off"
+          >
+            <span>{isPlaying ? "❚❚" : "▶"}</span>
+          </button>
+          <div className="content-information">
+            <div className="video-title">
+              <div className="video-description">
+                {video.description.toUpperCase()}
+              </div>
+              <div className="video-videoName">{video.videoName}</div>
+            </div>
 
-        <div className="video-title">
-          <div className="video-description">
-            {video.description.toUpperCase()}
-          </div>
-          <div className="video-videoName">{video.videoName}</div>
-        </div>
-
-        <div className="information-container">
-          <div className="information-container1">
-            {/*  {categories.map((category) => (
+            <div className="information-container">
+              <div className="information-container1">
+                {/*  {categories.map((category) => (
               <div>
                 {category.content.map((project, index) => (
                   <button
@@ -248,33 +246,35 @@ const VideoHover: React.FC<VideoHoverProps> = ({
                 ))}
               </div>
             ))} */}
-            {
-              <div>
-                <button className="handleProject" onClick={() => ({})}>
-                  Подробнее узнать о проекте:{" "}
-                </button>
+                {
+                  <div>
+                    <button className="handleProject" onClick={() => ({})}>
+                      Подробнее узнать о проекте:{" "}
+                    </button>
+                  </div>
+                }
+                <div className="information-image">
+                  <img src={image1} alt="" />
+                  <img src={image2} alt="" />
+                  <div className="ageLimit">{video.ageLimit}+</div>
+                </div>
               </div>
-            }
-            <div className="information-image">
-              <img src={image1} alt="" />
-              <img src={image2} alt="" />
-              <div className="ageLimit">{video.ageLimit}+</div>
-            </div>
-          </div>
-          <div className="information-container2">
-            <div>Продолжительность:</div>
-            <div className="lineProgress">
-              <div
-                style={{
-                  width: `${progress}%`,
-                  height: "100%",
-                  background: "rgba(255, 209, 47, 1)",
-                }}
-              />
-            </div>
-            <div className="progressTime">
-              <div>{formatTime(duration - currentTime)}</div>
-              <div>{formatTime(duration)}</div>
+              <div className="information-container2">
+                <div>Продолжительность:</div>
+                <div className="lineProgress">
+                  <div
+                    style={{
+                      width: `${progress}%`,
+                      height: "100%",
+                      background: "rgba(255, 209, 47, 1)",
+                    }}
+                  />
+                </div>
+                <div className="progressTime">
+                  <div>{formatTime(duration - currentTime)}</div>
+                  <div>{formatTime(duration)}</div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -288,7 +288,7 @@ const VideoHover: React.FC<VideoHoverProps> = ({
         <div className="arrow-left">←</div> <span>Назад</span>
       </button>
 
-      {selectedProject && <ProjectInformation project={selectedProject} />}
+      {/* {selectedProject && <ProjectInformation project={selectedProject} />} */}
     </div>
   );
 };

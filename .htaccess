@@ -1,0 +1,35 @@
+# Включение механизма перезаписи
+RewriteEngine On
+RewriteBase /
+
+# Указываем, что правило не срабатывает для index.html
+RewriteRule ^index\.html$ - [L]
+
+# Проверяем, что запрашиваемый файл не существует
+RewriteCond %{REQUEST_FILENAME} !-f
+# Проверяем, что запрашиваемая директория не существует
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# Если условия выполнены, направляем все запросы на index.html
+RewriteRule . /index.html [L]
+
+# ======== CORS настройки ========
+# Разрешить CORS заголовки для всех источников
+Header set Access-Control-Allow-Origin "*"
+# Разрешить GET и POST методы
+Header set Access-Control-Allow-Methods "GET, POST, OPTIONS"
+# Разрешить заголовки, прежде всего для работы с диапазонами (Range)
+Header set Access-Control-Allow-Headers "Range, X-Playback-Session-Id"
+
+
+# Обработка OPTIONS-запросов для CORS
+<Location />
+    Header always set Access-Control-Allow-Origin "*"
+    Header always set Access-Control-Allow-Methods "GET, POST, OPTIONS"
+    Header always set Access-Control-Allow-Headers "Range, X-Playback-Session-Id"
+    Header always set Access-Control-Max-Age "86400"
+</Location>
+
+# ======== Закончили CORS настройки ========
+
+

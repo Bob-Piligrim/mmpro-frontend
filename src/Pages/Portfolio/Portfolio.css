@@ -82,7 +82,7 @@
   display: flex;
 }
 
-.posterOther-container {
+.posterOther-container, .posterRils-container {
   display: flex;
   flex-wrap: wrap;
   overflow-y: auto;
@@ -197,7 +197,7 @@
   border-radius: 50%;
   background-color: black;
   opacity: 40%;
-  padding: 10px 0px;
+  padding: 9px 0px;
   margin-right: 5px;
   cursor: pointer;
   color: white;
@@ -207,10 +207,6 @@
   opacity: 1;
 }
 
-.btn > button img {
-  width: 15px;
-  height: auto;
-}
 
 @media (orientation: portrait) and (max-width: 656px) {
   /* 331px */
@@ -277,6 +273,11 @@
   .poster-other {
     width: 300px;
     height: auto;
+  }
+
+  .poster-rils {
+    height: auto;
+    width: 200px;
   }
 
   .other-discription {

@@ -74,7 +74,9 @@
 
 .arrow-up {
   margin-left: 12px;
-  font-size: 10px;
+  font-size: 12px;
+  width: 5px;
+  font-weight: 800;
   padding-bottom: 4px;
 }
 

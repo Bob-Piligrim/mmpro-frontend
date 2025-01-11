@@ -10,7 +10,8 @@ const ffmpeg = require("fluent-ffmpeg");
 const ffmpegPath = require("ffmpeg-static");
 
 const posterSizes = {
-  kino: { width: 20, height: 20 },
+  kino: { width: 180, height: 500 },
+  rils: { width: 290, height: 460 },
 };
 
 // Проверяем, что ffmpegPath не null
@@ -25,7 +26,7 @@ console.log("FFmpeg Path:", ffmpegPath);
 /* console.log("FFprobe Path:", ffprobe.path); */
 
 const videosDir = path.join(__dirname, "public", "videos");
-const postersDir = path.join(__dirname, "public", "posters");
+const postersDir = path.join(__dirname, "public", "posters2");
 
 // Проверяем, существует ли директория для постеров, если нет, создаём её
 if (!fs.existsSync(postersDir)) {
@@ -39,10 +40,12 @@ const generatePoster = (inputPath, outputPath, width, height) => {
       .outputOptions([
         "-y",
         "-ss",
-        "00:00:07",
+        "00:00:10",
         `-vf scale=${width}:${height}:force_original_aspect_ratio=decrease,unsharp=5:5:1.0`,
         "-frames:v",
         "1",
+        "-q:v",
+        "2",
       ])
       .on("end", () => {
         console.log(`Постер создан: ${outputPath}`);
@@ -66,8 +69,8 @@ const processVideos = async () => {
         const videoFiles = fs.readdirSync(categoryPath);
 
         const posterSize = posterSizes[category.toLowerCase()] || {
-          width: 2160,
-          height: 3840,
+          width: 290,
+          height: 160,
         };
         const { width, height } = posterSize;
 

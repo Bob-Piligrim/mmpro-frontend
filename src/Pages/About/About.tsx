@@ -131,7 +131,7 @@ const About: React.FC = () => {
                 className="next-button-mobile"
                 id={currentIndex === components.length - 1 ? "last-page" : ""}
               >
-                <span>Дальше</span> <img src={btn_next_mob} alt="Следующий" />{" "}
+                <span>Дальше</span> <div className="circle">→</div>
               </button>
             </div>
           </div>

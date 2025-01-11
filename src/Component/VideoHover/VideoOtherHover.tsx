@@ -2,7 +2,6 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import "./VideoOtherHover.css";
 import "./VideoHover.css";
 import VideoHoverInterface from "./VideoHoverInterface";
-import btn_prev from "../../Assets/Portfolio/btn-prev.png";
 import { useHeader } from "../Header/HeaderContext";
 
 interface VideoOtherHoverProps {
@@ -23,6 +22,10 @@ const VideoOtherHover: React.FC<VideoOtherHoverProps> = ({
   const [currentTime, setCurrentTime] = useState(0);
   const [showInfo, setShowInfo] = useState<boolean>(true); // Состояние для видимости информации
   const { hideHeader, showHeader } = useHeader();
+
+  // lazy loading
+  const [shouldPlay, setShouldPlay] = useState<boolean>(false);
+  // lazy loading
 
   const handleMouseEnter = () => {
     if (videoRef.current) {
@@ -48,6 +51,7 @@ const VideoOtherHover: React.FC<VideoOtherHoverProps> = ({
     if (target.classList.contains("OtherHover-on-off")) {
       return;
     }
+
     if (videoRef.current) {
       setShowInfo((prev) => !prev);
     }
@@ -102,6 +106,31 @@ const VideoOtherHover: React.FC<VideoOtherHoverProps> = ({
     };
   }, [handleTimeUpdate]);
 
+  useEffect(() => {
+    const videoElement = videoRef.current;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setShouldPlay(true);
+            observer.unobserve(videoElement!);
+          }
+        });
+      },
+      { threshold: 0.5 }
+    );
+
+    if (videoElement) {
+      observer.observe(videoElement);
+    }
+
+    return () => {
+      if (videoElement) {
+        observer.unobserve(videoElement);
+      }
+    };
+  }, []);
+
   const formatTime = (time: number) => {
     const minutes = Math.floor(time / 60);
     const seconds = Math.floor(time % 60);
@@ -116,7 +145,7 @@ const VideoOtherHover: React.FC<VideoOtherHoverProps> = ({
       onTouchStart={handleTouchStart}
     >
       <video
-        preload="auto"
+        preload={shouldPlay ? "auto" : "none"}
         loop
         id="video"
         ref={videoRef}
@@ -124,7 +153,7 @@ const VideoOtherHover: React.FC<VideoOtherHoverProps> = ({
         onPause={() => setIsPlaying(false)}
         onPlay={() => setIsPlaying(true)}
       >
-        <source src={video.videoUrl} type="video/mp4" />
+        {shouldPlay && <source src={video.videoUrl} type="video/mp4" />}
         Ваш браузер не поддерживает видео
       </video>
 
@@ -165,7 +194,7 @@ const VideoOtherHover: React.FC<VideoOtherHoverProps> = ({
       </div>
       <button
         onClick={onBack}
-        className="video-footerPrev"
+        className="video-footerPrev2"
         id={showInfo ? "showInfo" : "notShowInfo"}
       >
         <div>←</div> <span>Назад</span>
