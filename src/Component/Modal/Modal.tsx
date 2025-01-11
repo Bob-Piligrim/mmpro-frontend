@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import "./Modal.css";
-import arrowButton from "../../Assets/Header/arrowButton.png";
 import lefttop from "../../Assets/Modal/topleft.png";
 import righttop from "../../Assets/Modal/topright.png";
 import rightbottom from "../../Assets/Modal/bottomright.png";
@@ -116,7 +115,7 @@ const Modal: React.FC<ModalProps> = ({ onClose }) => {
               ></textarea>
               <button type="submit">
                 ОТПРАВИТЬ
-                <img src={arrowButton} alt="Arrow" className="arrow-icon" />
+                <div className="arrow-up-modal">↑</div>
               </button>
             </form>
           </div>

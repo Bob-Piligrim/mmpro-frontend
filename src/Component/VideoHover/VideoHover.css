@@ -11,19 +11,13 @@
   overflow: hidden;
 }
 
-.video-size {
-  position: relative;
-  width: 100vw;
-  height: 100vh;
-}
-
 #video {
   position: absolute;
   top: 50%;
   left: 50%;
   height: 100%;
   width: 100%;
-  object-fit: cover;
+  object-fit: fill;
   transform: translate(-50%, -50%) scale(1);
 }
 
@@ -36,23 +30,34 @@
   transition: opacity 1s ease-in-out;
 }
 
-.on-off {
+.contentShow {
   position: absolute;
-  top: 50%;
-  left: 50%;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+  overflow: hidden;
+  padding-bottom: 90px;
+}
+
+.on-off {
+  align-self: center;
+  justify-self: center;
   transform: translate(-50%, -50%);
   border-radius: 50%;
   background-color: white;
   border: none;
-  width: 60px;
   width: clamp(55px, 3.6vw, 65px);
-  height: 60px;
   height: clamp(55px, 3.6vw, 65px);
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  margin-bottom: 90px;
 }
 
 .on-off span {
@@ -61,54 +66,51 @@
   color: black;
 }
 
-.video-title {
-  margin-left: 18.75vw;
+.content-information {
+  display: flex;
+  width: 74vw;
   margin-left: 14vw;
-  position: absolute;
-  bottom: 140px;
-  left: 0;
-  height: 125px;
-  color: rgba(255, 209, 47, 1);
-  font-family: ASPHALTIC;
+  justify-content: space-between;
 }
 
-.video-description {
-  font-size: 25px;
-  font-size: clamp(20px, 1.5vw, 30px);
-  font-weight: 400;
-  line-height: 24.79px;
+.video-title {
+  height: clamp(120px, 125px, 140px);
+  color: rgba(255, 209, 47, 1);
+  font-family: ASPHALTIC;
+  justify-self: self-end;
   letter-spacing: 0.05em;
   text-align: left;
   text-underline-position: from-font;
   text-decoration-skip-ink: none;
-  margin-bottom: -10px;
+  font-weight: 400;
+  align-self: self-end;
+  margin-bottom: 50px;
+}
+
+.video-description {
+  font-size: clamp(20px, 1.5vw, 30px);
+  line-height: 24px;
+  letter-spacing: 0.05em;
 }
 
 .video-videoName {
-  padding: 0;
   font-size: 124px;
   font-size: clamp(110px, 7vw, 140px);
-  /* font-size: 6.5vw; */
-  font-weight: 400;
-  line-height: 124.1px;
+  line-height: 124px;
   letter-spacing: 0.04em;
-  text-align: left;
-  text-underline-position: from-font;
-  text-decoration-skip-ink: none;
 }
 
 .information-container {
-  position: absolute;
-  bottom: 50px;
-  right: 180px;
-  right: 9.3vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-left: 20px;
 }
 
 .information-container div {
   font-weight: 400;
-  font-size: 18px;
   font-size: clamp(14px, 1vw, 20px);
-  line-height: 21.6px;
+  line-height: 21px;
   color: rgba(255, 255, 255, 1);
 }
 
@@ -121,7 +123,6 @@
 }
 
 .information-image img {
-  width: 197px;
   width: clamp(150px, 10vw, 200px);
   height: auto;
   margin-right: 8px;
@@ -133,6 +134,10 @@
   border-radius: 50%;
   color: rgba(255, 255, 255, 1);
   padding: 10px;
+}
+
+.information-container2 {
+  margin-top: 18px;
 }
 
 .lineProgress {
@@ -157,7 +162,7 @@
 .lineProgress,
 .progressTime {
   width: 331px;
-  width: clamp(300px, 17vw, 360px);
+  width: clamp(310px, 17vw, 400px);
 }
 
 /* .video-footerPrev {
@@ -192,15 +197,8 @@
   cursor: pointer;
 }
 
-.arrow-left {
-  padding-right: 5px;
-}
-
-.video-footerPrev img {
-  margin-right: 9px;
-  width: 15px;
-  height: auto;
-  padding-top: 0;
+.video-footerPrev div {
+  padding-right: 7px;
 }
 
 .handleProject {
@@ -215,58 +213,57 @@
   cursor: pointer;
 }
 
-@media (orientation: landscape) and (max-width: 850px) and (height > 500px) {
+@media (orientation: portrait) and (max-width: 700px) {
   .video-container {
     padding: 0 auto;
   }
 
+  /* высота до 700px */
   .on-off {
-    position: absolute;
-    top: 40vh;
-    left: 400px;
-    left: 50vw;
-    width: 60px;
     width: clamp(55px, 3.6vw, 65px);
-    height: 60px;
     height: clamp(55px, 3.6vw, 65px);
+    margin-left: 40px;
+    margin-bottom: 0;
   }
 
   .on-off span {
     font-size: 15px;
   }
 
-  .video-title {
+  .contentShow {
+    @media (orientation: portrait) and (height > 750px) {
+      padding-bottom: 18vh;
+    }
+  }
+
+  .content-information {
+    flex-direction: column;
     margin-left: 0;
-    position: absolute;
     width: 100vw;
-    bottom: 37vh;
-    left: 0;
+  }
+
+  .video-title {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
+    align-self: center;
     height: 125px;
+    margin-bottom: 0;
   }
 
   .video-description {
-    font-size: 16px;
-    font-size: clamp();
+    font-size: clamp(14px, 16px, 19px);
     line-height: 16px;
     margin-bottom: 0px;
   }
 
   .video-videoName {
-    font-size: 81px;
-    font-size: clamp();
+    font-size: clamp(76px, 81px, 83px);
     font-weight: 400;
     line-height: 81px;
   }
 
   .information-container {
-    position: absolute;
-    bottom: 10vh;
-    left: 0;
-    right: 9.3vw;
     width: 100vw;
     display: flex;
     flex-direction: column;
@@ -280,205 +277,98 @@
   }
 
   .information-container div {
-    font-size: 18px;
     font-size: clamp(14px, 1vw, 20px);
     text-align: center;
   }
 
+  .information-container2 {
+    @media (orientation: portrait) and (height < 630px) {
+      margin-top: 0;
+    }
+  }
+
+  @media (orientation: portrait) and (height < 630px) {
+    .contentShow {
+      padding-bottom: 50px;
+    }
+    .video-title {
+      height: auto;
+    }
+    .video-description {
+      font-size: 13px;
+    }
+    .video-videoName {
+      font-size: 66px;
+    }
+    .lineProgress,
+    .progressTime,
+    .information-image {
+      margin-top: 6px;
+    }
+  }
+
   .information-image img {
-    width: 110px;
     width: clamp(90px, 30vw, 120px);
-  }
-
-  .lineProgress {
-    margin-top: 16px;
-    height: 5px;
-    background: #ddd;
-    border-radius: 5px;
-    overflow: hidden;
-    position: relative;
-  }
-
-  .progressTime {
-    margin-top: 15px;
-    display: flex;
-    justify-content: space-between;
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 19.2px;
-    color: rgba(255, 255, 255, 1);
-  }
-
-  .lineProgress,
-  .progressTime {
-    width: 263px;
-    width: clamp(230px, 79vw, 300px);
   }
 
   .video-footerPrev {
     bottom: 7%;
+    margin-left: 28px;
   }
 }
 
-@media (orientation: portrait) and (max-width: 656px) {
-  .video-footerPrev {
-    margin-left: 28px;
-  }
-  .video-container {
-    padding: 0 auto;
+@media (orientation: landscape) and (height < 700px) {
+  .contentShow {
+    padding-bottom: 10vh;
   }
 
   .on-off {
-    position: absolute;
-    top: 26vh;
-    width: clamp(55px, 3.6vw, 65px);
-    height: clamp(55px, 3.6vw, 65px);
-  }
-
-  .on-off span {
-    font-size: 15px;
+    margin-bottom: 10px;
+    margin-left: 20px;
   }
 
   .video-title {
-    margin-left: 0;
-    position: absolute;
-    width: 100vw;
-    bottom: 44vh;
-    left: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 125px;
+    height: auto;
+  }
+  .lineProgress,
+  .progressTime,
+  .information-image {
+    margin-top: 6px;
   }
 
-  .video-description {
-    font-size: 16px;
-    font-size: clamp();
-    line-height: 16px;
-    margin-bottom: 0px;
+  .lineProgress,
+  .progressTime {
+    width: 270px;
   }
 
-  .video-videoName {
-    font-size: 81px;
-    font-size: clamp();
-    font-weight: 400;
-    line-height: 81px;
-  }
-
-  .information-container {
-    position: absolute;
-    bottom: 10vh;
-    left: 0;
-    right: 9.3vw;
-    width: 100vw;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin: 0 auto;
-  }
-
-  .information-container1 {
-    order: 2;
-  }
-
-  .information-container div {
-    font-size: 18px;
-    font-size: clamp(14px, 1vw, 20px);
-    text-align: center;
+  .information-image {
+    margin-bottom: 5px;
   }
 
   .information-image img {
-    width: 110px;
     width: clamp(90px, 30vw, 120px);
   }
 
-  .lineProgress {
-    margin-top: 16px;
-    height: 5px;
-    background: #ddd;
-    border-radius: 5px;
-    overflow: hidden;
-    position: relative;
-  }
-
-  .progressTime {
-    margin-top: 15px;
-    display: flex;
-    justify-content: space-between;
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 19.2px;
-    color: rgba(255, 255, 255, 1);
-  }
-
-  .lineProgress,
-  .progressTime {
-    width: 263px;
-    width: clamp(230px, 79vw, 300px);
-  }
-
-  .video-footerPrev {
-    bottom: 7%;
-  }
-}
-
-@media (orientation: landscape) /* or (max-width: 1240px) and (max-height: 500px) */ {
-  .video-container {
-    padding: 0 auto;
-  }
-
-  .on-off {
-    top: 50vh;
-  }
-
-  .video-title {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    bottom: 7vh;
-    left: 0;
-    width: 40vw;
-  }
-
   .information-container {
-    bottom: 12vh;
-    right: 5px;
-    display: flex;
-    flex-direction: column;
-    width: 35vw;
-    justify-content: end;
+    justify-content: start;
   }
 
-  .information-container1 {
-    order: 0;
-  }
-
-  .information-image img {
-    width: 13vw;
-  }
-
-  .lineProgress,
-  .progressTime {
-    margin-top: 3px;
-  }
-
-  .information-container2,
-  .lineProgress,
-  .progressTime {
-    width: clamp(240px, 255px, 260px);
-  }
-
-  .video-videoName {
-    padding: 0;
-    font-size: clamp(70px, 81px, 85px);
-    font-weight: 400;
-    line-height: 81px;
+  .information-container2 {
+    margin-top: 5px;
   }
 
   .video-footerPrev {
     margin-left: 28px;
+  }
+
+  @media (orientation: landscape) and (height < 450px) {
+    .on-off {
+      position: absolute;
+      top: 50%;
+    }
+    .content-information {
+      margin-left: 30px;
+      width: 94vw;
+    }
   }
 }

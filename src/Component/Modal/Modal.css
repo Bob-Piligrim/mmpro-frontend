@@ -181,6 +181,20 @@
   text-align: center;
   align-self: center;
   cursor: pointer;
+  display: flex;
+  justify-content: center;
+  padding: 10px 22px;
+  display: flex;
+  align-items: center;
+}
+
+.arrow-up-modal {
+  margin-left: 12px;
+  font-size: 12px;
+  height: auto;
+  font-weight: 300;
+  padding-bottom: 5px;
+  
 }
 
 @media (orientation: portrait) and (max-width: 656px) {

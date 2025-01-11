@@ -3,12 +3,15 @@ const path = require("path");
 const sharp = require("sharp");
 
 const compressImage = (inputPath, outputPath) => {
-  return sharp(inputPath).png({ quality: 80 }).toFile(outputPath);
+  return sharp(inputPath)
+    .resize(290, 160, { fit: sharp.fit.inside }) // Устанавливаем конкретный размер
+    .png({ quality: 90 }) // Устанавливаем качество (это не всегда влияет на PNG)
+    .toFile(outputPath);
 };
 
 const processImages = async () => {
-  const imagesDir = path.join(__dirname, "public", "home");
-  const outputDir = path.join(__dirname, "public", "home2");
+  const imagesDir = path.join(__dirname, "public", "posters");
+  const outputDir = path.join(__dirname, "public", "posters2");
 
   if (!fs.existsSync(outputDir)) {
     fs.mkdirSync(outputDir, { recursive: true });

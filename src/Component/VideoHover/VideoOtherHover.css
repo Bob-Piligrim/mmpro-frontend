@@ -91,6 +91,28 @@
   color: red;
 }
 
+.video-footerPrev2 {
+  margin-left: 18.75vw;
+  margin-left: 14vw;
+  position: absolute;
+  bottom: 9.5%;
+  left: 0;
+  text-decoration: none;
+  border: none;
+  background: transparent;
+  color: rgba(255, 255, 255, 1);
+  display: flex;
+  align-content: center;
+  width: auto;
+  height: auto;
+  cursor: pointer;
+}
+
+.video-footerPrev2 div {
+  padding-right: 7px;
+}
+
+
 @media (max-width: 656px) {
   .OtherHover-on-off {
     margin-top: 110px;
@@ -113,6 +135,11 @@
   .OtherHover-on-off {
     font-size: 15px;
   }
+
+  .video-footerPrev2 {
+    bottom: 7%;
+    margin-left: 28px;
+  }
 }
 
 @media (max-height: 650px) {
@@ -126,6 +153,11 @@
     margin-top: 83px;
     height: 40px;
     width: 40px;
+  }
+
+  .video-footerPrev2 {
+    bottom: 7%;
+    margin-left: 28px;
   }
 
   .videoOtherInformation-container {
