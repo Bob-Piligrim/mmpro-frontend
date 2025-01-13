@@ -6,6 +6,7 @@ import VideoHoverInterface from "../../Component/VideoHover/VideoHoverInterface"
 import VideoOtherHover from "../../Component/VideoHover/VideoOtherHover";
 import { useParams, useNavigate } from "react-router-dom";
 import Category from "../../Component/VideoHover/CategoryInterface";
+import { supportsWebP } from "./utils";
 
 interface PortfolioProps {
   categories: Category[];
@@ -119,18 +120,27 @@ const Portfolio: React.FC<PortfolioProps> = ({ categories }) => {
       const newIndex = selectedCategoryIndex + 1;
       scrollToCategory(selectedCategoryIndex + 1);
       setSelectedCategoryIndex(newIndex);
-      navigate(`/portfolio/${categories[newIndex].route}`)
+      navigate(`/portfolio/${categories[newIndex].route}`);
     }
   };
 
   const prevCategory = () => {
     if (selectedCategoryIndex > 0) {
-      const newIndex = selectedCategoryIndex - 1; 
+      const newIndex = selectedCategoryIndex - 1;
       scrollToCategory(selectedCategoryIndex - 1);
       setSelectedCategoryIndex(newIndex);
-      navigate(`/portfolio/${categories[newIndex].route}`)
+      navigate(`/portfolio/${categories[newIndex].route}`);
     }
   };
+
+  const supportWepB = supportsWebP();
+
+  // Проверка для себя:
+  if (supportWepB) {
+    console.log("Устройство поддерживает формат WebP");
+  } else {
+    console.log("Устройство не поддерживает формат WebP");
+  }
 
   return (
     <>
@@ -166,44 +176,55 @@ const Portfolio: React.FC<PortfolioProps> = ({ categories }) => {
                 : "posterOther-container"
             }
           >
-            {selectedCategory.content.map((video) => (
-              <div key={video.poster}>
-                <button
-                  className="poster-button"
-                  onClick={() =>
-                    handleVideoClick({
-                      videoUrl: video.videoUrl,
-                      poster: video.poster,
-                      description: video.description,
-                      ageLimit: video.ageLimit,
-                      videoName: video.videoName,
-                      contentType: video.contentType,
-                    })
-                  }
-                >
-                  <img
-                    src={video.poster}
-                    alt={video.poster}
-                    className={
-                      selectedCategory.name === "КИНО"
-                        ? "poster-kino"
-                        : selectedCategory.name === "РИЛС"
-                        ? "poster-rils"
-                        : "poster-other"
+            {selectedCategory.content.map((video) => {
+              const posterPath = supportWepB
+                ? video.poster
+                    ?.replace("/posters/", "/posters/webp/")
+                    .replace(/\.png$/, ".webp")
+                : video.poster;
+              posterPath === ""
+                ? console.log("!!!Постер пустой! Проверь! ", posterPath)
+                : console.log("Все нормально!", posterPath);
+
+              return (
+                <div key={video.poster}>
+                  <button
+                    className="poster-button"
+                    onClick={() =>
+                      handleVideoClick({
+                        videoUrl: video.videoUrl,
+                        poster: posterPath,
+                        description: video.description,
+                        ageLimit: video.ageLimit,
+                        videoName: video.videoName,
+                        contentType: video.contentType,
+                      })
                     }
-                  />{" "}
-                </button>{" "}
-                {selectedCategory.name !== "КИНО" && (
-                  <div className="other-discription">
-                    {video.description && video.contentType
-                      ? `${video.description}. ${video.contentType}`
-                      : !video.description && video.contentType
-                      ? `${video.contentType}`
-                      : `${video.description}`}
-                  </div>
-                )}
-              </div>
-            ))}
+                  >
+                    <img
+                      src={posterPath}
+                      alt={video.poster}
+                      className={
+                        selectedCategory.name === "КИНО"
+                          ? "poster-kino"
+                          : selectedCategory.name === "РИЛС"
+                          ? "poster-rils"
+                          : "poster-other"
+                      }
+                    />{" "}
+                  </button>{" "}
+                  {selectedCategory.name !== "КИНО" && (
+                    <div className="other-discription">
+                      {video.description && video.contentType
+                        ? `${video.description}. ${video.contentType}`
+                        : !video.description && video.contentType
+                        ? `${video.contentType}`
+                        : `${video.description}`}
+                    </div>
+                  )}
+                </div>
+              );
+            })}
           </div>
         </div>
         <div className="footer-link">
