@@ -1,40 +1,38 @@
 import React, { useEffect, useState } from "react";
 import "./Home.css";
 import { Helmet } from "react-helmet-async";
-import { supportsWebP } from "../../supportWebP";
+import { supportsWebP } from "../../Pages/Portfolio/utils";
 
 const Home: React.FC = () => {
   const [isLeftHovered, setIsLeftHovered] = useState<boolean>(false);
   const [isRightHovered, setIsRightHovered] = useState<boolean>(false);
   const [leftBackground, setLeftBackground] = useState<string>("");
   const [rightBackground, setRightBackground] = useState<string>("");
+  const isSuppurtedWebP = supportsWebP();
 
   useEffect(() => {
     const isMobile = window.matchMedia("(max-width: 767px)").matches;
 
-    supportsWebP((isSupported) => {
-      if (isSupported) {
-        // Поддерживает WebP
-        if (isMobile) {
-          setLeftBackground("/home/webp/mportfolioHover.webp");
-          setRightBackground("/home/webp/maboutUsHover.webp");
-        } else {
-          setLeftBackground("/home/webp/portfolioHover.webp");
-          setRightBackground("/home/webp/aboutUsHover.webp");
-        }
-        console.log(leftBackground, rightBackground);
+    if (isSuppurtedWebP) {
+      if (isMobile) {
+        setLeftBackground("/home/webp/mportfolioHover.webp");
+        setRightBackground("/home/webp/maboutUsHover.webp");
       } else {
-        if (isMobile) {
-          setLeftBackground("/home/mportfolioHover.png");
-          setRightBackground("/home/maboutUsHover.png");
-        } else {
-          setLeftBackground("/home/portfolioHover.png");
-          setRightBackground("/home/aboutUsHover.png");
-        }
-        console.log(leftBackground, rightBackground);
+        setLeftBackground("/home/webp/portfolioHover.webp");
+        setRightBackground("/home/webp/aboutUsHover.webp");
       }
-    });
-  }, [leftBackground, rightBackground]);
+      console.log(leftBackground, rightBackground);
+    } else {
+      if (isMobile) {
+        setLeftBackground("/home/mportfolioHover.png");
+        setRightBackground("/home/maboutUsHover.png");
+      } else {
+        setLeftBackground("/home/portfolioHover.png");
+        setRightBackground("/home/aboutUsHover.png");
+      }
+      console.log(leftBackground, rightBackground);
+    }
+  }, [leftBackground, rightBackground, isSuppurtedWebP]);
 
   return (
     <>

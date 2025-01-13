@@ -12,6 +12,7 @@
 /build
 /public/videos
 /public/sitemap.xml
+/public/posters
 
 # misc
 .DS_Store
