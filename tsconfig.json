@@ -6,11 +6,11 @@
     "strict": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "resolveJsonModule": true,
+    "resolveJsonModule": true, 
     "allowJs": true, // Разрешить использование JavaScript
     "checkJs": false, // Отключить проверку для JavaScript файлов
     "jsx": "react",
-    "types": ["jest", "@testing-library/jest-dom"]
+    "types": ["jest", "@testing-library/jest-dom", "node"]
   },
   "include": ["src", "@types"],
   "exclude": ["node_modules", "**/*.spec.ts"]

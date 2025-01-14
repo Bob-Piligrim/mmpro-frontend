@@ -157,7 +157,7 @@
 
 .modal-form textarea {
   margin-top: 60px;
-  margin-bottom: 43px;
+  margin-bottom: 15px;
   resize: none;
 }
 
@@ -168,6 +168,17 @@
   border-bottom: 1px solid rgba(255, 255, 255, 1);
   background: none;
   box-shadow: none;
+}
+
+.fileUpload {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.fileUpload span {
+  font-size: 12px;
 }
 
 .modal-form button {
@@ -194,7 +205,6 @@
   height: auto;
   font-weight: 300;
   padding-bottom: 5px;
-  
 }
 
 @media (orientation: portrait) and (max-width: 656px) {
