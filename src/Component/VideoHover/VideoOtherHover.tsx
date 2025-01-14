@@ -146,7 +146,8 @@ const VideoOtherHover: React.FC<VideoOtherHoverProps> = ({
     >
       <video
         preload={shouldPlay ? "auto" : "none"}
-        loop
+        playsInline
+        /* loop */
         id="video"
         ref={videoRef}
         poster={video.poster}

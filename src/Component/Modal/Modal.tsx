@@ -102,7 +102,7 @@ const Modal: React.FC<ModalProps> = ({ onClose }) => {
     });
 
     try {
-      const response = await fetch("http://localhost:5000/sendMessage", {
+      const response = await fetch("https://www.mmproduction.ru:5000/sendMessage", {
         method: "POST",
         body: formData,
       });
