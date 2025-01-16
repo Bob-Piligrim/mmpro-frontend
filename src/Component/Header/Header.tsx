@@ -15,7 +15,7 @@ const Header: React.FC = () => {
   };
 
   const updateLogo = () => {
-    if (window.innerWidth < 361) {
+    if (window.innerWidth < 100) {
       setLogoImage(mMMPRO);
     } else {
       setLogoImage(MMPRO);

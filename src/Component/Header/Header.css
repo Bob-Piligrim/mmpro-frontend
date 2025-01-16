@@ -112,7 +112,16 @@
     margin-top: 26px;
   }
 
-  @media (orientation: portrait) and (width < 361px) {
+  @media (orientation: portrait) and (width < 355px) and (width > 30px) {
+    .header-button {
+      width: 140px;
+      font-size: 9px;
+      padding: 0;
+      justify-content: center;
+    }
+  }
+
+  @media (orientation: portrait) and (width < 300px) {
     .logoword {
       width: 71px;
       height: auto;
@@ -160,7 +169,7 @@
     text-align: start;
   }
 
-  @media (orientation: landscape) and (width < 361px) {
+  @media (orientation: landscape) and (width < 300px) {
     .logoword {
       width: 73px;
       height: auto;
