@@ -5,6 +5,7 @@ import righttop from "../../Assets/Modal/topright.png";
 import rightbottom from "../../Assets/Modal/bottomright.png";
 import skrepka from "../../Assets/Modal/skrepka.png";
 import ThankYou from "../ThankYou/ThankYou";
+import TextMask from "react-text-mask";
 
 interface ModalProps {
   onClose: () => void;
@@ -20,7 +21,7 @@ const Modal: React.FC<ModalProps> = ({ onClose }) => {
   const [message, setMessage] = useState<string>("");
   const [error, setError] = useState<string | null>(null);
   const [file, setFile] = useState<File | null>(null);
-  const [submitted, setSubmitted] = useState<boolean>(false); // Состояние для отслеживания отправки
+  const [submitted, setSubmitted] = useState<boolean>(false); // Состояние для отслеживания отправки (для ThankYou)
 
   const updatePlaceHolder = () => {
     if (window.innerWidth < 656) {
@@ -44,19 +45,48 @@ const Modal: React.FC<ModalProps> = ({ onClose }) => {
     console.log("Выбранный файл:", selectedFile);
   };
 
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let inputValue = e.target.value;
+
+    /**
+     * @param ((\+7 \(\s*)8/, "$1") - это группа захвата, которая ищет точную подстроку:
+     * @param (\+7 \(\s*) - это группа захвата, которая ищет точную подстроку:
+     * \+7 — символ +, за которым следуют "7";
+     * \( — символ открывающей скобки. Чтобы экранировать его (поскольку ( имеет специальное значение в регулярных выражениях), используется обратная косая черта (\).
+     * \s* — соответствует любому количеству пробелов (включая ноль).
+     * 8 — это конкретно число "8", которое мы собираемся удалить.
+     * $1 — это ссылка на первую группу захвата (в данном случае — на подстроку "+7 (" или "+7 (" с любым количеством пробелов после ().
+     * */
+    if (inputValue.startsWith("+7 (8")) {
+      inputValue = inputValue.replace(/^(\+7 \(\s*)8/, "$1");
+    }
+
+    setPhone(inputValue); // Обновляем состояние
+  };
+
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     // Проверка валидности данных
-    if (!name || !phone) {
-      setError("Имя и телефон обязательны для заполнения");
+    if (!name) {
+      setError("Пожалуйста заполните Ваше имя");
+      return;
+    } else if (!phone) {
+      setError("Пожалуйста заполните Ваш номер телефона");
       return;
     }
 
-    // Проверка формата телефона (пример)
-    const phoneRegex = /^[0-9]{11}$/; // Пример для 10-значного номера
+    const phoneRegex = /^\+7\s\(\d{3}\)\s\d{3}-\d{2}-\d{2}$/;
     if (!phoneRegex.test(phone)) {
-      setError("Некорректный номер телефона"); // Переделать красиво через css
+      setError("Некорректный номер телефона");
+      return;
+    }
+    console.log("Отправлен номер телефона:", phone);
+
+    setError(null);
+
+    if (!message && !file) {
+      setError("Обязательно укажите либо сообщение, либо прикрепите файл");
       return;
     }
 
@@ -116,7 +146,7 @@ const Modal: React.FC<ModalProps> = ({ onClose }) => {
       if (!response.ok) {
         throw new Error(resData.message || "Ошибка при отправке сообщения");
       }
-
+      console.log("Отправили номер: ", `+7${phone}`);
       console.log("Response:", resData);
       setSubmitted(true); // Устанавливаем состояние отправленного после успешной отправки
     } catch (error) {
@@ -168,15 +198,36 @@ const Modal: React.FC<ModalProps> = ({ onClose }) => {
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 className="nameInput"
-                required
               />
-              <input
+              <TextMask
+                mask={[
+                  "+",
+                  "7",
+                  " ",
+                  "(",
+                  /[0-9]/,
+                  /\d/,
+                  /\d/,
+                  ")",
+                  " ",
+                  /\d/,
+                  /\d/,
+                  /\d/,
+                  "-",
+                  /\d/,
+                  /\d/,
+                  "-",
+                  /\d/,
+                  /\d/,
+                ]}
                 type="tel"
+                /* placeholder="+7 (___) ___-__-__" */
                 placeholder="Ваш номер телефона"
+                guide={false}
                 value={phone}
-                onChange={(e) => setPhone(e.target.value)}
+                /* onChange={(e) => setPhone(e.target.value)} */
+                onChange={handleChange}
                 className="phoneInput"
-                required
               />
               <textarea
                 placeholder={placeholder}
