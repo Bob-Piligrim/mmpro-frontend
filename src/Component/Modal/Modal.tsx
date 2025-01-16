@@ -4,6 +4,7 @@ import lefttop from "../../Assets/Modal/topleft.png";
 import righttop from "../../Assets/Modal/topright.png";
 import rightbottom from "../../Assets/Modal/bottomright.png";
 import skrepka from "../../Assets/Modal/skrepka.png";
+import ThankYou from "../ThankYou/ThankYou";
 
 interface ModalProps {
   onClose: () => void;
@@ -19,6 +20,7 @@ const Modal: React.FC<ModalProps> = ({ onClose }) => {
   const [message, setMessage] = useState<string>("");
   const [error, setError] = useState<string | null>(null);
   const [file, setFile] = useState<File | null>(null);
+  const [submitted, setSubmitted] = useState<boolean>(false); // Состояние для отслеживания отправки
 
   const updatePlaceHolder = () => {
     if (window.innerWidth < 656) {
@@ -102,10 +104,13 @@ const Modal: React.FC<ModalProps> = ({ onClose }) => {
     });
 
     try {
-      const response = await fetch("https://www.mmproduction.ru:5000/sendMessage", {
-        method: "POST",
-        body: formData,
-      });
+      const response = await fetch(
+        "https://www.mmproduction.ru:5000/sendMessage",
+        {
+          method: "POST",
+          body: formData,
+        }
+      );
 
       const resData = await response.json();
       if (!response.ok) {
@@ -113,6 +118,7 @@ const Modal: React.FC<ModalProps> = ({ onClose }) => {
       }
 
       console.log("Response:", resData);
+      setSubmitted(true); // Устанавливаем состояние отправленного после успешной отправки
     } catch (error) {
       console.error("Ошибка при отправке сообщения: ", error);
       setError("Произошла ошибка при отправке сообщения");
@@ -128,6 +134,11 @@ const Modal: React.FC<ModalProps> = ({ onClose }) => {
       onClose();
     }
   };
+
+  // Если форма была успешно отправлена, показываем компонент ThankYou
+  if (submitted) {
+    return <ThankYou />;
+  }
 
   return (
     <>
@@ -156,6 +167,7 @@ const Modal: React.FC<ModalProps> = ({ onClose }) => {
                 placeholder="Ваше имя"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
+                className="nameInput"
                 required
               />
               <input
@@ -163,6 +175,7 @@ const Modal: React.FC<ModalProps> = ({ onClose }) => {
                 placeholder="Ваш номер телефона"
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
+                className="phoneInput"
                 required
               />
               <textarea
@@ -178,21 +191,11 @@ const Modal: React.FC<ModalProps> = ({ onClose }) => {
                 style={{ display: "none" }}
                 id="file-upload"
               />
-              <label
-                htmlFor="file-upload"
-                
-                className="fileUpload"
-              >
+              <label htmlFor="file-upload" className="fileUpload">
                 <span style={{ marginRight: "8px" }}>
-                  <img
-                    src={skrepka}
-                    alt="Upload"
-                    width="24"
-                    height="24"
-                  />
+                  <img src={skrepka} alt="Upload" />
                 </span>
                 <span>{file ? file.name : "Прикрепить файл"}</span>{" "}
-                
               </label>
               <button type="submit">
                 ОТПРАВИТЬ

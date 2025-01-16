@@ -18,8 +18,8 @@ interface VideoHoverProps {
 
 const VideoHover: React.FC<VideoHoverProps> = ({
   video,
-  onBack
-/*   currentCat, */
+  onBack,
+  /*   currentCat, */
 }) => {
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
@@ -167,6 +167,21 @@ const VideoHover: React.FC<VideoHoverProps> = ({
     return `${minutes}:${seconds < 10 ? `0${seconds}` : seconds}`;
   };
 
+  useEffect(() => {
+    const playVideo = async () => {
+      if (videoRef.current) {
+        try {
+          await videoRef.current.play();
+          console.log("Видео работает")
+        } catch (error) {
+          console.log("Ошибка воспроизведения");
+        }
+      }
+    };
+
+    playVideo();
+  }, []);
+
   /* Для подробностей */
   /* const handleProjectClick = (project: VideoHoverInterface) => {
     setSelectedProject(project);
@@ -192,12 +207,13 @@ const VideoHover: React.FC<VideoHoverProps> = ({
       <video
         preload={shouldPlay ? "auto" : "none"}
         playsInline
-        /* loop */
+        autoPlay
         id="video"
         ref={videoRef}
         poster={video.poster}
         onPause={() => setIsPlaying(false)}
         onPlay={() => setIsPlaying(true)}
+        onCanPlayThrough={() => videoRef.current?.play()}
       >
         {shouldPlay && <source src={video.videoUrl} type="video/mp4" />}
         Ваш браузер не поддерживает видео.

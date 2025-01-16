@@ -9,26 +9,20 @@
   align-items: center;
   z-index: 99999;
   background-color: transparent; /* ? */
-  backdrop-filter: blur(2px);
-  /* background: linear-gradient(0deg, #5b5757, #797575); */
-  /* background: radial-gradient(
-      69.04% 69.04% at 47.26% 39.49%,
-      rgba(0, 0, 0, 0) 0%,
-      rgba(0, 0, 0, 0.7) 100%
-    ) */
-  /* warning: gradient uses a rotation that is not supported by CSS and may not behave as expected */
 }
 
 .modal-container-background {
-  width: 60vw;
+  width: 57vw;
+  min-width: 600px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-  background-color: rgba(116, 116, 116, 0.7);
-  backdrop-filter: blur(74px);
+  background-color: rgba(116, 116, 116, 0.1);
   border-radius: 20px;
   padding: 50px 95px;
   display: flex;
   justify-content: center;
-  backdrop-filter: blur(200px);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  background-color: rgba(116, 116, 116, 0.1);
+  backdrop-filter: blur(16px);
 }
 
 .modal-container {
@@ -99,7 +93,7 @@
   right: 10px;
   border-bottom: 1px solid rgba(255, 255, 255, 1);
   border-right: 1px solid rgba(255, 255, 255, 1);
-  padding-top: 40px;
+  padding-top: 35px;
 }
 
 .bottom-right img {
@@ -115,7 +109,7 @@
   text-align: center;
   font-weight: 600;
   font-size: 35px;
-  font-size: clamp(30px, 1.8vw, 38px);
+  font-size: clamp(26px, 1.8vw, 38px);
   line-height: 42px;
   color: rgba(255, 27, 27, 1);
   text-shadow: 0px 4.13px 107.44px rgba(0, 0, 0, 1);
@@ -124,15 +118,15 @@
 
 .modal-container div {
   font-size: 20px;
-  font-size: clamp(16px, 1vw, 23px);
+  font-size: clamp(14px, 1vw, 23px);
 }
 
 .modal-form {
   margin-top: 50px;
   display: flex;
   flex-direction: column;
-  width: 25vw;
-  min-width: 368px;
+  width: 21vw;
+  min-width: 300px;
 }
 
 .modal-form input,
@@ -145,19 +139,23 @@
   line-height: 16px;
   color: rgba(255, 255, 255, 1);
   color: white;
-  border-bottom: 1px solid rgba(255, 255, 255, 1);
+  border-bottom: 0.5px solid rgba(255, 255, 255, 0.3);
   text-shadow: 0px 4.13px 107.44px rgba(0, 0, 0, 1);
 }
 
 .modal-form input {
-  margin-bottom: 32px;
-  padding-left: 10px;
+  padding-left: 11px;
   padding-bottom: 10px;
 }
 
+.nameInput {
+  margin-bottom: 32px;
+}
+
 .modal-form textarea {
-  margin-top: 60px;
+  margin-top: 90px;
   margin-bottom: 15px;
+  padding-left: 10px;
   resize: none;
 }
 
@@ -175,10 +173,16 @@
   display: flex;
   align-items: center;
   margin-bottom: 20px;
+  padding-left: 4px;
 }
 
 .fileUpload span {
   font-size: 12px;
+}
+
+.fileUpload span img {
+  width: 24px;
+  height: 24px;
 }
 
 .modal-form button {
@@ -207,22 +211,32 @@
   padding-bottom: 5px;
 }
 
+.fileUpload span img {
+  width: 24px;
+  height: 24px;
+}
+
 @media (orientation: portrait) and (max-width: 656px) {
   .modal-background {
     height: 80vh;
-    margin-top: 10vh;
+    height: 500px;
+    margin-top: 20vh;
   }
 
   .modal-container-background {
-    width: 90vw;
-    height: 80vh;
-    padding: 26px 19px;
+    width: 80vw;
+    min-width: auto;
+    height: auto;
+
+    padding: 26px 13px;
     display: flex;
     justify-content: center;
   }
 
   .modal-container {
-    width: 90vw;
+    width: 80vw;
+    display: flex;
+    min-width: auto;
   }
 
   /* углы */
@@ -286,15 +300,11 @@
 
   /* углы */
 
-  .modal-container {
-    justify-content: start;
-  }
-
   .modal-container h2 {
     font-size: 18px;
     font-size: clamp(18px, 5.8vw, 23px);
-    margin-top: 80px;
-    margin-bottom: 0;
+    margin-top: 45px;
+    margin-bottom: 0px;
   }
 
   .modal-container div {
@@ -303,12 +313,12 @@
   }
 
   .modal-form {
-    margin-top: 80px;
+    margin-top: 35px;
     display: flex;
     flex-direction: column;
-    width: 72vw;
     min-width: auto;
-    width: clamp(230px, 72vw, 370px);
+    max-width: 315px;
+    width: 70vw;
   }
 
   .modal-form input,
@@ -317,258 +327,116 @@
     background: transparent;
     border: none;
     font-weight: 400;
-    font-size: 14px;
+    font-size: 9px;
     line-height: 16px;
     color: rgba(255, 255, 255, 0.4);
     color: white;
-    border-bottom: 1px solid rgba(255, 255, 255, 1);
+    border-bottom: 0.5px solid rgba(255, 255, 255, 0.2);
     text-shadow: 0px 4.13px 107.44px rgba(0, 0, 0, 1);
   }
 
   .modal-form input {
-    margin-bottom: 32px;
-    padding-left: 10px;
-    padding-bottom: 10px;
+    padding-left: 15px;
+    padding-bottom: 6px;
   }
 
   .modal-form textarea {
-    margin-top: 80px;
-    margin-bottom: 60px;
+    padding-bottom: 0;
+    margin-top: 30px;
+    margin-bottom: 20px;
+    padding-left: 15px;
+  }
+
+  .fileUpload span {
+    font-size: 10px;
   }
 
   .modal-form button {
     width: 149px;
     height: 36px;
-    margin-bottom: 80px;
-  }
-}
-
-@media (orientation: portrait) and (max-width: 350px) {
-  .modal-background {
-    height: 90vh;
-    margin-top: 5vh;
+    margin-bottom: 45px;
   }
 
-  /* углы */
-
-  .corner {
-    position: absolute;
-    width: 30px;
-    height: 30px;
-  }
-
-  .top-left {
-    top: 6px;
-    left: 10px;
-    padding-left: 2px;
-    padding-top: 5px;
-  }
-
-  .top-left img {
-    width: 16px;
-    height: auto;
-  }
-
-  .top-right {
-    top: 6px;
-    right: 10px;
-    padding-top: 5px;
-  }
-
-  .top-right img {
-    width: 100%;
-    height: auto;
-  }
-
-  .bottom-left {
-    bottom: 0px;
-    left: 10px;
-    padding-top: 6px;
-    padding-left: 5px;
-  }
-
-  .bottom-left div {
-    font-family: Druk Cyr;
-    font-size: 12px;
-  }
-
-  .bottom-right {
-    bottom: 0px;
-    right: 10px;
-    padding-top: 0;
-  }
-
-  .bottom-right img {
-    width: 70px;
-    height: auto;
-    position: absolute;
-    right: 5px;
-    bottom: 0;
-  }
-
-  /* углы */
-
-  .modal-container {
-    display: block;
-  }
-
-  .modal-container h2 {
-    font-size: 16px;
-    margin-top: 40px;
-    margin-bottom: 0;
-  }
-
-  .modal-container div {
-    font-size: 11px;
-    font-size: clamp(9px, 3.3vw, 15px);
-  }
-
-  .modal-form {
-    margin-top: 16px;
-    display: flex;
-    flex-direction: column;
-    width: 80vw;
-    min-width: auto;
-  }
-
-  .modal-form input,
-  .modal-form textarea {
-    text-decoration: none;
-    background: transparent;
-    border: none;
-    font-weight: 400;
-    font-size: 9px;
-    line-height: 16px;
-    padding-left: 10px;
-    color: rgba(255, 255, 255, 0.4);
-    color: white;
-    border-bottom: 1px solid rgba(255, 255, 255, 1);
-    text-shadow: 0px 4.13px 107.44px rgba(0, 0, 0, 1);
-  }
-
-  .modal-form input {
-    margin-bottom: 10px;
-
-    padding-bottom: 10px;
+  .nameInput {
+    margin-bottom: 17px;
   }
 
   .modal-form textarea {
-    margin-top: 10px;
-    margin-bottom: 16px;
+    margin-top: 51px;
   }
 
-  .modal-form button {
-    width: 100px;
-    height: 30px;
-    margin-bottom: 30px;
-    font-size: 9px;
+  @media (orientation: portrait) and (width < 370px) {
+    .corner {
+      width: 26px;
+      height: 26px;
+    }
+
+    .top-left img {
+      width: 18px;
+      height: 18px;
+    }
+
+    .top-right {
+      padding-top: 5px;
+    }
+
+    .bottom-left {
+      padding-top: 0;
+    }
+
+    .bottom-left div {
+      font-size: 10px;
+    }
+
+    .bottom-right {
+      padding: 4px;
+    }
+
+    .bottom-right img {
+      width: 64px;
+      height: 18px;
+    }
+
+    .modal-container h2 {
+      font-size: clamp(15px, 6.6vw, 18px);
+    }
+
+    .modal-container div {
+      font-size: 10px;
+    }
+
+  }
+
+  @media (orientation: portrait) and (height < 170px) {
+    .modal-container {
+      min-height: 340px;
+    }
+
+    .modal-container h2 {
+      margin-top: 0;
+    }
+
+    .modal-form {
+      margin-top: 13px;
+    }
+
+    .modal-form input {
+      margin-bottom: 8px;
+    }
+
+    .modal-form textarea {
+      margin-top: 15px;
+      margin-bottom: 15px;
+    }
+
+    .fileUpload {
+      margin-bottom: 4px;
+    }
   }
 }
 
-@media (orientation: landscape) and (max-width: 1240px) and (max-height: 500px) {
-  .modal-background {
-    height: 90vh;
-    margin-top: 5vh;
-  }
-
+@media (width < 1200px) and (width > 657px) {
   .modal-container-background {
-    width: 60vw;
-    height: 90vh;
-    padding: 26px 19px;
-    display: flex;
-    justify-content: center;
-  }
-
-  .modal-container {
-    display: flex;
-    justify-content: start;
-  }
-
-  /* углы */
-
-  .corner {
-    position: absolute;
-    width: 30px;
-    height: 30px;
-  }
-
-  .top-left {
-    top: 6px;
-    left: 10px;
-    padding-left: 2px;
-    padding-top: 5px;
-  }
-
-  .top-left img {
-    width: 16px;
-    height: auto;
-  }
-
-  .top-right {
-    top: 6px;
-    right: 10px;
-    padding-top: 5px;
-  }
-
-  .top-right img {
-    width: 100%;
-    height: auto;
-  }
-
-  .bottom-left {
-    bottom: 0px;
-    left: 10px;
-    padding-top: 6px;
-    padding-left: 5px;
-  }
-
-  .bottom-left div {
-    font-family: Druk Cyr;
-    font-size: 12px;
-  }
-
-  .bottom-right {
-    bottom: 0px;
-    right: 10px;
-    padding-top: 0;
-  }
-
-  .bottom-right img {
-    width: 70px;
-    height: auto;
-    position: absolute;
-    right: 5px;
-    bottom: 0;
-  }
-
-  /* углы */
-
-  .modal-container h2 {
-    font-size: clamp(22px, 24px, 30px);
-    margin-bottom: 0;
-  }
-
-  .modal-container div {
-    font-size: clamp(12px, 14px, 16px);
-  }
-
-  .modal-form {
-    margin-top: 10px;
-    width: 40vw;
-  }
-
-  .modal-form input {
-    margin-top: 5px;
-    margin-bottom: clamp(10px, 15px, 20px);
-  }
-
-  .modal-form textarea {
-    margin-top: 10px;
-    margin-bottom: 0;
-    padding-left: 10px;
-  }
-
-  .modal-form button {
-    margin-top: 25px;
+    padding: 50px 40px;
   }
 }

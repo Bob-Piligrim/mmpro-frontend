@@ -24,7 +24,6 @@
 
 .left-half {
   left: 0;
-  background-image: url("/public/home/portfolioHover.png");
   filter: saturate(0%);
 }
 
@@ -36,7 +35,6 @@
 
 .right-half {
   right: 0;
-  background-image: url("/public/home/aboutUsHover.png");
   filter: saturate(0%);
 }
 

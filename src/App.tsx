@@ -8,6 +8,7 @@ import Portfolio from "./Pages/Portfolio/Portfolio";
 import About from "./Pages/About/About";
 import { HeaderProvider } from "./Component/Header/HeaderContext";
 import categories from "./Component/VideoHover/Categories";
+import NotFound from "./Component/NotFound/NotFound";
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
                     element={<Portfolio categories={categories} />}
                   />
                   <Route path="/aboutus" element={<About />} />
+                  <Route path="*" element={<NotFound />} />
                 </Routes>
               </Router>
             </div>

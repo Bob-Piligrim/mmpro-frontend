@@ -144,7 +144,10 @@ const Portfolio: React.FC<PortfolioProps> = ({ categories }) => {
 
   return (
     <>
-      <div ref={portfolioContainerRef} className="portfolio-container">
+      <div
+        ref={portfolioContainerRef}
+        className="portfolio-container"
+      >
         <div className="linkfixed-container">
           <img src={format} alt="format" />
           <div className="link-container" ref={linkContainerRef}>
