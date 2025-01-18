@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./NotFound.css";
-import { supportsWebP } from "../../Pages/Portfolio/utils";
+import { supportsWebP } from "../../utils";
 
 const NotFound: React.FC = () => {
   const [leftBackground, setLeftBackground] = useState<string>("");

@@ -1,12 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./Portfolio.css";
 import format from "../../Assets/Portfolio/format.png";
-import VideoHover from "../../Component/VideoHover/VideoHover";
-import VideoHoverInterface from "../../Component/VideoHover/VideoHoverInterface";
-import VideoOtherHover from "../../Component/VideoHover/VideoOtherHover";
+import VideoHover from "../../Component/Video/VideoHover/VideoHover";
+import VideoHoverInterface from "../../Component/Video/VideoHoverInterface";
+import VideoOtherHover from "../../Component/Video/VideoOtherHover/VideoOtherHover";
 import { useParams, useNavigate } from "react-router-dom";
-import Category from "../../Component/VideoHover/CategoryInterface";
-import { supportsWebP } from "./utils";
+import Category from "../../Component/Video/CategoryInterface";
+import { supportsWebP } from "../../utils";
 
 interface PortfolioProps {
   categories: Category[];

@@ -1,24 +1,40 @@
 // useVideoPlayer.ts
-import { useRef, useState, useEffect, useCallback } from "react";
+import React, { useRef, useState, useEffect, useCallback } from "react";
 import { useHeader } from "../Header/HeaderContext";
+import { isSafariOrIos } from "../../utils";
+import VideoHoverInterface from "./VideoHoverInterface";
 
-const isSafariOrIos = (): boolean => {
-  const userAgent = navigator.userAgent;
-  const isSafari = /Safari/.test(userAgent) && !/Chrome/.test(userAgent); // Проверка на Safari
-  const isIOS = /iPhone|iPad|iPod/.test(userAgent); // Проверка на iOS устройство
-  return isSafari || isIOS; // Возвращаем true, если это Safari или iOS
-};
+const isSafariIosSupported = isSafariOrIos();
 
-const useVideoPlayer = (videoUrl: string, poster: string) => {
+const useVideoPlayer = (video: VideoHoverInterface, onBack?: () => void) => {
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
-  const [showPlayPrompt, setShowPlayPrompt] = useState<boolean>(false);
-  const [duration, setDuration] = useState<number>(0);
-  const [currentTime, setCurrentTime] = useState<number>(0);
-  const [progress, setProgress] = useState<number>(0);
+  const [progress, setProgress] = useState(0);
+  const [isDragging, setIsDragging] = useState<boolean>(false);
+  const [duration, setDuration] = useState(0);
+  const [currentTime, setCurrentTime] = useState(0);
   const [showInfo, setShowInfo] = useState<boolean>(true);
   const { hideHeader, showHeader } = useHeader();
+  const [showPlayPrompt, setShowPlayPrompt] = useState<boolean>(false);
   const [shouldPlay, setShouldPlay] = useState<boolean>(false);
+
+  // Логика воспроизведения (монтирования) на сафари и ios
+  useEffect(() => {
+    if (isSafariOrIos()) {
+      setShowPlayPrompt(true);
+      console.log("Состояние под сафари и ios: ", showPlayPrompt);
+      console.log("Состояние проигрывания для сафари и ios: ", isPlaying);
+      const videoElement = document.getElementById("video");
+      if (videoElement) {
+        videoElement.style.opacity = "1";
+      }
+    } else {
+      setShowPlayPrompt(false);
+      setIsPlaying(true);
+      console.log("Состояние под сафари и ios: ", showPlayPrompt);
+      console.log("Состояние проигрывания для сафари и ios: ", isPlaying);
+    }
+  }, [isPlaying, showPlayPrompt]);
 
   // Загрузка методанных и линии прогресса
   const handleLoadedMetadata = () => {
@@ -52,12 +68,20 @@ const useVideoPlayer = (videoUrl: string, poster: string) => {
     return `${minutes}:${seconds < 10 ? `0${seconds}` : seconds}`;
   };
 
+  // Логика событий после окончания видео
+  const handleVideoEnded = () => {
+    setIsPlaying(false); // Устанавливаем состояние на "не играет"
+    setCurrentTime(0); // Сбрасываем текущее время
+    setProgress(0); // Сбрасываем прогресс
+  };
+
   useEffect(() => {
     const videoElement = videoRef.current;
     if (videoElement) {
       videoElement.addEventListener("loadedmetadata", handleLoadedMetadata);
       videoElement.addEventListener("timeupdate", handleTimeUpdate);
-      /* videoElement.play(); */ // убираем, чтоб не работало (для сафари сделано)
+      videoElement.addEventListener("ended", handleVideoEnded);
+      /* videoElement.play(); */
     }
     return () => {
       if (videoElement) {
@@ -66,9 +90,38 @@ const useVideoPlayer = (videoUrl: string, poster: string) => {
           handleLoadedMetadata
         );
         videoElement.removeEventListener("timeupdate", handleTimeUpdate);
+        videoElement.removeEventListener("ended", handleVideoEnded);
       }
     };
   }, [handleTimeUpdate]);
+
+  // Логика каасания прогресса видео
+  const handleProgressClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    const progressBar = e.currentTarget as HTMLDivElement;
+    const rect = progressBar.getBoundingClientRect();
+    const offsetX = e.clientX - rect.left; // Позиция клика относительно прогресс-бара
+    /* const newProgress = offsetX / rect.width; */ // Новое значение прогресса (от 0 до 1)
+    const newProgress = Math.max(0, Math.min(1, offsetX / rect.width)); // Ограничиваем значение от 0 до 1
+    const newTime = newProgress * duration; // Новое время видео
+    if (videoRef.current) {
+      videoRef.current.currentTime = newTime; // Устанавливаем новое время
+      setCurrentTime(newTime); // Обновляем состояние текущего времени
+    }
+  };
+
+  const handleMouseDown = () => {
+    setIsDragging(true);
+  };
+
+  const handleMouseUp = () => {
+    setIsDragging(false);
+  };
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (isDragging) {
+      handleProgressClick(e);
+    }
+  };
 
   // Событие нажатия мышкой
   const handleMouseEnter = () => {
@@ -224,23 +277,36 @@ const useVideoPlayer = (videoUrl: string, poster: string) => {
   }, []);
 
   return {
+    video,
+    onBack,
     videoRef,
     isPlaying,
-    showPlayPrompt,
+    setIsPlaying,
+    progress,
+    isDragging,
     duration,
     currentTime,
-    progress,
-    poster,
-    videoUrl,
     showInfo,
+    hideHeader,
+    showHeader,
+    showPlayPrompt,
     shouldPlay,
-    formatTime,
+    isSafariIosSupported,
     handleMouseEnter,
     handleMouseLeave,
+    forHeader,
     handleTouchStart,
-    handleButtonClick,
     handlePlayPause,
     handleUserInteraction,
+    handleButtonClick,
+    handleLoadedMetadata,
+    handleTimeUpdate,
+    handleVideoEnded,
+    formatTime,
+    handleProgressClick,
+    handleMouseDown,
+    handleMouseUp,
+    handleMouseMove
   };
 };
 export default useVideoPlayer;

@@ -8,7 +8,7 @@ import example3 from "../../Assets/ProjectInformation/example3.png";
 import example4 from "../../Assets/ProjectInformation/example4.png";
 import example5 from "../../Assets/ProjectInformation/example5.png";
 import example6 from "../../Assets/ProjectInformation/example6.png";
-import VideoHoverInterface from "../VideoHover/VideoHoverInterface";
+import VideoHoverInterface from "../Video/VideoHoverInterface";
 
 interface projectInformationProps {
     project: VideoHoverInterface;
