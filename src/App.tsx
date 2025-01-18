@@ -7,7 +7,7 @@ import Home from "./Pages/Home/Home";
 import Portfolio from "./Pages/Portfolio/Portfolio";
 import About from "./Pages/About/About";
 import { HeaderProvider } from "./Component/Header/HeaderContext";
-import categories from "./Component/VideoHover/Categories";
+import categories from "./Component/Video/Categories";
 import NotFound from "./Component/NotFound/NotFound";
 import Modal from "./Component/Modal/Modal";
 

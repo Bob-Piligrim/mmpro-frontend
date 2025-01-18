@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./Home.css";
 import { Helmet } from "react-helmet-async";
-import { supportsWebP } from "../../Pages/Portfolio/utils";
+import { supportsWebP } from "../../utils";
 
 const Home: React.FC = () => {
   const [isLeftHovered, setIsLeftHovered] = useState<boolean>(false);
