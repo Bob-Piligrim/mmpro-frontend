@@ -9,19 +9,27 @@ import About from "./Pages/About/About";
 import { HeaderProvider } from "./Component/Header/HeaderContext";
 import categories from "./Component/VideoHover/Categories";
 import NotFound from "./Component/NotFound/NotFound";
+import Modal from "./Component/Modal/Modal";
 
 function App() {
+  const closeModal = () => {
+    return;
+  };
+
   return (
     <>
-      <HelmetProvider>
-        <div className="App">
-          <HeaderProvider>
-            <Header />
-
-            <div className="contentWrapper">
-              <Router>
+      <Router>
+        <HelmetProvider>
+          <div className="App">
+            <HeaderProvider>
+              <Header />
+              <div className="contentWrapper">
                 <Routes>
                   <Route path="/" element={<Home />} />
+                  <Route
+                    path="/modal"
+                    element={<Modal onClose={closeModal} />}
+                  />
                   <Route
                     path="/portfolio"
                     element={<Portfolio categories={categories} />}
@@ -34,11 +42,11 @@ function App() {
                   <Route path="/aboutus" element={<About />} />
                   <Route path="*" element={<NotFound />} />
                 </Routes>
-              </Router>
-            </div>
-          </HeaderProvider>
-        </div>
-      </HelmetProvider>
+              </div>
+            </HeaderProvider>
+          </div>
+        </HelmetProvider>
+      </Router>
     </>
   );
 }

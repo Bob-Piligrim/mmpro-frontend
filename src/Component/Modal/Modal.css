@@ -168,12 +168,38 @@
   box-shadow: none;
 }
 
+.containerFile {
+  display: flex;
+  flex-direction: row;
+}
+
+#deleteFile {
+  text-decoration: none;
+  border: none;
+  font-size: 12px;
+  margin-bottom: 20px;
+  width: auto;
+  height: auto;
+  background: none;
+  border-radius: none;
+  color: rgba(255, 27, 27, 1);
+  text-align: center;
+  align-self: center;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+ padding: unset;
+ padding-left: 30px;
+  display: flex;
+  align-items: center;
+}
+
 .fileUpload {
   cursor: pointer;
   display: flex;
   align-items: center;
-  margin-bottom: 20px;
   padding-left: 4px;
+  margin-bottom: 20px;
 }
 
 .fileUpload span {
@@ -422,6 +448,10 @@
 
     .fileUpload span {
       font-size: 10px;
+    }
+
+    #deleteFile {
+    font-size: 10px;
     }
 
     @media (orientation: portrait) and (width < 370px) and (height < 590px) {

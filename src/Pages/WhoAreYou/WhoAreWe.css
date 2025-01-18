@@ -2,8 +2,9 @@
   margin-top: 12px;
   font-weight: 600;
   font-size: 1.6vw;
-  width: 590px;
-  width: 30vw;
+  /* убираем width (сафари) ??? */
+/*   width: 590px;
+  width: 30vw; */
   height: 105px;
   height: 5.4vw;
   letter-spacing: 1px;

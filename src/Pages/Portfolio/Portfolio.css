@@ -171,23 +171,24 @@
   justify-content: space-between;
   margin-top: 7vh;
   margin-bottom: 1vh;
+  font-size: 13px;
 }
 
-.footer-link a {
+.portfolio-back {
   text-decoration: none;
-  color: white;
+  border: none;
+  background: transparent;
+  color: rgba(255, 255, 255, 1);
   display: flex;
-}
-
-.footer-link a div {
-  padding-right: 5px;
-}
-
-/* .footer-link-img {
-  margin-right: 9px;
-  width: 14px;
+  align-content: center;
+  width: auto;
   height: auto;
-} */
+  cursor: pointer;
+}
+
+.portfolio-back div {
+  padding-right: 7px;
+}
 
 .btn {
   justify-self: end;
@@ -278,13 +279,12 @@
       width: 200px;
       height: 140px;
     }
-  
+
     .poster-rils {
       width: 150px;
       height: auto;
-      
     }
-  
+
     .poster-kino {
       width: 110px;
       height: 300px;
@@ -337,7 +337,6 @@
   .posterOther-container:-webkit-scrollbar {
     display: none; /* Скрываем полосу прокрутки для WebKit */
   }
-
 
   .other-discription {
     margin-top: 4px;
