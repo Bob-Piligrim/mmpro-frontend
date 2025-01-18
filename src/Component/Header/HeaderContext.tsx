@@ -10,7 +10,7 @@ const HeaderContext = createContext<HeaderContextType | undefined>(undefined);
 
 export const useHeader = (): HeaderContextType => {
   const context = useContext(HeaderContext);
-  console.log("Контекст:", context);
+  /* console.log("Контекст:", context); */
   if (!context) {
     throw new Error("Бла");
   }

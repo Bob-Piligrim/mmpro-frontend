@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./About.css";
 import btn_next from "../../Assets/About/next.png";
-import btn_next_mob from "../../Assets/About/nextMobile.png";
 import link2 from "../../Assets/About/link2.png";
 import link3 from "../../Assets/About/link3.png";
 import link4 from "../../Assets/About/link4.png";

@@ -15,14 +15,12 @@ const Modal: React.FC<ModalProps> = ({ onClose }) => {
   const [placeholder, setPlaceholder] = useState<string>(
     "Отправить техническое задание"
   );
-
   const [name, setName] = useState<string>("");
   const [phone, setPhone] = useState<string>("");
   const [message, setMessage] = useState<string>("");
   const [error, setError] = useState<string | null>(null);
   const [file, setFile] = useState<File | null>(null);
   const [submitted, setSubmitted] = useState<boolean>(false); // Состояние для отслеживания отправки (для ThankYou)
-
   const updatePlaceHolder = () => {
     if (window.innerWidth < 656) {
       setPlaceholder("Техническое задание");
@@ -43,6 +41,17 @@ const Modal: React.FC<ModalProps> = ({ onClose }) => {
     const selectedFile = event.target.files?.[0];
     setFile(selectedFile || null);
     console.log("Выбранный файл:", selectedFile);
+  };
+
+  const deleteFileChange = () => {
+    setFile(null);
+    const fileInput = document.getElementById(
+      "file-upload"
+    ) as HTMLInputElement;
+    console.log(`Файл ${fileInput.value} удален`);
+    if (fileInput) {
+      fileInput.value = "";
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -234,20 +243,27 @@ const Modal: React.FC<ModalProps> = ({ onClose }) => {
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
               ></textarea>
-              <input
-                type="file" // Поле для загрузки файла
-                name="document"
-                accept=".txt, .jpg, .png, .pdf" // Указываем типы файлов, которые можно загрузить
-                onChange={handleFileChange}
-                style={{ display: "none" }}
-                id="file-upload"
-              />
-              <label htmlFor="file-upload" className="fileUpload">
-                <span style={{ marginRight: "8px" }}>
-                  <img src={skrepka} alt="Upload" />
-                </span>
-                <span>{file ? file.name : "Прикрепить файл"}</span>{" "}
-              </label>
+              <div className="containerFile">
+                <input
+                  type="file" // Поле для загрузки файла
+                  name="document"
+                  accept=".txt, .jpg, .png, .pdf" // Указываем типы файлов, которые можно загрузить
+                  onChange={handleFileChange}
+                  style={{ display: "none" }}
+                  id="file-upload"
+                />
+                <label htmlFor="file-upload" className="fileUpload">
+                  <span style={{ marginRight: "8px" }}>
+                    <img src={skrepka} alt="Upload" />
+                  </span>
+                  <span>{file ? file.name : "Прикрепить файл"}</span>{" "}
+                </label>
+                {file ? (
+                  <button onClick={deleteFileChange} id="deleteFile">
+                    Удалить файл
+                  </button>
+                ) : null}
+              </div>
               <button type="submit">
                 ОТПРАВИТЬ
                 <div className="arrow-up-modal">↑</div>

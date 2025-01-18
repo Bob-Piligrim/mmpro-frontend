@@ -144,10 +144,7 @@ const Portfolio: React.FC<PortfolioProps> = ({ categories }) => {
 
   return (
     <>
-      <div
-        ref={portfolioContainerRef}
-        className="portfolio-container"
-      >
+      <div ref={portfolioContainerRef} className="portfolio-container">
         <div className="linkfixed-container">
           <img src={format} alt="format" />
           <div className="link-container" ref={linkContainerRef}>
@@ -232,10 +229,11 @@ const Portfolio: React.FC<PortfolioProps> = ({ categories }) => {
         </div>
         <div className="footer-link">
           {" "}
-          <a href="/">
-            <div className="circle">←</div>
+          <button onClick={() => (window.location.href = "/")
+          } className="portfolio-back">
+            <div>←</div>
             <span>Назад</span>
-          </a>
+          </button>
           <div className="btn">
             <button
               onClick={prevCategory}
