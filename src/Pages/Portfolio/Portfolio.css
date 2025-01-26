@@ -70,7 +70,7 @@
 .content-container {
   flex: 1 0 auto;
   margin-top: 7vh;
-  width: 80vw;
+  width: 75vw;
   margin-bottom: auto;
 }
 
@@ -92,6 +92,45 @@
   -webkit-overflow-scrolling: touch;
 }
 
+.posterOther-container {
+  justify-content: flex-start; /* Выровнять по левому краю */
+  align-items: stretch; /* Растянуть элементы по высоте */
+}
+
+.posterOther-container > div {
+  margin-right: 12px;
+  display: flex;
+  flex-direction: column;
+  width: clamp(286px, 18vw, 320px);
+}
+
+.posterOther-container > div > button {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  width: clamp(290px, 18vw, 320px);
+  flex: 1 1 auto;
+}
+
+.posterRils-container {
+  justify-content: flex-start;
+  align-items: stretch;
+}
+
+.posterRils-container > div {
+  margin-right: 12px;
+  display: flex;
+  flex-direction: column;
+  width: clamp(250px, 18vw, 320px);
+}
+
+.posterRils-container > div > button {
+  display: flex;
+  align-items: center;
+  width: clamp(290px, 18vw, 320px);
+  flex: 1 1 auto;
+}
+
 .posterOther-container::-webkit-scrollbar {
   display: none;
 }
@@ -110,7 +149,6 @@
   height: 45vh;
   margin-right: 10px;
   transition: transform 0.3s ease, filter 0.3s ease;
-
   filter: grayscale(100%); /* Черно-белое изображение */
   cursor: pointer;
   object-fit: cover;
@@ -127,9 +165,8 @@
 }
 
 .poster-rils {
-  width: 290px;
-  height: 460px;
-  margin-right: 0px;
+  width: clamp(250px, 18vw, 320px);
+  height: clamp(440px, 445px, 460px);
   transition: transform 0.3s ease, filter 0.3s ease;
   filter: opacity(20%); /* Черно-белое изображение */
   cursor: pointer;
@@ -138,7 +175,9 @@
 .poster-other {
   width: 290px;
   height: 214px;
-  margin-right: 12px;
+  width: 100%;
+  height: auto;
+  /* margin-right: 12px; */
   transition: transform 0.3s ease, filter 0.3s ease;
   filter: opacity(20%); /* Черно-белое изображение */
   cursor: pointer;
@@ -181,6 +220,8 @@
   color: rgba(255, 255, 255, 1);
   display: flex;
   align-content: center;
+  align-items: center;
+  justify-content: center;
   width: auto;
   height: auto;
   cursor: pointer;
@@ -188,6 +229,8 @@
 
 .portfolio-back div {
   padding-right: 7px;
+  display: flex;
+  align-items: center;
 }
 
 .btn {
@@ -207,7 +250,12 @@
   cursor: pointer;
   color: white;
   display: flex;
+  align-items: center;
   justify-content: center;
+}
+
+.btn button div {
+  display: flex;
   align-items: center;
 }
 
@@ -215,7 +263,8 @@
   opacity: 1;
 }
 
-@media (orientation: portrait) and (max-width: 656px) {
+@media (orientation: portrait) and (max-width: 481px) {
+  /* 656px */
   /* 331px */
   .portfolio-container {
     margin-left: 0;
@@ -248,47 +297,45 @@
     height: 354px;
   }
 
-  @media (orientation: portrait) and (width < 361px) {
-    .linkfixed-container img {
-      width: 20px;
-      height: 10px;
-      margin-right: 20px;
-      margin-bottom: 4px;
-    }
+  .linkfixed-container img {
+    width: 20px;
+    height: 10px;
+    margin-right: 20px;
+    margin-bottom: 4px;
+  }
 
-    .link-container {
-      height: 30px;
-    }
+  .link-container {
+    height: 30px;
+  }
 
-    .category {
-      font-size: 6px;
-      width: auto;
-      height: 25px;
-      padding: 10px 20px;
-      margin-right: 6px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
+  .category {
+    font-size: 6px;
+    width: auto;
+    height: 25px;
+    padding: 10px 20px;
+    margin-right: 6px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 
-    .other-discription {
-      font-size: 12px;
-    }
+  .other-discription {
+    font-size: 12px;
+  }
 
-    .poster-other {
-      width: 200px;
-      height: 140px;
-    }
+  .poster-other {
+    width: 200px;
+    height: 140px;
+  }
 
-    .poster-rils {
-      width: 150px;
-      height: auto;
-    }
+  .poster-rils {
+    width: 150px;
+    height: auto;
+  }
 
-    .poster-kino {
-      width: 110px;
-      height: 300px;
-    }
+  .poster-kino {
+    width: 110px;
+    height: 300px;
   }
 
   .link-container {
@@ -356,6 +403,11 @@
     width: 89vw;
     margin-top: 0;
   }
+
+  .btn > button {
+    width: 27px;
+    height: 27px;
+  }
 }
 
 @media (orientation: landscape) and (max-width: 1240px) and (max-height: 500px) {
@@ -400,16 +452,6 @@
 
   .posterRils-container div button {
     margin-right: 30px;
-  }
-
-  .poster-other {
-    width: 210px;
-    height: 130px;
-  }
-
-  .poster-rils {
-    height: auto;
-    width: 140px;
   }
 
   .other-discription {

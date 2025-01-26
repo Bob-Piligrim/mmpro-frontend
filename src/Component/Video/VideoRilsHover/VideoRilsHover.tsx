@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from "react";
-import "./VideoOtherHover.css";
+import "../VideoOtherHover/VideoOtherHover.css";
 import "../VideoHover/VideoHover.css";
 import VideoHoverInterface from "../VideoHoverInterface";
 import useVideoPlayer from "../useVideoPlayer";
 
-interface VideoOtherHoverProps {
+interface VideoRilsHoverProps {
   video: VideoHoverInterface;
   onBack: () => void;
   currentCat: string;
 }
 
-const VideoOtherHover: React.FC<VideoOtherHoverProps> = ({ video, onBack }) => {
+const VideoRilsHover: React.FC<VideoRilsHoverProps> = ({ video, onBack }) => {
   const {
     videoRef,
     isPlaying,
@@ -32,10 +32,7 @@ const VideoOtherHover: React.FC<VideoOtherHoverProps> = ({ video, onBack }) => {
     handleMouseUp,
     handleMouseMove,
   } = useVideoPlayer(video, onBack);
-  const [mobile, setMobile] =
-    useState<boolean>(
-      false
-    );
+  const [mobile, setMobile] = useState<boolean>(false);
 
   const handleBackClick = () => {
     if (onBack) {
@@ -45,7 +42,7 @@ const VideoOtherHover: React.FC<VideoOtherHoverProps> = ({ video, onBack }) => {
 
   useEffect(() => {
     const updateMobileOrDesctop = () => {
-      const isMobile = window.matchMedia("(max-width: 656px)").matches;
+      const isMobile = window.matchMedia("(max-width: 481px)").matches;
       return isMobile ? setMobile(true) : setMobile(false);
     };
 
@@ -84,7 +81,7 @@ const VideoOtherHover: React.FC<VideoOtherHoverProps> = ({ video, onBack }) => {
             </div>
           </div>
         </div>
-        <div className="videoOther-descFooter">
+        <div className="videoRils-descFooter">
           <div className="videoOther-title">
             <div className="videoOther-videoName">{video.description}</div>
             <div className="videoOther-contentType">{video.contentType}</div>
@@ -136,39 +133,41 @@ const VideoOtherHover: React.FC<VideoOtherHoverProps> = ({ video, onBack }) => {
 
   return (
     <div
-      className="video-container"
+      className="video-containerRils"
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       onTouchStart={handleTouchStart}
       onClick={handleUserInteraction}
     >
-      <video
-        preload={shouldPlay ? "auto" : "none"}
-        playsInline
-        autoPlay={isSafariIosSupported ? false : true}
-        id="video"
-        className={!isPlaying ? "grayScale" : ""}
-        ref={videoRef}
-        poster={video.poster}
-        onPause={() => setIsPlaying(false)}
-        onPlay={() => setIsPlaying(true)}
-        onCanPlayThrough={() => videoRef.current?.play()}
-      >
-        {shouldPlay && <source src={video.videoUrl} type="video/mp4" />}
-        Ваш браузер не поддерживает видео
-      </video>
-      <div
-        id="OtherHoverMain"
-        className={showInfo ? "showInfo" : "notShowInfo"}
-      >
-        <button onClick={handleButtonClick} className="OtherHover-on-off">
-          <span>{isPlaying ? "❚❚" : "▶"}</span>
-        </button>
+      <div className="videoRils-secondcontainer">
+        <video
+          preload={shouldPlay ? "auto" : "none"}
+          playsInline
+          autoPlay={isSafariIosSupported ? false : true}
+          id="videoRils"
+          className={!isPlaying ? "grayScale" : ""}
+          ref={videoRef}
+          poster={video.poster}
+          onPause={() => setIsPlaying(false)}
+          onPlay={() => setIsPlaying(true)}
+          onCanPlayThrough={() => videoRef.current?.play()}
+        >
+          {shouldPlay && <source src={video.videoUrl} type="video/mp4" />}
+          Ваш браузер не поддерживает видео
+        </video>
+        <div
+          id="OtherRilsMain"
+          className={showInfo ? "showInfo" : "notShowInfo"}
+        >
+          <button onClick={handleButtonClick} className="OtherHover-on-off">
+            <span>{isPlaying ? "❚❚" : "▶"}</span>
+          </button>
 
-        {mobile ? <MobileHover /> : <DesctopHover />}
+          {mobile ? <MobileHover /> : <DesctopHover />}
+        </div>
       </div>
     </div>
   );
 };
 
-export default VideoOtherHover;
+export default VideoRilsHover;

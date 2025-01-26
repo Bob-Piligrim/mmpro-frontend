@@ -23,18 +23,16 @@ const useVideoPlayer = (video: VideoHoverInterface, onBack?: () => void) => {
     if (isSafariOrIos()) {
       setShowPlayPrompt(true);
       console.log("Состояние под сафари и ios: ", showPlayPrompt);
-      console.log("Состояние проигрывания для сафари и ios: ", isPlaying);
       const videoElement = document.getElementById("video");
       if (videoElement) {
         videoElement.style.opacity = "1";
       }
     } else {
       setShowPlayPrompt(false);
-      setIsPlaying(true);
+      /*       setIsPlaying(true); */
       console.log("Состояние под сафари и ios: ", showPlayPrompt);
-      console.log("Состояние проигрывания для сафари и ios: ", isPlaying);
     }
-  }, [isPlaying, showPlayPrompt]);
+  }, [showPlayPrompt]);
 
   // Загрузка методанных и линии прогресса
   const handleLoadedMetadata = () => {
@@ -131,35 +129,80 @@ const useVideoPlayer = (video: VideoHoverInterface, onBack?: () => void) => {
     }
   };
 
-  // Событие ухода мышки
-  const handleMouseLeave = (e: React.MouseEvent) => {
-    if (videoRef.current) {
-      if (
-        e.relatedTarget &&
-        (e.relatedTarget as HTMLElement).className !== "on-off"
-      ) {
-        setShowInfo(false);
-        hideHeader();
+  const interactiveClasses = [
+    "header-container",
+    "on-off",
+    "OtherHover-on-off",
+    "lineProgress",
+    "videoOtherLineProgress",
+    "video-footerPrev",
+    "video-footerPrev2",
+  ];
+
+  // Обработчик mouseleave
+  const handleMouseLeave = (event: React.MouseEvent) => {
+    const target = event.relatedTarget as HTMLElement;
+
+    // Если target не существует, просто скрываем информацию
+    if (!target) {
+      setShowInfo(false);
+      hideHeader();
+      return;
+    }
+
+    // Убедимся, что target является HTMLElement перед работой с classList
+    if (target instanceof HTMLElement) {
+      const isInteractive = interactiveClasses.some(
+        (className) =>
+          target.classList.contains(className) ||
+          target.closest(`.${className}`) !== null // Проверяем родителей
+      );
+
+      if (isInteractive) {
+        setShowInfo(true);
+        showHeader();
+        return; // Ничего не делаем, если курсор на интерактивном элементе
       }
     }
+
+    setShowInfo(false); // Скрываем информацию, если ничего не сработало
+    hideHeader();
   };
 
   // Собыытие нажатия пальчиками
   const handleTouchStart = (e: React.TouchEvent) => {
-    const target = e.target as HTMLElement;
-    if (target.classList.contains("on-off")) {
-      return;
-    }
+    const target = e.target as HTMLElement; // Измените на currentTarget
 
-    if (videoRef.current) {
-      setShowInfo((prev) => !prev);
-      forHeader(e);
+    // Проверяем, является ли целевой элемент интерактивным
+    if (target instanceof HTMLElement) {
+      const isInteractive = interactiveClasses.some(
+        (className) =>
+          target.classList.contains(className) ||
+          target.closest(`.${className}`) !== null // Проверяем родителей
+      );
+
+      // Если элемент интерактивный, ничего не делаем
+      if (isInteractive) {
+        // Проверяем, является ли нажата кнопка
+        if (
+          target.classList.contains("on-off") ||
+          target.classList.contains("OtherHover-on-off")
+        ) {
+          return; // Выходим из функции
+        }
+      } else {
+        // Если элемент не интерактивный, переключаем состояние отображения информации
+        if (videoRef.current) {
+          setShowInfo((prev) => !prev);
+          forHeader(e); // Дополнительная функция, если требуется
+        }
+      }
     }
   };
 
   // Прячем/показываем хедер
   const forHeader = (e: React.TouchEvent) => {
-    if (e.target) {
+    if (e.target && showInfo) {
       hideHeader();
     } else {
       showHeader();
@@ -204,6 +247,37 @@ const useVideoPlayer = (video: VideoHoverInterface, onBack?: () => void) => {
     }
   };
 
+  /* const handlePlayPause = () => {
+    const videoElement = videoRef.current;
+    console.log("handlePlayPause called, isPlaying:", isPlaying); // Отладка
+
+    if (videoElement) {
+      if (isPlaying) {
+        console.log("Pausing video"); // Отладка
+        videoElement.pause();
+        setIsPlaying(false);
+      } else {
+        console.log("Playing video"); // Отладка
+        if (isSafariOrIos()) {
+          setShowPlayPrompt(true);
+        }
+        // Убедитесь, что не нужно повторно выполнять play() и pause()
+        videoElement
+          .play()
+          .then(() => {
+            console.log("Video is now playing"); // Отладка
+            setIsPlaying(true);
+          })
+          .catch((error) => {
+            console.log("Ошибка воспроизведения", error);
+            setIsPlaying(false);
+          });
+      }
+    } else {
+      console.log("videoElement is null"); // Отладка
+    }
+  }; */
+
   // Для сафари и ios (ios не тестирован)
   const handleUserInteraction = () => {
     const videoElement = videoRef.current;
@@ -226,7 +300,7 @@ const useVideoPlayer = (video: VideoHoverInterface, onBack?: () => void) => {
   };
 
   // Логика для кнопочки
-  const handleButtonClick = (e: React.MouseEvent) => {
+  const handleButtonClick = (e: React.MouseEvent | React.TouchEvent) => {
     e.stopPropagation(); // Предотвращаем всплытие события
     handlePlayPause();
   };
@@ -287,6 +361,7 @@ const useVideoPlayer = (video: VideoHoverInterface, onBack?: () => void) => {
     duration,
     currentTime,
     showInfo,
+    setShowInfo,
     hideHeader,
     showHeader,
     showPlayPrompt,
@@ -306,7 +381,7 @@ const useVideoPlayer = (video: VideoHoverInterface, onBack?: () => void) => {
     handleProgressClick,
     handleMouseDown,
     handleMouseUp,
-    handleMouseMove
+    handleMouseMove,
   };
 };
 export default useVideoPlayer;

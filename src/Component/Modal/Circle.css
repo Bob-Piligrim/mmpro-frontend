@@ -1,0 +1,58 @@
+.circle-container {
+  position: absolute;
+  right: 10px;
+  bottom: 8px;
+  width: auto;
+  height: 70px;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: end;
+  line-height: 11px;
+}
+
+.row {
+  display: flex;
+  align-items: end;
+}
+
+.row > div {
+  font-size: 12px;
+}
+
+.C1 {
+  margin-right: 5.1px;
+  color: white;
+}
+
+.C2 {
+  margin-right: 3px;
+  color: white;
+}
+
+.circleAnnimation {
+  background: transparent;
+  border: 0.5px solid white;
+  width: 6.5px;
+  height: 6.5px;
+  border-radius: 50%;
+  margin-right: 2px;
+  margin-bottom: 2px;
+  animation-fill-mode: forwards;
+}
+
+.filled {
+  background-color: white; /* Заполненный цвет */
+}
+
+@media (orientation: portrait) and (width < 481px) {
+  .row div {
+    font-size: 9px;
+  }
+
+  .circleAnnimation {
+    width: 5px;
+    height: 5px;
+    margin-bottom: 3px;
+  }
+}

@@ -1,8 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import "./WeDo.css";
 import arrow from "../../Assets/About/arrow.png";
+import Modal from "../../Component/Modal/Modal";
 
 const WeDo: React.FC = () => {
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+
+  const toggleModal = () => {
+    setIsModalOpen(!isModalOpen);
+  };
+
   return (
     <>
       <div className="services-content">
@@ -20,11 +27,12 @@ const WeDo: React.FC = () => {
           <div>ОНЛАЙН ТРАНСЛЯЦИЯ</div>
           <div>CG</div>
           <div>СВАДЬБА</div>
-          <a href="/" className="services-link">
+          <button onClick={toggleModal} className="services-link">
             {" "}
             {/* доработать ссылку */}
             ЗАКАЗАТЬ СЪЕМКУ <img src={arrow} alt="стрелка" />{" "}
-          </a>{" "}
+          </button>{" "}
+          {isModalOpen && <Modal onClose={toggleModal} />}
           {/* ВРЕМЕННО!!! */}
         </div>
       </div>
