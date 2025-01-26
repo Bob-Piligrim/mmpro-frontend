@@ -15,8 +15,14 @@
 }
 
 .services-link {
-  text-decoration: none;
+  all: unset;
+  cursor: pointer;
+  color: rgba(134, 134, 134, 1);
+}
+
+.services-link:hover {
   color: white;
+  transition: color 1s ease;
 }
 
 .services-link img {
@@ -38,8 +44,6 @@
   }
 
   .services-link {
-    text-decoration: none;
-    color: white;
     font-weight: 600;
   }
 
@@ -74,11 +78,13 @@
       letter-spacing: 0px;
     }
 
-    .first-services div, .second-services div {
+    .first-services div,
+    .second-services div {
       height: clamp(14px, 4vw, 40px);
     }
 
-    .first-services, .second-services {
+    .first-services,
+    .second-services {
       width: 30vw;
     }
 

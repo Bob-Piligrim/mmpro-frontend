@@ -1,36 +1,38 @@
 import React, { useEffect, useState } from "react";
-import MMPRO from "../../Assets/Header/MMPRO.png";
-import mMMPRO from "../../Assets/Header/mMMPRO.png";
 import "./Header.css";
 import Modal from "../Modal/Modal";
 import { useHeader } from "./HeaderContext";
+import { supportsWebP } from "../../utils";
 
 const Header: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const { isVisible } = useHeader();
   const [logoImage, setLogoImage] = useState<string>("");
+  const isSuppurtedWebP = supportsWebP();
 
   const toggleModal = () => {
     setIsModalOpen(!isModalOpen);
   };
 
-  const updateLogo = () => {
-    if (window.innerWidth < 100) {
-      setLogoImage(mMMPRO);
-    } else {
-      setLogoImage(MMPRO);
-    }
-  };
-
   useEffect(() => {
-    updateLogo();
+    const isMobile = window.matchMedia("(max-width: 767px)").matches;
 
-    window.addEventListener("resize", updateLogo);
-
-    return () => {
-      window.removeEventListener("resize", updateLogo);
-    };
-  }, []);
+    if (isSuppurtedWebP) {
+      if (isMobile) {
+        setLogoImage("/header/webp/mMMPRO.webp");
+      } else {
+        setLogoImage("/header/webp/MMPRO.webp");
+      }
+      console.log(logoImage);
+    } else {
+      if (isMobile) {
+        setLogoImage("/header/mMMPRO.png");
+      } else {
+        setLogoImage("/header/MMPRO.png");
+      }
+      console.log(logoImage);
+    }
+  }, [logoImage, isSuppurtedWebP]);
 
   return (
     <>

@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./Modal.css";
+import "./Circle.css";
 import lefttop from "../../Assets/Modal/topleft.png";
-import righttop from "../../Assets/Modal/topright.png";
-import rightbottom from "../../Assets/Modal/bottomright.png";
 import skrepka from "../../Assets/Modal/skrepka.png";
 import ThankYou from "../ThankYou/ThankYou";
 import TextMask from "react-text-mask";
@@ -10,6 +9,82 @@ import TextMask from "react-text-mask";
 interface ModalProps {
   onClose: () => void;
 }
+
+const ModalWithCircles: React.FC = () => {
+  const numberOfCircles = 10;
+  const [filledCirclesRow1, setFilledCirclesRow1] = useState<boolean[]>(
+    Array(numberOfCircles).fill(false)
+  );
+  const [filledCirclesRow2, setFilledCirclesRow2] = useState<boolean[]>(
+    Array(numberOfCircles).fill(false)
+  );
+
+  const fillCircles = (
+    setFilledCircles: React.Dispatch<React.SetStateAction<boolean[]>>,
+    delay: number
+  ) => {
+    let currentIndex = 0;
+
+    const interval = setInterval(() => {
+      setFilledCircles((prev) => {
+        const newRow = [...prev];
+        newRow[currentIndex] = true;
+        currentIndex += 1;
+
+        if (currentIndex === numberOfCircles) {
+          clearInterval(interval);
+          setTimeout(() => {
+            setFilledCircles(Array(numberOfCircles).fill(false));
+            fillCircles(setFilledCircles, delay);
+          }, 1000);
+        }
+
+        return newRow;
+      });
+    }, delay);
+
+    return () => clearInterval(interval);
+  };
+
+  useEffect(() => {
+    fillCircles(setFilledCirclesRow1, 1000);
+  }, []);
+
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      fillCircles(setFilledCirclesRow2, 1000); // Убедитесь, что задержка такая же, чтобы заполнение было последовательным
+    }, 1000); // Ждать, пока первый ряд заполнится
+
+    return () => clearTimeout(timeoutId);
+  }, []);
+
+  return (
+    <div className="circle-container">
+      <div className="row row1">
+        <div className="C1">C1</div>
+        {Array.from({ length: numberOfCircles }).map((_, index) => (
+          <div
+            key={index}
+            className={`circleAnnimation ${
+              filledCirclesRow1[index] ? "filled" : ""
+            }`}
+          />
+        ))}
+      </div>
+      <div className="row row2">
+        <div className="C2">C2</div>
+        {Array.from({ length: numberOfCircles }).map((_, index) => (
+          <div
+            key={index}
+            className={`circleAnnimation ${
+              filledCirclesRow2[index] ? "filled" : ""
+            }`}
+          />
+        ))}
+      </div>
+    </div>
+  );
+};
 
 const Modal: React.FC<ModalProps> = ({ onClose }) => {
   const [placeholder, setPlaceholder] = useState<string>(
@@ -21,6 +96,9 @@ const Modal: React.FC<ModalProps> = ({ onClose }) => {
   const [error, setError] = useState<string | null>(null);
   const [file, setFile] = useState<File | null>(null);
   const [submitted, setSubmitted] = useState<boolean>(false); // Состояние для отслеживания отправки (для ThankYou)
+  const [loading, setLoading] = useState<boolean>(false); // Состояние для аннимации ожидания
+  const [time, setTime] = useState<string>("00:00:00"); // Состояние для таймера
+  const [intervalId, setIntervalId] = useState<NodeJS.Timeout | null>(null); // Состояние для таймера
   const updatePlaceHolder = () => {
     if (window.innerWidth < 656) {
       setPlaceholder("Техническое задание");
@@ -36,6 +114,42 @@ const Modal: React.FC<ModalProps> = ({ onClose }) => {
       window.removeEventListener("resize", updatePlaceHolder);
     };
   }, []);
+
+  useEffect(() => {
+    // Новое время от 0 до 3599 секунд
+    const randomTimeInSeconds = Math.floor(Math.random() * 3600);
+    setTime(formatTime(randomTimeInSeconds));
+
+    const id = setInterval(() => {
+      setTime((prevTime) => {
+        // увеличение на 1 секунду
+        const totalSeconds = convertToSeconds(prevTime) + 1;
+        return formatTime(totalSeconds);
+      });
+    }, 1000);
+    // Сохраняем ID интервала (в дальнейшем может понадобится)
+    setIntervalId(id);
+
+    return () => {
+      clearInterval(id);
+    };
+  }, []);
+
+  // Формати в нужную строку
+  const formatTime = (totalSeconds: number): string => {
+    const hours = String(Math.floor(totalSeconds / 3600)).padStart(2, "0");
+    const minutes = String(Math.floor((totalSeconds % 3600) / 60)).padStart(
+      2,
+      "0"
+    );
+    const seconds = String(totalSeconds % 60).padStart(2, "0");
+    return `${hours}:${minutes}:${seconds}`;
+  };
+
+  const convertToSeconds = (time: string): number => {
+    const [hours, minutes, seconds] = time.split(":").map(Number);
+    return hours * 3600 + minutes * 60 + seconds;
+  };
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = event.target.files?.[0];
@@ -94,12 +208,12 @@ const Modal: React.FC<ModalProps> = ({ onClose }) => {
 
     setError(null);
 
-    if (!message && !file) {
+    /* if (!message && !file) {
       setError("Обязательно укажите либо сообщение, либо прикрепите файл");
       return;
     }
 
-    setError(null);
+    setError(null); */ /* Сервер доработать! */
 
     const formData = new FormData();
     formData.append("chat_id", process.env.REACT_APP_CHAT_ID || "");
@@ -114,33 +228,13 @@ const Modal: React.FC<ModalProps> = ({ onClose }) => {
       console.log("Файла нет у клиента");
     }
 
-    /* if (message && file) {
-      formData.append("message", message);
-      formData.append("document", file)
-    } else if (message && !file) {
-      formData.append("message", message)
-    } 
-    if (message) {
-      formData.append("message", message);
-    } else if (file) {
-      formData.append("document", file);
-    } else if (!file && !message) {
-      console.log("Нужно отправить или сообщение, или файл")
-    } */
-    /* if (file && message) {
-      formData.append("caption", message)
-    } */
-
-    /* formData.append(
-      "text",
-      `Имя: ${name}\nТелефон: ${phone}\nСообщение: ${message || ""}`
-    ); */
-
     console.log("FormData перед отправкой:", {
       chat_id: process.env.REACT_APP_CHAT_ID || "",
       text: `Имя: ${name}\nТелефон: ${phone}\nСообщение: ${message || ""}`,
-      file: file ? file.name : null, // Показываем имя файла, если он есть
+      file: file ? file.name : null,
     });
+
+    setLoading(true);
 
     try {
       const response = await fetch(
@@ -161,6 +255,8 @@ const Modal: React.FC<ModalProps> = ({ onClose }) => {
     } catch (error) {
       console.error("Ошибка при отправке сообщения: ", error);
       setError("Произошла ошибка при отправке сообщения");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -189,13 +285,19 @@ const Modal: React.FC<ModalProps> = ({ onClose }) => {
               <img src={lefttop} alt="Corner1" />
             </div>
             <div className="corner top-right">
-              <img src={righttop} alt="Corner2" />
+              {/* <img src={righttop} alt="Corner2" /> */}
+              <div className="rec-label">
+                <span className="dot"></span>
+                <span className="REC">REC </span>
+              </div>
             </div>
             <div className="corner bottom-left">
-              <div>00:00:00</div>
+              {/* <div>00:00:00</div> */}
+              <div>{time}</div>
             </div>
             <div className="corner bottom-right">
-              <img src={rightbottom} alt="Corner4" />
+              {/* <img src={rightbottom} alt="Corner4" /> */}
+              <ModalWithCircles />
             </div>
             <h2>ОСТАВЬТЕ ЗАЯВКУ</h2>
             <div>и мы свяжемся с вами в ближайшее время</div>
@@ -264,6 +366,7 @@ const Modal: React.FC<ModalProps> = ({ onClose }) => {
                   </button>
                 ) : null}
               </div>
+              {loading && <div className="loading-spinner"></div>}
               <button type="submit">
                 ОТПРАВИТЬ
                 <div className="arrow-up-modal">↑</div>

@@ -7,25 +7,67 @@ import VideoOtherHover from "../../Component/Video/VideoOtherHover/VideoOtherHov
 import { useParams, useNavigate } from "react-router-dom";
 import Category from "../../Component/Video/CategoryInterface";
 import { supportsWebP } from "../../utils";
+import VideoRilsHover from "../../Component/Video/VideoRilsHover/VideoRilsHover";
 
 interface PortfolioProps {
   categories: Category[];
 }
 
 const Portfolio: React.FC<PortfolioProps> = ({ categories }) => {
-  /* const [selectedCategory, setSelectedCategory] = useState(categories[0]); */
   const [selectedCategoryIndex, setSelectedCategoryIndex] = useState<number>(0);
   const selectedCategory = categories[selectedCategoryIndex];
   const [offset, setOffset] = useState<number>(0);
+  const [linkItemWidth, setLinkItemWidth] = useState<number[]>([]);
   const linkContainerRef = useRef<HTMLDivElement>(null);
   const linksRef = useRef<(HTMLButtonElement | null)[]>([]);
   const portfolioContainerRef = useRef<HTMLDivElement>(null);
-  const [linkItemWidth, setLinkItemWidth] = useState(0);
-  const [containerWidth, setContainerWidth] = useState(0);
-
-  // для маршрутизации
   const { categoryName } = useParams<{ categoryName: string }>();
   const navigate = useNavigate();
+  const supportWepB = supportsWebP();
+
+  /* Свечение постера (инкапсулировать) */
+  const [boxShadowColor, setBoxShadowColor] =
+    useState<string>("rgba(0, 0, 0, 0.7)");
+  const imgRef = useRef<HTMLImageElement | null>(null);
+  const [hoveredIdx, setHoveredIdx] = useState<number | null>(null); // Индекс наведённого изображения
+
+  const getDominantColor = (img: HTMLImageElement) => {
+    const canvas = document.createElement("canvas");
+    const ctx = canvas.getContext("2d");
+
+    if (ctx) {
+      const width = img.naturalWidth;
+      const height = img.naturalHeight;
+      canvas.width = width;
+      canvas.height = height;
+      ctx.drawImage(img, 0, 0);
+      const imgData = ctx.getImageData(0, 0, width, height);
+      const data = imgData.data;
+
+      let r = 0,
+        g = 0,
+        b = 0;
+      let count = 0;
+
+      // Подсчет цветов по пикселям
+      for (let i = 0; i < data.length; i += 4) {
+        r += data[i];
+        g += data[i + 1];
+        b += data[i + 2];
+        count++;
+      }
+
+      // Средний цвет
+      r = Math.floor(r / count);
+      g = Math.floor(g / count);
+      b = Math.floor(b / count);
+      return `rgba(${r}, ${g}, ${b}, 0.7)`; // Установите желаемую прозрачность
+    }
+    return "rgba(0, 0, 0, 0.5)"; // Возврат цвета по умолчанию
+  };
+  /* Свечение постера (инкапсулировать) */
+
+  // Навигация
   useEffect(() => {
     const index = categories.findIndex((cat) => cat.route === categoryName);
     if (index !== -1) {
@@ -44,7 +86,6 @@ const Portfolio: React.FC<PortfolioProps> = ({ categories }) => {
     const index = categories.findIndex((cat) => cat.name === category.name);
     setSelectedCategoryIndex(index);
     setOffset(0);
-    // для маршрутизации
     navigate(`/portfolio/${category.route}`);
   };
 
@@ -52,65 +93,76 @@ const Portfolio: React.FC<PortfolioProps> = ({ categories }) => {
     setSelectedVideo(video);
   };
 
-  // Получаем(изменяем) ширину каждого button (категории)
   useEffect(() => {
-    if (linkContainerRef.current) {
-      const linkItems = linkContainerRef.current.children;
-      if (linkItems.length > 0) {
-        setLinkItemWidth(linkItems[1].getBoundingClientRect().width);
-      }
-    }
-  }, [linkItemWidth]);
+    const updateButtonWidths = () => {
+      const widths = linksRef.current.map((button) => {
+        return button ? button.getBoundingClientRect().width : 0;
+      });
+      setLinkItemWidth(widths); // Сохраняем ширины всех кнопок в массив
+    };
 
-  // Получаем ширину каждого link-container'a (всех ссылок)
-  useEffect(() => {
-    if (linkContainerRef.current) {
-      setContainerWidth(linkContainerRef.current.getBoundingClientRect().width);
-    }
-  }, [containerWidth]);
+    updateButtonWidths();
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            console.log(`${entry.target.textContent} is in view`);
-          } else {
-            console.log(`${entry.target.textContent} is out of view`);
-          }
-        });
-      },
-      {
-        threshold: 0.1, // 10%
-      }
-    );
-
-    const currentLinks = linksRef.current;
-
-    currentLinks.forEach((link) => {
-      if (link) {
-        observer.observe(link);
-      }
-    });
+    // Обновляем ширину при изменении размеров окна
+    window.addEventListener("resize", updateButtonWidths);
 
     return () => {
-      currentLinks.forEach((link) => {
-        if (link) {
-          observer.unobserve(link);
-        }
-      });
+      window.removeEventListener("resize", updateButtonWidths);
     };
-  }, [linkContainerRef]);
+  }, [categories]);
 
   const scrollToCategory = (index: number) => {
     setSelectedCategoryIndex(index);
 
-    const portfolioContainerWidth = portfolioContainerRef.current?.clientWidth;
-    if (portfolioContainerWidth) {
-      if (portfolioContainerWidth > linkItemWidth * categories.length) {
-        setOffset(0);
+    if (linkContainerRef.current) {
+      // Тут ширина всего, что есть
+      const totalWidth = linkItemWidth
+        .slice(0, index)
+        .reduce((acc, width, i) => {
+          const button = linksRef.current[i];
+          if (button) {
+            // Ширина marginRight и borderRight
+            const marginRight = parseFloat(
+              getComputedStyle(button).marginRight
+            );
+            const borderRight = parseFloat(
+              getComputedStyle(button).borderRightWidth
+            );
+            return acc + width + marginRight + borderRight; // Суммируем ширину и отступ
+          }
+          return acc; // Если кнопка null, просто возвращаем текущее значение (чтобы ошибки не было)
+        }, 0);
+
+      // Получаем ширину текущей кнопки
+      const currentButtonWidth = linkItemWidth[index] || 0;
+
+      // Получаем ширину контейнера и родителя
+      const containerWidth = linkContainerRef.current.clientWidth;
+
+      // Общее смещение для последнего элемента
+      const scrollToPosition = totalWidth + currentButtonWidth;
+
+      // Если индекс последний
+      if (index === linkItemWidth.length - 1) {
+        // Проверяем, чтобы при прокрутке элемент не оставался наполовину видимым (не работает так, как я хочу!!!)
+        if (scrollToPosition > containerWidth) {
+          linkContainerRef.current.scrollTo({
+            left: scrollToPosition + 200, // Добавьте запас для полного отображения элемента
+            behavior: "smooth",
+          });
+        } else {
+          // Если элемент помещается, прокручиваем просто до него
+          linkContainerRef.current.scrollTo({
+            left: scrollToPosition,
+            behavior: "smooth",
+          });
+        }
       } else {
-        setOffset(-index * linkItemWidth);
+        // Прокручиваем к текущему элементу
+        linkContainerRef.current.scrollTo({
+          left: totalWidth,
+          behavior: "smooth",
+        });
       }
     }
   };
@@ -118,8 +170,7 @@ const Portfolio: React.FC<PortfolioProps> = ({ categories }) => {
   const nextCategory = () => {
     if (selectedCategoryIndex < categories.length - 1) {
       const newIndex = selectedCategoryIndex + 1;
-      scrollToCategory(selectedCategoryIndex + 1);
-      setSelectedCategoryIndex(newIndex);
+      scrollToCategory(newIndex);
       navigate(`/portfolio/${categories[newIndex].route}`);
     }
   };
@@ -127,20 +178,41 @@ const Portfolio: React.FC<PortfolioProps> = ({ categories }) => {
   const prevCategory = () => {
     if (selectedCategoryIndex > 0) {
       const newIndex = selectedCategoryIndex - 1;
-      scrollToCategory(selectedCategoryIndex - 1);
-      setSelectedCategoryIndex(newIndex);
+      scrollToCategory(newIndex);
       navigate(`/portfolio/${categories[newIndex].route}`);
     }
   };
 
-  const supportWepB = supportsWebP();
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          /* if (entry.isIntersecting) {
+            console.log(`${entry.target.textContent} is in view`);
+          } else {
+            console.log(`${entry.target.textContent} is out of view`);
+          } */
+        });
+      },
+      {
+        threshold: 0.1,
+      }
+    );
 
-  // Проверка для себя:
-  if (supportWepB) {
-    console.log("Устройство поддерживает формат WebP");
-  } else {
-    console.log("Устройство не поддерживает формат WebP");
-  }
+    const currentLinks = linksRef.current;
+
+    // Наблюдаем за всеми кнопками
+    currentLinks.forEach((link) => {
+      if (link) observer.observe(link);
+    });
+
+    return () => {
+      // Отменяем наблюдение
+      currentLinks.forEach((link) => {
+        if (link) observer.unobserve(link);
+      });
+    };
+  }, [linksRef]);
 
   return (
     <>
@@ -182,10 +254,6 @@ const Portfolio: React.FC<PortfolioProps> = ({ categories }) => {
                     ?.replace("/posters/", "/posters/webp/")
                     .replace(/\.png$/, ".webp")
                 : video.poster;
-              posterPath === ""
-                ? console.log("!!!Постер пустой! Проверь! ", posterPath)
-                : console.log("Все нормально!", posterPath);
-
               return (
                 <div key={video.poster}>
                   <button
@@ -202,6 +270,7 @@ const Portfolio: React.FC<PortfolioProps> = ({ categories }) => {
                     }
                   >
                     <img
+                      ref={imgRef}
                       src={posterPath}
                       alt={video.poster}
                       className={
@@ -229,8 +298,10 @@ const Portfolio: React.FC<PortfolioProps> = ({ categories }) => {
         </div>
         <div className="footer-link">
           {" "}
-          <button onClick={() => (window.location.href = "/")
-          } className="portfolio-back">
+          <button
+            onClick={() => (window.location.href = "/")}
+            className="portfolio-back"
+          >
             <div>←</div>
             <span>Назад</span>
           </button>
@@ -240,14 +311,14 @@ const Portfolio: React.FC<PortfolioProps> = ({ categories }) => {
               disabled={selectedCategoryIndex === 0}
               className="btn-prev"
             >
-              ←
+              <div>←</div>
             </button>
             <button
               onClick={nextCategory}
               disabled={selectedCategoryIndex >= categories.length - 1}
               className="btn-next"
             >
-              →
+              <div>→</div>
             </button>
           </div>
         </div>
@@ -267,8 +338,8 @@ const Portfolio: React.FC<PortfolioProps> = ({ categories }) => {
           />
         )}
 
-        {selectedCategory.name !== "КИНО" && selectedVideo && (
-          <VideoOtherHover
+        {selectedCategory.name === "РИЛС" && selectedVideo && (
+          <VideoRilsHover
             video={{
               videoUrl: selectedVideo.videoUrl,
               description: selectedVideo.description,
@@ -281,6 +352,23 @@ const Portfolio: React.FC<PortfolioProps> = ({ categories }) => {
             currentCat={categories[selectedCategoryIndex].name}
           />
         )}
+
+        {selectedCategory.name !== "КИНО" &&
+          selectedCategory.name !== "РИЛС" &&
+          selectedVideo && (
+            <VideoOtherHover
+              video={{
+                videoUrl: selectedVideo.videoUrl,
+                description: selectedVideo.description,
+                poster: selectedVideo.poster,
+                ageLimit: selectedVideo.ageLimit,
+                videoName: selectedVideo.videoName,
+                contentType: selectedVideo.contentType,
+              }}
+              onBack={() => setSelectedVideo(null)}
+              currentCat={categories[selectedCategoryIndex].name}
+            />
+          )}
       </div>
     </>
   );

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import "./About.css";
 import btn_next from "../../Assets/About/next.png";
 import link2 from "../../Assets/About/link2.png";
@@ -12,16 +12,17 @@ import Call from "../Call/Call";
 import WhoAreWe from "../WhoAreYou/WhoAreWe";
 
 const components = [
-  { id: 1, component: <WhoAreWe />, title: "КТО МЫ" },
-  { id: 2, component: <WeDo />, title: "МЫ ДЕЛАЕМ" },
-  { id: 3, component: <OurClients />, title: "НАШИ КЛИЕНТЫ" },
-  { id: 4, component: <Call />, title: "СВЯЖИТЕСЬ С НАМИ" },
+  { id: 0, component: <WhoAreWe />, title: "КТО МЫ" },
+  { id: 1, component: <WeDo />, title: "МЫ ДЕЛАЕМ" },
+  { id: 2, component: <OurClients />, title: "НАШИ КЛИЕНТЫ" },
+  { id: 3, component: <Call />, title: "СВЯЖИТЕСЬ С НАМИ" },
 ];
 
 const About: React.FC = () => {
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const [currentIndex, setCurrentIndex] = useState<number>(0);
+  console.log(currentIndex);
   // для высоты .about-content-container
-  const [containerHeight, setContainerHeight] = useState(0);
+  /* const [containerHeight, setContainerHeight] = useState(0); */
   const activeComponentRef = useRef<HTMLDivElement>(null);
 
   // для пролистывания
@@ -62,11 +63,11 @@ const About: React.FC = () => {
     setStartX(null); // сброс координата
   };
 
-  useEffect(() => {
+  /* useEffect(() => {
     if (activeComponentRef.current) {
       setContainerHeight(activeComponentRef.current.clientHeight);
     }
-  }, [currentIndex]);
+  }, [currentIndex]); */
 
   return (
     <>
@@ -83,12 +84,12 @@ const About: React.FC = () => {
         </video>
         <div
           className="about-content-container"
-          style={{ height: containerHeight }}
+          /* style={{ minHeight: containerHeight }} */
         >
           {components.map((item, index) => (
             <div
               key={item.id}
-              ref={index === currentIndex ? activeComponentRef : null}
+              ref={item.id === currentIndex ? activeComponentRef : null}
               className={`component ${index === currentIndex ? "active" : ""}`}
             >
               <div className="count">
@@ -101,7 +102,18 @@ const About: React.FC = () => {
             </div>
           ))}
         </div>
-        <button onClick={handleNextSlide} className="next-button">
+        <button
+          onClick={handlePrevSlide}
+          className="prev-button"
+          id={currentIndex === 0 ? "last-page-button" : ""}
+        >
+          <img src={btn_next} alt="Следующий" />
+        </button>
+        <button
+          onClick={handleNextSlide}
+          className="next-button"
+          id={currentIndex === components.length - 1 ? "last-page-button" : ""}
+        >
           <img src={btn_next} alt="Следующий" />
         </button>
         <div className="about-footer">
@@ -122,7 +134,13 @@ const About: React.FC = () => {
               </a>
             </div>
             <div className="about-btn-mobile">
-              <button onClick={handlePrevSlide} className="footer-prev">
+              <button
+                onClick={() => (window.location.href = "/")}
+                className="footer-prev-desctop"
+              >
+                <div className="circle">←</div> <span>Назад</span>
+              </button>
+              <button onClick={handlePrevSlide} className="footer-prev-mobile">
                 <div className="circle">←</div> <span>Назад</span>
               </button>
               <button
@@ -135,9 +153,6 @@ const About: React.FC = () => {
             </div>
           </div>
           <div className="messanger">
-            <a href="https://vk.com">
-              <img src={link2} alt="линк" />
-            </a>
             <a href="https://vk.com">
               <img src={link2} alt="линк" />
             </a>

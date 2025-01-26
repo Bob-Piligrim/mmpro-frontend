@@ -58,6 +58,7 @@ const VideoHover: React.FC<VideoHoverProps> = ({ video, onBack }) => {
         playsInline
         autoPlay={isSafariIosSupported ? false : true}
         id="video"
+        className={!isPlaying ? "grayScale" : ""}
         ref={videoRef}
         poster={video.poster}
         onPause={() => setIsPlaying(false)}
@@ -70,10 +71,7 @@ const VideoHover: React.FC<VideoHoverProps> = ({ video, onBack }) => {
       <div id={showInfo ? "showInfo" : "notShowInfo"}>
         <div className="contentShow">
           <div className="emptyContent"></div>
-          <button
-            onClick={handleButtonClick}
-            className="on-off"
-          >
+          <button onClick={handleButtonClick} className="on-off">
             <span>{isPlaying ? "❚❚" : "▶"}</span>
           </button>
           <div className="content-information">
@@ -147,16 +145,15 @@ const VideoHover: React.FC<VideoHoverProps> = ({ video, onBack }) => {
               </div>
             </div>
           </div>
+          <button
+            onClick={handleBackClick}
+            id={showInfo ? "showInfo" : "notShowInfo"}
+            className="video-footerPrev"
+          >
+            <div className="arrow-left">←</div> <span>Назад</span>
+          </button>
         </div>
       </div>
-
-      <button
-        onClick={handleBackClick}
-        id={showInfo ? "showInfo" : "notShowInfo"}
-        className="video-footerPrev"
-      >
-        <div className="arrow-left">←</div> <span>Назад</span>
-      </button>
 
       {/* {selectedProject && <ProjectInformation project={selectedProject} />} */}
     </div>

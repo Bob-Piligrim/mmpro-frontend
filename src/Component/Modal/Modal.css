@@ -40,7 +40,7 @@
 
 .corner {
   position: absolute;
-  width: 70px; /* Ширина изображения угла */
+  width: 75px; /* Ширина изображения угла */
   height: 70px; /* Высота изображения угла */
 }
 
@@ -64,6 +64,40 @@
   border-top: 1px solid rgba(255, 255, 255, 1);
   border-right: 1px solid rgba(255, 255, 255, 1);
   padding-top: 10px;
+  padding-right: 10px;
+}
+
+.rec-label {
+  font-family: Arial, sans-serif;
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+  color: white;
+}
+
+.REC {
+  font-size: 24px;
+}
+
+.dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  background-color: red;
+  border-radius: 50%;
+  margin-right: 5px;
+  animation: blink 1s step-start infinite;
+  margin-right: 6px;
+}
+
+@keyframes blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
 }
 
 .top-right img {
@@ -93,15 +127,15 @@
   right: 10px;
   border-bottom: 1px solid rgba(255, 255, 255, 1);
   border-right: 1px solid rgba(255, 255, 255, 1);
-  padding-top: 35px;
+  padding-bottom: 6px;
 }
 
-.bottom-right img {
+/* .bottom-right img {
   width: 107px;
   height: 30px;
   position: absolute;
   right: 10px;
-}
+} */
 
 /* углы */
 
@@ -188,8 +222,8 @@
   cursor: pointer;
   display: flex;
   justify-content: center;
- padding: unset;
- padding-left: 30px;
+  padding: unset;
+  padding-left: 30px;
   display: flex;
   align-items: center;
 }
@@ -247,9 +281,72 @@
   margin-top: 10px;
 }
 
+.loading-spinner {
+  position: absolute;
+  top: 20%;
+  left: 45%;
+  z-index: 9999999;
+  width: 50px;
+  height: 50px;
+  border: 5px solid red;
+  border-top: 5px solid black;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 100px auto;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@media (width < 1200px) and (width > 657px) {
+  .modal-container-background {
+    padding: 50px 40px;
+    @media (orientation: landscape) and (height < 568px) {
+      padding: 10px 20px;
+    }
+  }
+}
+
+@media (orientation: landscape) and (height < 568px) {
+  .modal-container-background {
+    height: 90vh;
+    padding: 10px 20px;
+  }
+  .modal-container h2 {
+    margin-bottom: 4px;
+  }
+
+  .modal-form {
+    margin-top: 10px;
+  }
+
+  .nameInput {
+    margin-top: 4px;
+    margin-bottom: 10px;
+  }
+
+  .modal-form textarea {
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+  .fileUpload {
+    margin-bottom: 15px;
+  }
+
+  .modal-form button {
+    margin-bottom: 25px;
+  }
+}
 @media (orientation: portrait) and (max-width: 656px) {
   .modal-background {
     height: auto;
+    background-color:rgba(0, 0, 0, 0.7);
   }
 
   .modal-container-background {
@@ -260,6 +357,7 @@
     padding: 26px 13px;
     display: flex;
     justify-content: center;
+    backdrop-filter: blur(16px);
   }
 
   .modal-container {
@@ -272,7 +370,7 @@
 
   .corner {
     position: absolute;
-    width: 40px;
+    width: 48px;
     height: 40px;
   }
 
@@ -292,11 +390,32 @@
     top: 6px;
     right: 10px;
     padding-top: 10px;
+    padding-right: 5px;
   }
 
-  .top-right img {
-    width: 100%;
-    height: auto;
+  .rec-label {
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    color: white;
+    width: 50px;
+  }
+
+  .REC {
+    font-size: 14px;
+    line-height: 10px;
+  }
+  
+  .dot {
+    display: inline-block;
+    width: 5px;
+    height: 5px;
+    background-color: red;
+    border-radius: 50%;
+    margin-right: 5px;
+    animation: blink 1s step-start infinite;
+    margin-right: 6px;
   }
 
   .bottom-left {
@@ -307,7 +426,7 @@
   }
 
   .bottom-left div {
-    font-family: Druk Cyr;
+    font-family: DrukCyr;
     font-size: 18px;
     line-height: 24px;
     letter-spacing: 0.1;
@@ -403,7 +522,7 @@
 
   @media (orientation: portrait) and (width < 370px) {
     .corner {
-      width: 26px;
+      width: 34px;
       height: 26px;
     }
 
@@ -413,7 +532,31 @@
     }
 
     .top-right {
-      padding-top: 5px;
+      padding-top: 8px;
+    }
+
+    .rec-label {
+      font-family: Arial, sans-serif;
+      font-size: 10px;
+      display: flex;
+      align-items: center;
+      justify-items: start;
+      color: white;
+      width: 30px;
+    }
+  
+    .REC {
+      font-size: 10px;
+    }
+    
+    .dot {
+      display: inline-block;
+      width: 3px;
+      height: 3px;
+      background-color: red;
+      border-radius: 50%;
+      animation: blink 1s step-start infinite;
+      margin-right: 3px;
     }
 
     .bottom-left {
@@ -451,7 +594,7 @@
     }
 
     #deleteFile {
-    font-size: 10px;
+      font-size: 10px;
     }
 
     @media (orientation: portrait) and (width < 370px) and (height < 590px) {
@@ -493,11 +636,5 @@
     .fileUpload {
       margin-bottom: 4px;
     }
-  }
-}
-
-@media (width < 1200px) and (width > 657px) {
-  .modal-container-background {
-    padding: 50px 40px;
   }
 }
