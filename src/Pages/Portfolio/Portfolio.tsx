@@ -89,6 +89,22 @@ const Portfolio: React.FC<PortfolioProps> = ({ categories }) => {
     navigate(`/portfolio/${category.route}`);
   };
 
+  useEffect(() => {
+    if (categoryName) {
+      const index = categories.findIndex((cat) => cat.route === categoryName);
+      if (index !== -1 && linksRef.current[index]) {
+        const linkElement = linksRef.current[index];
+        if (linkElement) {
+          linkElement.scrollIntoView({
+            behavior: "smooth",
+            block: "center",
+            inline: "start",
+          });
+        }
+      }
+    }
+  }, [categories, categoryName]);
+
   const handleVideoClick = (video: VideoHoverInterface) => {
     setSelectedVideo(video);
   };
@@ -299,7 +315,7 @@ const Portfolio: React.FC<PortfolioProps> = ({ categories }) => {
         <div className="footer-link">
           {" "}
           <button
-            onClick={() => (window.location.href = "/")}
+            onClick={() => window.history.back()}
             className="portfolio-back"
           >
             <div>←</div>

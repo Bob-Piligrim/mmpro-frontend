@@ -32,10 +32,7 @@ const VideoOtherHover: React.FC<VideoOtherHoverProps> = ({ video, onBack }) => {
     handleMouseUp,
     handleMouseMove,
   } = useVideoPlayer(video, onBack);
-  const [mobile, setMobile] =
-    useState<boolean>(
-      false
-    );
+  const [mobile, setMobile] = useState<boolean>(false);
 
   const handleBackClick = () => {
     if (onBack) {
@@ -89,9 +86,11 @@ const VideoOtherHover: React.FC<VideoOtherHoverProps> = ({ video, onBack }) => {
             <div className="videoOther-videoName">{video.description}</div>
             <div className="videoOther-contentType">{video.contentType}</div>
           </div>
-          <button onClick={handleBackClick} className="video-footerPrev2">
-            <div>←</div> <span>Назад</span>
-          </button>
+          <div className="videoFooter-other">
+            <button onClick={handleBackClick} className="video-footerPrev2">
+              <div>←</div> <span>Назад</span>
+            </button>
+          </div>
         </div>
       </>
     );
@@ -127,9 +126,11 @@ const VideoOtherHover: React.FC<VideoOtherHoverProps> = ({ video, onBack }) => {
             </div>
           </div>
         </div>
-        <button onClick={handleBackClick} className="video-footerPrev2">
-          <div>←</div> <span>Назад</span>
-        </button>
+        <div className="videoFooter-other">
+          <button onClick={handleBackClick} className="video-footerPrev2">
+            <div>←</div> <span>Назад</span>
+          </button>
+        </div>
       </>
     );
   };

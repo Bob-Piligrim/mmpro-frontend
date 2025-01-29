@@ -1,6 +1,288 @@
 .projectInformation-container {
-    width: 100vw;
-    height: 100vh;
+  margin-left: 14vw;
+  width: 74vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  margin-top: 2.3vw;
+}
+
+.block {
+  display: flex;
+  align-items: center;
+  color: white;
+}
+
+.block1 {
+  width: inherit;
+  margin-bottom: 0.8vw;
+  height: 15.1vw;
+}
+
+.block1 img,
+.block1 div {
+  flex: 1 1 auto;
+}
+
+.image1 {
+  width: 26.8vw;
+  object-fit: fill;
+}
+
+.image2 {
+  width: 15.2vw;
+  object-fit: fill;
+}
+
+.text1 {
+  width: 18.8vw;
+  font-size: 0.8vw;
+}
+
+.block2 div,
+.block2 img {
+  flex: 1 1 auto;
+}
+
+.text1,
+.text2 {
+  position: relative;
+  height: inherit;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.8vw;
+  width: clamp(400px, 30vw, 1000px);
+}
+
+/* углы текстов */
+
+.project-corner {
+  position: absolute;
+  width: 1.3vw;
+  height: 1.3vw;
+  color: white;
+}
+.proj-top-right {
+  top: 0;
+  right: 0;
+  border-top: 1px solid rgba(255, 255, 255, 1);
+  border-right: 1px solid rgba(255, 255, 255, 1);
+}
+.proj-top-left {
+  top: 0;
+  left: 0;
+  border-top: 1px solid rgba(255, 255, 255, 1);
+  border-left: 1px solid rgba(255, 255, 255, 1);
+}
+.proj-bottom-right {
+  bottom: 0;
+  right: 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 1);
+  border-right: 1px solid rgba(255, 255, 255, 1);
+}
+
+.proj-bottom-left {
+  bottom: 0;
+  left: 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 1);
+  border-left: 1px solid rgba(255, 255, 255, 1);
+}
+
+/* углы текстов */
+
+/* margin's for each */
+.image1,
+.image2 {
+  margin-right: 0.8vw;
+}
+
+/* margin's for each */
+
+.block2 {
+  width: inherit;
+  height: 16.8vw;
+  margin-bottom: 0.8vw;
+}
+
+.text2 {
+  width: 15.6vw;
+  font-size: 0.8vw;
+}
+
+.image3 {
+  width: 29.9vw;
+}
+
+.image4 {
+  width: 16.8vw;
+}
+
+.text2,
+.image3 {
+  margin-right: 0.8vw;
+}
+
+.block3 {
+  width: inherit;
+  height: 15.1vw;
+}
+
+.block3 img {
+  flex: 1 1 auto;
+  width: 50%;
+}
+
+.image5 {
+  margin-right: 0.8vw;
+}
+
+img {
+  object-fit: fill;
+  height: inherit;
+}
+
+.project-footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  height: 4vw;
+  padding-top: 2vw;
+  padding-bottom: 2vw;
+  font-size: 0.8vw;
+}
+
+.project-back {
+  text-decoration: none;
+  border: none;
+  background: transparent;
+  color: rgba(255, 255, 255, 1);
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: auto;
+  height: auto;
+  cursor: pointer;
+  font-size: 0.8vw;
+}
+
+.project-back div {
+  padding-right: 7px;
+  display: flex;
+  align-items: center;
+}
+
+@media (orientation: portrait) and (max-width: 656px) {
+  .projectInformation-container {
+    width: 88vw;
+    margin-left: 28px;
+    margin-top: 7vw;
+    padding-bottom: 6vw;
+    padding-right: 10px;
+    overflow-y: auto;
+    -ms-overflow-style: auto;
+    scrollbar-width: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .projectInformation-container::-webkit-scrollbar {
+    display: none;
+  }
+
+  .project-footer {
     display: flex;
-    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-start;
+    height: 40px;
+    padding-top: 4vw;
+    padding-bottom: 2vw;
+    width: inherit;
+  }
+
+  .project-back {
+    font-size: 13px;
+  }
+
+  img {
+    object-fit: cover;
+  }
+}
+
+@media (orientation: portrait) and (width < 482px) {
+  .projectInformation-container {
+    margin-top: 1vw;
+  }
+  .block1,
+  .block2,
+  .block3 {
+    flex-direction: column;
+    width: 84vw;
+    height: auto;
+  }
+
+  .image1 {
+    width: inherit;
+    height: 48.7vw;
+    margin-right: 0;
+    margin-bottom: 3vw;
+  }
+
+  .image2 {
+    width: inherit;
+    height: 86.6vw;
+    max-height: 300px;
+    margin-right: 0;
+    margin-bottom: 3vw;
+  }
+
+  .text1,
+  .text2 {
+    width: inherit;
+    padding: 12vw;
+    height: 69vw;
+    font-size: 3.6vw;
+    margin-right: 0;
+    margin-bottom: 3vw;
+  }
+
+  .project-corner {
+    width: 6.4vw;
+    height: 6.4vw;
+  }
+
+  .image4 {
+    width: inherit;
+    height: 86.6vw;
+    max-height: 300px;
+    margin-bottom: 3vw;
+    order: -1;
+  }
+
+  .image3 {
+    width: inherit;
+    height: 48.7vw;
+    margin-bottom: 3vw;
+    order: -2;
+  }
+
+  .image5,
+  .image6 {
+    width: inherit;
+    height: 42.2vw;
+  }
+
+  .image5 {
+    margin-bottom: 3vw;
+  }
+
+  .block3 img {
+    width: auto;
+  }
+}
+
+@media (orientation: landscape) and (max-width: 1240px) and (max-height: 500px) {
+  .projectInformation-container {
+    width: 92vw;
+    margin-left: 28px;
+  }
 }

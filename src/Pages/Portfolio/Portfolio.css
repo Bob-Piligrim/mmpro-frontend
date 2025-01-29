@@ -325,12 +325,22 @@
 
   .poster-other {
     width: 200px;
+    width: 70vw;
     height: 140px;
+    @media (orientation: portrait) and (width < 310px) {
+      width: 84vw;
+      height: auto;
+    }
   }
 
   .poster-rils {
-    width: 150px;
-    height: auto;
+    width: 250px;
+    width: 70vw;
+    height: 400px;
+    @media (orientation: portrait) and (width < 310px) {
+      width: 84vw;
+      height: 300px;
+    }
   }
 
   .poster-kino {

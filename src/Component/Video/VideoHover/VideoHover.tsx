@@ -84,28 +84,6 @@ const VideoHover: React.FC<VideoHoverProps> = ({ video, onBack }) => {
 
             <div className="information-container">
               <div className="information-container1">
-                {/*  {categories.map((category) => (
-              <div>
-                {category.content.map((project, index) => (
-                  <button
-                    className="handleProject"
-                    key={index}
-                    onClick={() =>
-                      handleProjectClick({
-                        videoUrl: project.videoUrl,
-                        poster: project.poster,
-                        description: project.description,
-                        ageLimit: project.ageLimit,
-                        videoName: project.videoName,
-                        contentType: project.contentType,
-                      })
-                    }
-                  >
-                    Подробнее узнать о проекте:{" "}
-                  </button>
-                ))}
-              </div>
-            ))} */}
                 {
                   <div>
                     <button className="handleProject" onClick={() => ({})}>
@@ -114,8 +92,18 @@ const VideoHover: React.FC<VideoHoverProps> = ({ video, onBack }) => {
                   </div>
                 }
                 <div className="information-image">
-                  <img src={image1} alt="" />
-                  <img src={image2} alt="" />
+                  <a
+                    href="/portfolio/kino/informatcia_o_proekte"
+                    style={{ all: "unset", cursor: "pointer" }}
+                  >
+                    <img src={image1} alt="" />
+                  </a>
+                  <a
+                    href="/portfolio/kino/informatcia_o_proekte"
+                    style={{ all: "unset", cursor: "pointer" }}
+                  >
+                    <img src={image2} alt="" />
+                  </a>
                   <div className="ageLimit">{video.ageLimit}+</div>
                 </div>
               </div>
@@ -145,13 +133,11 @@ const VideoHover: React.FC<VideoHoverProps> = ({ video, onBack }) => {
               </div>
             </div>
           </div>
-          <button
-            onClick={handleBackClick}
-            id={showInfo ? "showInfo" : "notShowInfo"}
-            className="video-footerPrev"
-          >
-            <div className="arrow-left">←</div> <span>Назад</span>
-          </button>
+          <div className="videoFooter">
+            <button onClick={handleBackClick} className="video-footerPrev">
+              <div className="arrow-left">←</div> <span>Назад</span>
+            </button>
+          </div>
         </div>
       </div>
 

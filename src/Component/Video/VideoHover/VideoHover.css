@@ -75,7 +75,6 @@
     width: 100vw;
     max-width: none;
     object-fit: cover;
-
   }
 }
 
@@ -103,7 +102,7 @@
   flex-direction: column;
   justify-content: flex-end;
   overflow: hidden;
-  padding-bottom: 110px;
+  padding-bottom: 50px;
 }
 
 .on-off {
@@ -225,6 +224,13 @@
 .progressTime {
   width: 331px;
   width: clamp(310px, 17vw, 400px);
+}
+
+.videoFooter {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  height: 60px;
 }
 
 .video-footerPrev {
@@ -378,7 +384,7 @@
 
   @media (orientation: portrait) and (width < 481px) {
     .contentShow {
-      padding-bottom: 30px;
+      padding-bottom: 0;
       min-width: 238px;
     }
 
@@ -395,18 +401,22 @@
     .content-information {
       margin-bottom: 20px;
     }
+
+    .videoFooter {
+      height: 100px;
+    }
   }
 }
 
 @media (orientation: landscape) and (max-width: 1240px) and (max-height: 500px) {
-.contentShow {
-  margin-left: 28px;
-  width: 92vw;
-}
+  .contentShow {
+    margin-left: 28px;
+    width: 92vw;
+  }
 
-.content-information {
-  width: inherit;
-}
+  .content-information {
+    width: inherit;
+  }
 }
 
 @media (orientation: landscape) and (height < 700px) {

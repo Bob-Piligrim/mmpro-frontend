@@ -1,44 +1,80 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./About.css";
 import btn_next from "../../Assets/About/next.png";
-import link2 from "../../Assets/About/link2.png";
-import link3 from "../../Assets/About/link3.png";
-import link4 from "../../Assets/About/link4.png";
-import link5 from "../../Assets/About/link5.png";
+import phone from "../../Assets/About/link2.png";
+import youtube from "../../Assets/About/link3.png";
+import vk from "../../Assets/About/link4.png";
+import tg from "../../Assets/About/link5.png";
 
-import WeDo from "../WeDo/WeDo";
+/* import WeDo from "../WeDo/WeDo";
 import OurClients from "../OurClients/OurClients";
 import Call from "../Call/Call";
-import WhoAreWe from "../WhoAreYou/WhoAreWe";
+import WhoAreWe from "../WhoAreYou/WhoAreWe"; */
+import { useNavigate, useParams } from "react-router-dom";
+import { ComponentsInterface } from "./Components";
 
-const components = [
-  { id: 0, component: <WhoAreWe />, title: "КТО МЫ" },
-  { id: 1, component: <WeDo />, title: "МЫ ДЕЛАЕМ" },
-  { id: 2, component: <OurClients />, title: "НАШИ КЛИЕНТЫ" },
-  { id: 3, component: <Call />, title: "СВЯЖИТЕСЬ С НАМИ" },
-];
+interface AboutProps {
+  components: ComponentsInterface[];
+}
 
-const About: React.FC = () => {
+const About: React.FC<AboutProps> = ({ components }) => {
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   console.log(currentIndex);
   // для высоты .about-content-container
   /* const [containerHeight, setContainerHeight] = useState(0); */
   const activeComponentRef = useRef<HTMLDivElement>(null);
-
   // для пролистывания
   const threshold = 50;
   const [startX, setStartX] = useState<number | null>(null);
+  const navigate = useNavigate();
+  const { componentName } = useParams<{ componentName: string }>();
+
+  useEffect(() => {
+    console.log("Компонент: ", componentName);
+    const index = components.findIndex(
+      (component) => component.route === componentName
+    );
+    if (index !== -1) {
+      setCurrentIndex(index);
+    } else {
+      setCurrentIndex(0);
+      navigate(`/aboutus/${components[0].route}`);
+    }
+  }, [componentName, navigate, components]);
+
+  // для номера телефона
+  /*  const phoneNumber = "+79661309045";
+  const [confirmed, setConfirmed] = useState(false);
+
+  const handleCall = () => {
+    if (window.confirm(`Вы хотите позвонить на ${phoneNumber}?`)) {
+      setConfirmed(true);
+      return (window.location.href = `tel:${phoneNumber}`);
+    }
+  }; */
 
   const handleNextSlide = () => {
-    setCurrentIndex((prevIndex) =>
+   /*  setCurrentIndex((prevIndex) =>
       prevIndex === components.length - 1 ? 0 : prevIndex + 1
     );
+      navigate(`/aboutus/${components[currentIndex].route}`); */
+    if (currentIndex < components.length - 1) {
+      const newIndex = currentIndex + 1;
+      setCurrentIndex(newIndex)
+      navigate(`/aboutus/${components[newIndex].route}`);
+    }
   };
 
   const handlePrevSlide = () => {
-    setCurrentIndex((prevIndex) =>
+    /* setCurrentIndex((prevIndex) =>
       prevIndex === 0 ? components.length - 1 : prevIndex - 1
     );
+    navigate(`/aboutus/${components[currentIndex].route}`); */
+    if (currentIndex > 0) {
+      const newIndex = currentIndex - 1;
+      setCurrentIndex(newIndex);
+      navigate(`/aboutus/${components[newIndex].route}`);
+    }
   };
 
   const handleTouchStart = (e: React.TouchEvent) => {
@@ -86,19 +122,20 @@ const About: React.FC = () => {
           className="about-content-container"
           /* style={{ minHeight: containerHeight }} */
         >
-          {components.map((item, index) => (
+          {components.map((component, index) => (
             <div
-              key={item.id}
-              ref={item.id === currentIndex ? activeComponentRef : null}
+              key={component.id}
+              ref={component.id === currentIndex ? activeComponentRef : null}
               className={`component ${index === currentIndex ? "active" : ""}`}
             >
               <div className="count">
                 <span className="main-count">{`0${currentIndex + 1}`}</span>
                 <span>/</span>
                 <span className="main-count_1">04</span>
-                <h2 className="title-who">{item.title}</h2>
+                <h2 className="title-who">{component.title}</h2>
               </div>
-              <div>{item.component}</div>
+              <div>{component.component({})}</div>
+              
             </div>
           ))}
         </div>
@@ -120,17 +157,21 @@ const About: React.FC = () => {
           {" "}
           <div>
             <div className="about-link-mobile">
-              <a href="https://vk.com">
-                <img src={link2} alt="линк" />
+              {/* <button onClick={handleCall} style={{ all: "unset" }}>
+                <img src={phone} alt="линк" />
+              </button> */}
+              {/* <a href="tel:+79661309045"></a> */}
+              <a href="tel:+79038924705">
+                <img src={phone} alt="линк" />
               </a>
-              <a href="https://vk.com">
-                <img src={link2} alt="линк" />
+              <a href="https://youtube.com/@mosmedia-yi7km?si=Bwm9_GLZHhY3GSYh">
+                <img src={youtube} alt="линк" />
               </a>
-              <a href="https://vk.com">
-                <img src={link3} alt="линк" />
+              <a href="https://vk.com/mosmedia_pro">
+                <img src={vk} alt="линк" />
               </a>
-              <a href="https://vk.com">
-                <img src={link4} alt="линк" />
+              <a href="https://t.me/mos_media">
+                <img src={tg} alt="линк" />
               </a>
             </div>
             <div className="about-btn-mobile">
@@ -153,22 +194,23 @@ const About: React.FC = () => {
             </div>
           </div>
           <div className="messanger">
-            <a href="https://vk.com">
-              <img src={link2} alt="линк" />
+            <a href="tel:+79038924705">
+              <img src={phone} alt="линк" />
             </a>
-            <a href="https://vk.com">
-              <img src={link3} alt="линк" />
+            <a href="https://youtube.com/@mosmedia-yi7km?si=Bwm9_GLZHhY3GSYh">
+              <img src={youtube} alt="линк" />
             </a>
-            <a href="https://vk.com">
-              <img src={link4} alt="линк" />
+            <a href="https://vk.com/mosmedia_pro">
+              <img src={vk} alt="линк" />
             </a>
-            <a href="https://vk.com">
-              <img src={link5} alt="линк" />
+            <a href="https://t.me/mos_media">
+              <img src={tg} alt="линк" />
             </a>
           </div>
           <div className="info-links">
             <a href="/portfolio">Портфолио</a>
-            <a href="https://vk.com">Контакты</a>
+            {/* <Link to="/aboutus/svyazhitec_s_nami">Контакты</Link> */}
+            <a href="/aboutus/svyazhitec_s_nami">Контакты</a>
           </div>
         </div>
       </div>

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "../VideoOtherHover/VideoOtherHover.css";
 import "../VideoHover/VideoHover.css";
+import "./VideoRilsHover.css";
 import VideoHoverInterface from "../VideoHoverInterface";
 import useVideoPlayer from "../useVideoPlayer";
 
@@ -58,10 +59,10 @@ const VideoRilsHover: React.FC<VideoRilsHoverProps> = ({ video, onBack }) => {
   const DesctopHover: React.FC = () => {
     return (
       <>
-        <div className="videoOtherInformation-container">
+        <div className="videoRilsInformation-container-double">
           <div>Продолжительность:</div>
           <div
-            className="videoOtherLineProgress"
+            className="videoRilsLineProgress"
             style={{ cursor: "pointer" }}
             onClick={handleProgressClick}
             onMouseDown={handleMouseDown}
@@ -75,20 +76,45 @@ const VideoRilsHover: React.FC<VideoRilsHoverProps> = ({ video, onBack }) => {
                 background: "rgba(255, 209, 47, 1)",
               }}
             />
-            <div className="videoOtherProgressTime">
+            <div className="videoRilsProgressTime">
               <div>{formatTime(currentTime)}</div>
               <div>{formatTime(duration)}</div>
             </div>
           </div>
         </div>
         <div className="videoRils-descFooter">
-          <div className="videoOther-title">
-            <div className="videoOther-videoName">{video.description}</div>
-            <div className="videoOther-contentType">{video.contentType}</div>
+          <div className="videoRils-title">
+            <div className="videoRils-videoName">{video.description}</div>
+            <div className="videoRils-contentType">{video.contentType}</div>
           </div>
-          <button onClick={handleBackClick} className="video-footerPrev2">
-            <div>←</div> <span>Назад</span>
-          </button>
+          <div className="videoRilsInformation-container">
+            <div>Продолжительность:</div>
+            <div
+              className="videoRilsLineProgress"
+              style={{ cursor: "pointer" }}
+              onClick={handleProgressClick}
+              onMouseDown={handleMouseDown}
+              onMouseUp={handleMouseUp}
+              onMouseMove={handleMouseMove}
+            >
+              <div
+                style={{
+                  width: `${progress}%`,
+                  height: "100%",
+                  background: "rgba(255, 209, 47, 1)",
+                }}
+              />
+              <div className="videoRilsProgressTime">
+                <div>{formatTime(currentTime)}</div>
+                <div>{formatTime(duration)}</div>
+              </div>
+            </div>
+          </div>
+          <div className="videoFooter-rils">
+            <button onClick={handleBackClick} className="videoRils-footerPrev2">
+              <div>←</div> <span>Назад</span>
+            </button>
+          </div>
         </div>
       </>
     );
@@ -97,14 +123,14 @@ const VideoRilsHover: React.FC<VideoRilsHoverProps> = ({ video, onBack }) => {
   const MobileHover: React.FC = () => {
     return (
       <>
-        <div className="videoOther-title">
-          <div className="videoOther-videoName">{video.description}</div>
-          <div className="videoOther-contentType">{video.contentType}</div>
+        <div className="videoRils-title">
+          <div className="videoRils-videoName">{video.description}</div>
+          <div className="videoRils-contentType">{video.contentType}</div>
         </div>
-        <div className="videoOtherInformation-container">
+        <div className="videoRilsInformation-container-double">
           <div>Продолжительность:</div>
           <div
-            className="videoOtherLineProgress"
+            className="videoRilsLineProgress"
             style={{ cursor: "pointer" }}
             onClick={handleProgressClick}
             onMouseDown={handleMouseDown}
@@ -118,15 +144,17 @@ const VideoRilsHover: React.FC<VideoRilsHoverProps> = ({ video, onBack }) => {
                 background: "rgba(255, 209, 47, 1)",
               }}
             />
-            <div className="videoOtherProgressTime">
+            <div className="videoRilsProgressTime">
               <div>{formatTime(currentTime)}</div>
               <div>{formatTime(duration)}</div>
             </div>
           </div>
         </div>
-        <button onClick={handleBackClick} className="video-footerPrev2">
-          <div>←</div> <span>Назад</span>
-        </button>
+        <div className="videoFooter-rils">
+          <button onClick={handleBackClick} className="videoRils-footerPrev2">
+            <div>←</div> <span>Назад</span>
+          </button>
+        </div>
       </>
     );
   };
