@@ -6,8 +6,8 @@ import useVideoPlayer from "../useVideoPlayer";
 
 interface VideoOtherHoverProps {
   video: VideoHoverInterface;
-  onBack: () => void;
-  currentCat: string;
+  onBack?: () => void;
+  currentCat?: string;
 }
 
 const VideoOtherHover: React.FC<VideoOtherHoverProps> = ({ video, onBack }) => {
@@ -23,22 +23,20 @@ const VideoOtherHover: React.FC<VideoOtherHoverProps> = ({ video, onBack }) => {
     isSafariIosSupported,
     handleMouseEnter,
     handleMouseLeave,
+    handleMouseOut,
     handleTouchStart,
     handleUserInteraction,
     handleButtonClick,
     formatTime,
     handleProgressClick,
-    handleMouseDown,
+    handleTouchProgressClick,
+    progressBarRef,
+    /* handleMouseDown,
     handleMouseUp,
-    handleMouseMove,
+    handleMouseMove, */
+    handleBackClick,
   } = useVideoPlayer(video, onBack);
   const [mobile, setMobile] = useState<boolean>(false);
-
-  const handleBackClick = () => {
-    if (onBack) {
-      onBack(); // Проверяем, что onBack определен
-    }
-  };
 
   useEffect(() => {
     const updateMobileOrDesctop = () => {
@@ -61,12 +59,15 @@ const VideoOtherHover: React.FC<VideoOtherHoverProps> = ({ video, onBack }) => {
         <div className="videoOtherInformation-container">
           <div>Продолжительность:</div>
           <div
+          ref={progressBarRef}
             className="videoOtherLineProgress"
             style={{ cursor: "pointer" }}
             onClick={handleProgressClick}
-            onMouseDown={handleMouseDown}
+            /* onMouseDown={handleMouseDown}
             onMouseUp={handleMouseUp}
-            onMouseMove={handleMouseMove}
+            onMouseMove={handleMouseMove} */
+            onTouchStart={handleTouchProgressClick}
+            onTouchMove={handleTouchProgressClick}
           >
             <div
               style={{
@@ -106,12 +107,15 @@ const VideoOtherHover: React.FC<VideoOtherHoverProps> = ({ video, onBack }) => {
         <div className="videoOtherInformation-container">
           <div>Продолжительность:</div>
           <div
+            ref={progressBarRef}
             className="videoOtherLineProgress"
             style={{ cursor: "pointer" }}
             onClick={handleProgressClick}
-            onMouseDown={handleMouseDown}
+            /* onMouseDown={handleMouseDown}
             onMouseUp={handleMouseUp}
-            onMouseMove={handleMouseMove}
+            onMouseMove={handleMouseMove} */
+            onTouchStart={handleTouchProgressClick}
+            onTouchMove={handleTouchProgressClick}
           >
             <div
               style={{
@@ -140,6 +144,7 @@ const VideoOtherHover: React.FC<VideoOtherHoverProps> = ({ video, onBack }) => {
       className="video-container"
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
+      onMouseOut={handleMouseOut}
       onTouchStart={handleTouchStart}
       onClick={handleUserInteraction}
     >
@@ -153,7 +158,7 @@ const VideoOtherHover: React.FC<VideoOtherHoverProps> = ({ video, onBack }) => {
         poster={video.poster}
         onPause={() => setIsPlaying(false)}
         onPlay={() => setIsPlaying(true)}
-        onCanPlayThrough={() => videoRef.current?.play()}
+        /* onCanPlayThrough={() => videoRef.current?.play()} */
       >
         {shouldPlay && <source src={video.videoUrl} type="video/mp4" />}
         Ваш браузер не поддерживает видео
@@ -162,7 +167,7 @@ const VideoOtherHover: React.FC<VideoOtherHoverProps> = ({ video, onBack }) => {
         id="OtherHoverMain"
         className={showInfo ? "showInfo" : "notShowInfo"}
       >
-        <button onClick={handleButtonClick} className="OtherHover-on-off">
+        <button onClick={handleButtonClick} onTouchMove={handleButtonClick} className="OtherHover-on-off">
           <span>{isPlaying ? "❚❚" : "▶"}</span>
         </button>
 

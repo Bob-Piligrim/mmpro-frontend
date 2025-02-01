@@ -131,11 +131,9 @@ const WeDo: React.FC = () => {
           </div>
           <button onClick={toggleModal} className="services-link">
             {" "}
-            {/* доработать ссылку */}
             ЗАКАЗАТЬ СЪЕМКУ <img src={arrow} alt="стрелка" />{" "}
           </button>{" "}
           {isModalOpen && <Modal onClose={toggleModal} />}
-          {/* ВРЕМЕННО!!! */}
         </div>
       </div>
     </>

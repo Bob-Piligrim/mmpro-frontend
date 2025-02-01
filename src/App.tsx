@@ -12,6 +12,9 @@ import NotFound from "./Component/NotFound/NotFound";
 import Modal from "./Component/Modal/Modal";
 import components from "./Pages/About/Components";
 import ProjectInformation from "./Component/ProjectInformation/ProjectInformation";
+import VideoHover from "./Component/Video/VideoHover/VideoHover";
+import VideoRilsHover from "./Component/Video/VideoRilsHover/VideoRilsHover";
+import VideoOtherHover from "./Component/Video/VideoOtherHover/VideoOtherHover";
 
 function App() {
   const closeModal = () => {
@@ -53,6 +56,27 @@ function App() {
                     path="/portfolio/kino/informatcia_o_proekte"
                     element={<ProjectInformation />}
                   />
+                  {categories.map((category) =>
+                    category.content.map((video) => {
+                      const videoComponent = (() => {
+                        if (category.name === "КИНО") {
+                          return <VideoHover video={video} />;
+                        } else if (category.name === "РИЛС") {
+                          return <VideoRilsHover video={video} />;
+                        } else {
+                          return <VideoOtherHover video={video} />;
+                        }
+                      })();
+
+                      return (
+                        <Route
+                          key={video.id}
+                          path={`/portfolio/${category.route}/${video.id}/${video.description}`}
+                          element={videoComponent}
+                        />
+                      );
+                    })
+                  )}
                   <Route path="*" element={<NotFound />} />
                 </Routes>
               </div>

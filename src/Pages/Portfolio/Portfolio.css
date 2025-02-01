@@ -43,7 +43,7 @@
 .link-container::-webkit-scrollbar,
 .linkfixed-container::-webkit-scrollbar,
 .portfolio-container::-webkit-scrollbar {
-  display: none; /* Скрываем полосу прокрутки для WebKit */
+  display: none;
 }
 
 .category {
@@ -93,8 +93,8 @@
 }
 
 .posterOther-container {
-  justify-content: flex-start; /* Выровнять по левому краю */
-  align-items: stretch; /* Растянуть элементы по высоте */
+  justify-content: flex-start;
+  align-items: stretch;
 }
 
 .posterOther-container > div {
@@ -149,27 +149,23 @@
   height: 45vh;
   margin-right: 10px;
   transition: transform 0.3s ease, filter 0.3s ease;
-  filter: grayscale(100%); /* Черно-белое изображение */
+  filter: grayscale(100%);
   cursor: pointer;
   object-fit: cover;
 }
 
 .poster-kino:hover {
-  transform: scale(1.1); /* Увеличение изображения */
-  filter: grayscale(0%); /* Цветное изображение */
-  background: linear-gradient(
-    9.73deg,
-    rgba(255, 255, 255, 0.06) -2.28%,
-    rgba(255, 255, 255, 0) 55.73%
-  );
+  transform: scale(1.2);
+  filter: grayscale(0%);
 }
 
 .poster-rils {
   width: clamp(250px, 18vw, 320px);
   height: clamp(440px, 445px, 460px);
   transition: transform 0.3s ease, filter 0.3s ease;
-  filter: opacity(20%); /* Черно-белое изображение */
+  filter: opacity(20%);
   cursor: pointer;
+  object-fit: cover;
 }
 
 .poster-other {
@@ -177,15 +173,15 @@
   height: 214px;
   width: 100%;
   height: auto;
-  /* margin-right: 12px; */
+ 
   transition: transform 0.3s ease, filter 0.3s ease;
-  filter: opacity(20%); /* Черно-белое изображение */
+  filter: opacity(20%);
   cursor: pointer;
 }
 
 .poster-rils:hover,
 .poster-other:hover {
-  filter: opacity(100%); /* Цветное изображение */
+  filter: opacity(100%);
   background: linear-gradient(
     9.73deg,
     rgba(255, 255, 255, 0.06) -2.28%,
@@ -211,6 +207,7 @@
   margin-top: 7vh;
   margin-bottom: 1vh;
   font-size: 13px;
+  z-index: 2;
 }
 
 .portfolio-back {
@@ -263,7 +260,7 @@
   opacity: 1;
 }
 
-@media (orientation: portrait) and (max-width: 481px) {
+@media screen and ((orientation: portrait) and (max-width: 481px)) {
   /* 656px */
   /* 331px */
   .portfolio-container {
@@ -327,7 +324,7 @@
     width: 200px;
     width: 70vw;
     height: 140px;
-    @media (orientation: portrait) and (width < 310px) {
+    @media screen and ((orientation: portrait) and (max-width: 310px)) {
       width: 84vw;
       height: auto;
     }
@@ -337,7 +334,7 @@
     width: 250px;
     width: 70vw;
     height: 400px;
-    @media (orientation: portrait) and (width < 310px) {
+    @media screen and ((orientation: portrait) and (max-width: 310px)) {
       width: 84vw;
       height: 300px;
     }
@@ -362,7 +359,7 @@
     margin-top: 100px;
     margin-bottom: 80px;
     padding: 0 auto;
-    @media (orientation: portrait) and (width < 310px) {
+    @media screen and ((orientation: portrait) and (max-width: 310px)) {
       margin-left: 28px;
     }
   }
@@ -380,7 +377,7 @@
   }
 
   .posterKino-container::-webkit-scrollbar {
-    display: none; /* Скрываем полосу прокрутки для WebKit */
+    display: none;
   }
 
   .posterOther-container {
@@ -392,7 +389,7 @@
   }
 
   .posterOther-container:-webkit-scrollbar {
-    display: none; /* Скрываем полосу прокрутки для WebKit */
+    display: none;
   }
 
   .other-discription {
@@ -402,11 +399,6 @@
   }
 
   .footer-link {
-    /* margin-top: 3vh;
-    margin-left: 28px;
-    width: 85vw;
-    align-items: center;
-    margin-bottom: 30px; */
     position: fixed;
     margin-left: 28px;
     bottom: 30px;
@@ -420,11 +412,11 @@
   }
 }
 
-@media (orientation: landscape) and (max-width: 1240px) and (max-height: 500px) {
+@media screen and ((orientation: landscape) and (max-width: 1240px) and (max-height: 500px)) {
   .portfolio-container {
     margin-top: 0;
-    margin-left: 10vh;
-    width: 100vw;
+    margin-left: 28px;
+    width: 98vw;
     overflow: auto;
     -ms-overflow-style: auto;
     scrollbar-width: auto;
@@ -482,7 +474,7 @@
     height: clamp(180px, 210px, 240px);
   }
 
-  @media (orientation: landscape) and (width < 361px) {
+  @media screen and ((orientation: landscape) and (max-width: 361px)) {
     .category {
       font-size: 6px;
       width: auto;

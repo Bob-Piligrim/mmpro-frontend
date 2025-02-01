@@ -1,0 +1,22 @@
+/* BatteryIcon.css */
+.battery-icon {
+  display: inline-block;
+  position: relative;
+}
+
+.battery-charge {
+  animation: charging 1.5s infinite; /* Анимация будет происходить бесконечно */
+}
+
+/* Определяем анимацию */
+@keyframes charging {
+  0% {
+    width: 0; /* Начинаем с нулевой ширины */
+  }
+  50% {
+    width: 10px; /* Занимаем полную ширину для "зарядки" */
+  }
+  100% {
+    width: 0; /* Возвращаемся к ширине 0 */
+  }
+}

@@ -70,7 +70,7 @@
   border-radius: 24px;
 }
 
-@media (orientation: portrait) and (width < 656px) {
+@media screen and (orientation: portrait) and (max-width: 656px) {
     .thankYou, .thankYou-container {
         width: 100vw;
         margin-left: -14px;
@@ -109,7 +109,7 @@
     height: 40px;
   }
 
-  @media (orientation: portrait) and (width < 300px) {
+  @media screen and (orientation: portrait) and (max-width: 300px) {
     .thankYou-container h1 {
       font-size: 1.4rem;
     }

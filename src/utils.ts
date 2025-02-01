@@ -7,8 +7,16 @@ export const supportsWebP = () => {
 };
 
 export const isSafariOrIos = (): boolean => {
-    const userAgent = navigator.userAgent;
-    const isSafari = /Safari/.test(userAgent) && !/Chrome/.test(userAgent); // Проверка на Safari
-    const isIOS = /iPhone|iPad|iPod/.test(userAgent); // Проверка на iOS устройство
-    return isSafari || isIOS; // Возвращаем true, если это Safari или iOS
-  };
+  const userAgent = navigator.userAgent;
+  const isSafari = /Safari/.test(userAgent) && !/Chrome/.test(userAgent); // Проверка на Safari
+  const isIOS = /iPhone|iPad|iPod/.test(userAgent); // Проверка на iOS устройство
+  return isSafari || isIOS; // Возвращаем true, если это Safari или iOS
+};
+
+export const supportsSVG = () => {
+  return (
+    !!document.createElementNS &&
+    !!document.createElementNS("http://www.w3.org/2000/svg", "svg")
+      .createSVGRect
+  );
+};

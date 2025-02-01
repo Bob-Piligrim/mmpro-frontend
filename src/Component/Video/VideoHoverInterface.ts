@@ -5,6 +5,7 @@ interface VideoHoverInterface {
   ageLimit?: string;
   videoName?: string;
   contentType?: string;
+  id: string;
 }
 
 export default VideoHoverInterface;

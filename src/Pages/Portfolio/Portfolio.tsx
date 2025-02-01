@@ -26,45 +26,53 @@ const Portfolio: React.FC<PortfolioProps> = ({ categories }) => {
   const supportWepB = supportsWebP();
 
   /* Свечение постера (инкапсулировать) */
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const [boxShadowColor, setBoxShadowColor] =
-    useState<string>("rgba(0, 0, 0, 0.7)");
-  const imgRef = useRef<HTMLImageElement | null>(null);
-  const [hoveredIdx, setHoveredIdx] = useState<number | null>(null); // Индекс наведённого изображения
+    useState<string>("rgba(0, 0, 0, 0.5)");
 
-  const getDominantColor = (img: HTMLImageElement) => {
-    const canvas = document.createElement("canvas");
-    const ctx = canvas.getContext("2d");
+  const getDominantColor = (src: string): Promise<string> => {
+    return new Promise((resolve) => {
+      const img = new Image();
+      img.src = src;
 
-    if (ctx) {
-      const width = img.naturalWidth;
-      const height = img.naturalHeight;
-      canvas.width = width;
-      canvas.height = height;
-      ctx.drawImage(img, 0, 0);
-      const imgData = ctx.getImageData(0, 0, width, height);
-      const data = imgData.data;
+      img.onload = () => {
+        // Canvas
+        const canvas = document.createElement("canvas");
+        const ctx = canvas.getContext("2d");
 
-      let r = 0,
-        g = 0,
-        b = 0;
-      let count = 0;
+        if (ctx) {
+          canvas.width = img.width;
+          canvas.height = img.height;
+          ctx.drawImage(img, 0, 0);
+          const data = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
 
-      // Подсчет цветов по пикселям
-      for (let i = 0; i < data.length; i += 4) {
-        r += data[i];
-        g += data[i + 1];
-        b += data[i + 2];
-        count++;
-      }
+          // Извлечение среднего цвета
+          let r = 0,
+            g = 0,
+            b = 0,
+            count = 0;
 
-      // Средний цвет
-      r = Math.floor(r / count);
-      g = Math.floor(g / count);
-      b = Math.floor(b / count);
-      return `rgba(${r}, ${g}, ${b}, 0.7)`; // Установите желаемую прозрачность
-    }
-    return "rgba(0, 0, 0, 0.5)"; // Возврат цвета по умолчанию
+          for (let i = 0; i < data.length; i += 4) {
+            r += data[i];
+            g += data[i + 1];
+            b += data[i + 2];
+            count++;
+          }
+
+          r = Math.floor(r / count);
+          g = Math.floor(g / count);
+          b = Math.floor(b / count);
+
+          resolve(`rgba(${r}, ${g}, ${b}, 0.7)`);
+        }
+      };
+
+      img.onerror = () => {
+        resolve("rgba(0, 0, 0, 0.5)");
+      };
+    });
   };
+
   /* Свечение постера (инкапсулировать) */
 
   // Навигация
@@ -107,6 +115,7 @@ const Portfolio: React.FC<PortfolioProps> = ({ categories }) => {
 
   const handleVideoClick = (video: VideoHoverInterface) => {
     setSelectedVideo(video);
+    navigate(`/portfolio/${categoryName}/${video.id}/${video.description}`);
   };
 
   useEffect(() => {
@@ -264,14 +273,59 @@ const Portfolio: React.FC<PortfolioProps> = ({ categories }) => {
                 : "posterOther-container"
             }
           >
-            {selectedCategory.content.map((video) => {
+            {selectedCategory.content.map((video, index) => {
               const posterPath = supportWepB
                 ? video.poster
                     ?.replace("/posters/", "/posters/webp/")
                     .replace(/\.png$/, ".webp")
                 : video.poster;
               return (
-                <div key={video.poster}>
+                <div
+                  key={video.poster}
+                  style={{
+                    position: "relative",
+                    display: "inline-block",
+                  }}
+                  onMouseEnter={() => {
+                    if (posterPath) {
+                      getDominantColor(posterPath).then((color) =>
+                        setBoxShadowColor(color)
+                      );
+                      setHoveredIndex(index);
+                    }
+                  }}
+                  onMouseLeave={() => {
+                    setHoveredIndex(null);
+                    setBoxShadowColor("rgba(0, 0, 0, 0.5)");
+                  }}
+                >
+                  {hoveredIndex === index &&
+                    selectedCategory.name === "КИНО" && (
+                      <div
+                        style={{
+                          position: "absolute",
+                          top: "0",
+                          left: "0",
+                          right: "0",
+                          bottom: "0",
+                          backgroundColor: "transparent",
+                          boxShadow: `0 0 100px ${boxShadowColor}, 
+                          0 0 20px ${boxShadowColor}, 
+                          0 0 30px ${boxShadowColor}, 
+                          0 0 40px ${boxShadowColor}, 
+                          0 0 50px ${boxShadowColor},
+                          0 0 60px ${boxShadowColor},
+                          0 0 70px ${boxShadowColor},
+                          0 0 80px ${boxShadowColor},
+                          0 0 90px ${boxShadowColor},
+                          0 0 100px ${boxShadowColor}`,
+                          borderRadius: "5px",
+                          pointerEvents: "none",
+                          transition: "box-shadow 0.3s ease-in-out",
+                          zIndex: 0,
+                        }}
+                      />
+                    )}
                   <button
                     className="poster-button"
                     onClick={() =>
@@ -282,11 +336,15 @@ const Portfolio: React.FC<PortfolioProps> = ({ categories }) => {
                         ageLimit: video.ageLimit,
                         videoName: video.videoName,
                         contentType: video.contentType,
+                        id: video.id,
                       })
                     }
+                    style={{
+                      position: "relative",
+                      zIndex: 0,
+                    }}
                   >
                     <img
-                      ref={imgRef}
                       src={posterPath}
                       alt={video.poster}
                       className={
@@ -348,9 +406,10 @@ const Portfolio: React.FC<PortfolioProps> = ({ categories }) => {
               ageLimit: selectedVideo.ageLimit,
               videoName: selectedVideo.videoName,
               contentType: selectedVideo.contentType,
+              id: selectedVideo.id,
             }}
             onBack={() => setSelectedVideo(null)}
-            currentCat={categories[selectedCategoryIndex].name}
+            /*  currentCat={categories[selectedCategoryIndex].name} */
           />
         )}
 
@@ -363,6 +422,7 @@ const Portfolio: React.FC<PortfolioProps> = ({ categories }) => {
               ageLimit: selectedVideo.ageLimit,
               videoName: selectedVideo.videoName,
               contentType: selectedVideo.contentType,
+              id: selectedVideo.id,
             }}
             onBack={() => setSelectedVideo(null)}
             currentCat={categories[selectedCategoryIndex].name}
@@ -380,6 +440,7 @@ const Portfolio: React.FC<PortfolioProps> = ({ categories }) => {
                 ageLimit: selectedVideo.ageLimit,
                 videoName: selectedVideo.videoName,
                 contentType: selectedVideo.contentType,
+                id: selectedVideo.id,
               }}
               onBack={() => setSelectedVideo(null)}
               currentCat={categories[selectedCategoryIndex].name}
