@@ -64,7 +64,7 @@
   border-radius: 24px;
 }
 
-@media (orientation: portrait) and (width < 670px) {
+@media screen and (orientation: portrait) and (max-width: 670px) {
   .left-image {
     position: fixed;
     top: 0;
@@ -97,7 +97,7 @@
     height: 40px;
   }
 
-  @media (orientation: portrait) and (width < 300px) {
+  @media screen and (orientation: portrait) and (max-width: 300px) {
     .notFound-container h1 {
         font-size: 1.4rem;
     }

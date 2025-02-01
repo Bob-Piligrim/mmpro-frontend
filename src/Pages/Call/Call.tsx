@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import "./Call.css";
+import Modal from "../../Component/Modal/Modal";
 
 const Call: React.FC = () => {
   const handleDownload = () => {
@@ -11,6 +12,12 @@ const Call: React.FC = () => {
     document.body.removeChild(link);
   };
 
+  const [isModalOpens, setIsModalOpens] = useState<boolean>(false);
+
+  const toggleModals = () => {
+    setIsModalOpens(!isModalOpens);
+  };
+
   return (
     <>
       <div className="mail">info@mmproduct.ru</div>
@@ -18,7 +25,8 @@ const Call: React.FC = () => {
         <button id="btn-for-mobile" onClick={handleDownload}>
           ПРЕЗЕНТАЦИЯ
         </button>
-        <button>БРИФ</button>
+        <button onClick={toggleModals}>БРИФ</button>
+        {isModalOpens && <Modal onClose={toggleModals} />}
       </div>
     </>
   );

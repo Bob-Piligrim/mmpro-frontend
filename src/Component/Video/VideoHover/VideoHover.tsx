@@ -13,7 +13,7 @@ import ProjectInformation from "../ProjectInformation/ProjectInformation";
 interface VideoHoverProps {
   video: VideoHoverInterface;
   onBack?: () => void;
-  currentCat: string;
+  /* currentCat: string; */
 }
 
 const VideoHover: React.FC<VideoHoverProps> = ({ video, onBack }) => {
@@ -29,27 +29,32 @@ const VideoHover: React.FC<VideoHoverProps> = ({ video, onBack }) => {
     isSafariIosSupported,
     handleMouseEnter,
     handleMouseLeave,
+    handleMouseOut,
     handleTouchStart,
     handleUserInteraction,
     handleButtonClick,
     formatTime,
     handleProgressClick,
-    handleMouseDown,
+    handleTouchProgressClick,
+    progressBarRef,
+    /* handleMouseDown,
     handleMouseUp,
-    handleMouseMove,
+    handleMouseMove, */
+    handleBackClick,
   } = useVideoPlayer(video, onBack);
 
-  const handleBackClick = () => {
+  /* const handleBackClick = () => {
     if (onBack) {
       onBack(); // Проверяем, что onBack определен
     }
-  };
+  }; */
 
   return (
     <div
       className="video-container"
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
+      onMouseOut={handleMouseOut}
       onTouchStart={handleTouchStart}
       onClick={handleUserInteraction}
     >
@@ -70,7 +75,6 @@ const VideoHover: React.FC<VideoHoverProps> = ({ video, onBack }) => {
       </video>
       <div id={showInfo ? "showInfo" : "notShowInfo"}>
         <div className="contentShow">
-          <div className="emptyContent"></div>
           <button onClick={handleButtonClick} className="on-off">
             <span>{isPlaying ? "❚❚" : "▶"}</span>
           </button>
@@ -110,12 +114,15 @@ const VideoHover: React.FC<VideoHoverProps> = ({ video, onBack }) => {
               <div className="information-container2">
                 <div>Продолжительность:</div>
                 <div
+                ref={progressBarRef}
                   className="lineProgress"
                   style={{ cursor: "pointer" }}
                   onClick={handleProgressClick}
-                  onMouseDown={handleMouseDown}
+                 /*  onMouseDown={handleMouseDown}
                   onMouseUp={handleMouseUp}
-                  onMouseMove={handleMouseMove}
+                  onMouseMove={handleMouseMove} */
+                  onTouchStart={handleTouchProgressClick}
+                  onTouchMove={handleTouchProgressClick}
                 >
                   <div
                     style={{

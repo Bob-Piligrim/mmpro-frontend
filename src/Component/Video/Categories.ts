@@ -6,6 +6,11 @@ interface Category {
   content: VideoHoverInterface[];
 }
 
+let videoIndex = 0;
+const generateVideoId = (index: number): string => {
+  return `video-${index + 1}`; // Генерируем уникальный ID
+};
+
 const categories: Category[] = [
   {
     name: "КИНО",
@@ -32,9 +37,14 @@ const categories: Category[] = [
         ageLimit: "18",
         videoName: "СОСЕД",
       },
-    ],
+    ].map((video) => {
+      videoIndex++;
+      return {
+        ...video,
+        id: generateVideoId(videoIndex),
+      };
+    }) as VideoHoverInterface[],
   },
-  /* не сделал */
   {
     name: "РЕКЛАМА",
     route: "reklama",
@@ -95,7 +105,13 @@ const categories: Category[] = [
         contentType: "Реклама",
         ageLimit: "18",
       },
-    ],
+    ].map((video) => {
+      videoIndex++;
+      return {
+        ...video,
+        id: generateVideoId(videoIndex),
+      };
+    }) as VideoHoverInterface[],
   },
   {
     name: "ОТЧЁТНЫЕ ВИДЕО",
@@ -113,12 +129,14 @@ const categories: Category[] = [
         description: "СК",
         contentType: "Стрельбы",
         ageLimit: "18",
+        videoName: "СК",
       },
       {
         poster: "/posters/otchetnie_video/FORTBOYAR.png",
         videoUrl: "/videos/otchetnie_video/FORTBOYAR.mp4",
         description: "FORTBOYAR",
         ageLimit: "18",
+        videoName: "FORTBOYAR",
       },
       {
         poster: "/posters/otchetnie_video/ДГП 143 - ДЕНЬ СЕМЬИ.png",
@@ -126,14 +144,22 @@ const categories: Category[] = [
         description: "ДГП 143",
         contentType: "День семьи",
         ageLimit: "18",
+        videoName: "День семьи",
       },
       {
         poster: "/posters/otchetnie_video/ФСБ.png",
         videoUrl: "/videos/otchetnie_video/ФСБ.mp4",
         description: "ФСБ",
         ageLimit: "18",
+        videoName: "ФСБ",
       },
-    ],
+    ].map((video) => {
+      videoIndex++;
+      return {
+        ...video,
+        id: generateVideoId(videoIndex),
+      };
+    }) as VideoHoverInterface[],
   },
   {
     name: "РЕПОРТАЖ",
@@ -145,6 +171,7 @@ const categories: Category[] = [
         description: "Донорская акция",
         contentType: "Репортаж",
         ageLimit: "18",
+        videoName: "Донорская акция",
       },
       {
         poster: "/posters/reportazh/БЕРГ АВТО.png",
@@ -152,6 +179,7 @@ const categories: Category[] = [
         description: "BERG AUTO",
         contentType: "Репортаж",
         ageLimit: "18",
+        videoName: "BERG AUTO",
       },
       {
         poster: "/posters/reportazh/СК - РЕПОРТАЖ.png",
@@ -159,6 +187,7 @@ const categories: Category[] = [
         description: "СК",
         contentType: "Репортаж",
         ageLimit: "18",
+        videoName: "СК",
       },
       {
         poster: "/posters/reportazh/ФОНД ЛЮСИ ВОРОНОВОЙ - РЕПОРТАЖ.png",
@@ -166,8 +195,15 @@ const categories: Category[] = [
         description: "Фонд Люси Вороновой",
         contentType: "Репортаж",
         ageLimit: "18",
+        videoName: "Фонд Люси Вороновой",
       },
-    ],
+    ].map((video) => {
+      videoIndex++;
+      return {
+        ...video,
+        id: generateVideoId(videoIndex),
+      };
+    }) as VideoHoverInterface[],
   },
   {
     name: "КУРСЫ",
@@ -201,7 +237,13 @@ const categories: Category[] = [
         contentType: "Курс",
         ageLimit: "18",
       },
-    ],
+    ].map((video) => {
+      videoIndex++;
+      return {
+        ...video,
+        id: generateVideoId(videoIndex),
+      };
+    }) as VideoHoverInterface[],
   },
   {
     name: "ИНТЕРВЬЮ",
@@ -228,7 +270,13 @@ const categories: Category[] = [
         contentType: "Интервью",
         ageLimit: "18",
       },
-    ],
+    ].map((video) => {
+      videoIndex++;
+      return {
+        ...video,
+        id: generateVideoId(videoIndex),
+      };
+    }) as VideoHoverInterface[],
   },
   {
     name: "РИЛС",
@@ -290,7 +338,13 @@ const categories: Category[] = [
         contentType: "Рилс",
         ageLimit: "18",
       },
-    ],
+    ].map((video) => {
+      videoIndex++;
+      return {
+        ...video,
+        id: generateVideoId(videoIndex),
+      };
+    }) as VideoHoverInterface[],
   },
   {
     name: "YOUTUBE",
@@ -310,7 +364,13 @@ const categories: Category[] = [
         contentType: "YouTube",
         ageLimit: "18",
       },
-    ],
+    ].map((video) => {
+      videoIndex++;
+      return {
+        ...video,
+        id: generateVideoId(videoIndex),
+      };
+    }) as VideoHoverInterface[],
   },
   {
     name: "ОНЛАЙН ТРАНСЛЯЦИЯ",
@@ -330,7 +390,13 @@ const categories: Category[] = [
         contentType: "Трансляция",
         ageLimit: "18",
       },
-    ],
+    ].map((video) => {
+      videoIndex++;
+      return {
+        ...video,
+        id: generateVideoId(videoIndex),
+      };
+    }) as VideoHoverInterface[],
   },
   {
     name: "CG",
@@ -384,7 +450,7 @@ const categories: Category[] = [
         description: "ИИНП",
         contentType: "GG",
         ageLimit: "18",
-      }, 
+      },
       {
         poster: "/posters/cg/ИИНП.png",
         videoUrl: "/videos/cg/ИИНП.mp4",
@@ -392,7 +458,13 @@ const categories: Category[] = [
         contentType: "GG",
         ageLimit: "18",
       },
-    ],
+    ].map((video) => {
+      videoIndex++;
+      return {
+        ...video,
+        id: generateVideoId(videoIndex),
+      };
+    }) as VideoHoverInterface[],
   },
   {
     name: "СВАДЬБЫ",
@@ -400,20 +472,31 @@ const categories: Category[] = [
     content: [
       {
         poster: "/posters/svadba/СВАДЬБА 1.png",
-        videoUrl: "/videos/svadba/СВАДЬБА 1",
+        videoUrl: "/videos/svadba/СВАДЬБА 1.mp4",
         description: "Свадьба. 1",
         contentType: "",
         ageLimit: "18",
       },
       {
         poster: "/posters/svadba/СВАДЬБА 2.png",
-        videoUrl: "/videos/svadba/СВАДЬБА 2",
+        videoUrl: "/videos/svadba/СВАДЬБА 2.mp4",
         description: "Свадьба. 2",
         contentType: "",
         ageLimit: "18",
       },
-    ],
+    ].map((video) => {
+      videoIndex++;
+      return {
+        ...video,
+        id: generateVideoId(videoIndex),
+      };
+    }) as VideoHoverInterface[],
   },
 ];
 
+categories.forEach((category) => {
+  category.content.forEach((video) => {
+    console.log(video.id); // Логируем ID каждого видео
+  });
+});
 export default categories;

@@ -5,6 +5,8 @@ import lefttop from "../../Assets/Modal/topleft.png";
 import skrepka from "../../Assets/Modal/skrepka.png";
 import ThankYou from "../ThankYou/ThankYou";
 import TextMask from "react-text-mask";
+/* import Power from "./Power/Power";
+import { supportsSVG } from "../../utils"; */
 
 interface ModalProps {
   onClose: () => void;
@@ -52,8 +54,8 @@ const ModalWithCircles: React.FC = () => {
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
-      fillCircles(setFilledCirclesRow2, 1000); // Убедитесь, что задержка такая же, чтобы заполнение было последовательным
-    }, 1000); // Ждать, пока первый ряд заполнится
+      fillCircles(setFilledCirclesRow2, 1000);
+    }, 1000);
 
     return () => clearTimeout(timeoutId);
   }, []);
@@ -282,13 +284,14 @@ const Modal: React.FC<ModalProps> = ({ onClose }) => {
           <div className="modal-container">
             {/* Угловые изображения */}
             <div className="corner top-left">
+              {/* {supportsSVG() ? <Power /> : <img src={lefttop} alt="Corner1" />} */}
               <img src={lefttop} alt="Corner1" />
             </div>
             <div className="corner top-right">
               {/* <img src={righttop} alt="Corner2" /> */}
-              <div className="rec-label">
-                <span className="dot"></span>
-                <span className="REC">REC </span>
+              <div id="rec-label">
+                <span id="dot"></span>
+                <span id="REC">REC </span>
               </div>
             </div>
             <div className="corner bottom-left">
@@ -367,7 +370,7 @@ const Modal: React.FC<ModalProps> = ({ onClose }) => {
                 ) : null}
               </div>
               {loading && <div className="loading-spinner"></div>}
-              <button type="submit">
+              <button type="submit" id="modal-button">
                 ОТПРАВИТЬ
                 <div className="arrow-up-modal">↑</div>
               </button>

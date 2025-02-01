@@ -10,13 +10,15 @@ const useVideoPlayer = (video: VideoHoverInterface, onBack?: () => void) => {
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [progress, setProgress] = useState(0);
-  const [isDragging, setIsDragging] = useState<boolean>(false);
+  /* const [isDragging, setIsDragging] = useState<boolean>(false); */
   const [duration, setDuration] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
   const [showInfo, setShowInfo] = useState<boolean>(true);
   const { hideHeader, showHeader } = useHeader();
+  const [shouldShowHeader, setshouldShowHeader] = useState<boolean>();
   const [showPlayPrompt, setShowPlayPrompt] = useState<boolean>(false);
   const [shouldPlay, setShouldPlay] = useState<boolean>(false);
+  /* let hideTimeout: NodeJS.Timeout | null = null; */
 
   // Логика воспроизведения (монтирования) на сафари и ios
   useEffect(() => {
@@ -94,20 +96,68 @@ const useVideoPlayer = (video: VideoHoverInterface, onBack?: () => void) => {
   }, [handleTimeUpdate]);
 
   // Логика каасания прогресса видео
-  const handleProgressClick = (e: React.MouseEvent<HTMLDivElement>) => {
+  /* const handleProgressClick = (e: React.MouseEvent<HTMLDivElement>) => {
     const progressBar = e.currentTarget as HTMLDivElement;
     const rect = progressBar.getBoundingClientRect();
     const offsetX = e.clientX - rect.left; // Позиция клика относительно прогресс-бара
-    /* const newProgress = offsetX / rect.width; */ // Новое значение прогресса (от 0 до 1)
     const newProgress = Math.max(0, Math.min(1, offsetX / rect.width)); // Ограничиваем значение от 0 до 1
     const newTime = newProgress * duration; // Новое время видео
+    if (videoRef.current) {
+      videoRef.current.currentTime = newTime; // Устанавливаем новое время
+      setCurrentTime(newTime); // Обновляем состояние текущего времени
+      console.log("Сработал handleProgressClick ", newTime);
+    } else {
+      console.log("Не сработал handleProgressClick");
+    }
+  }; */
+  const progressBarRef = useRef<HTMLDivElement>(null);
+  const handleProgressClick = useCallback(
+    (e: React.MouseEvent<HTMLDivElement>) => {
+      if (!progressBarRef.current) {
+        console.log("Контейнер не находится");
+        return;
+      }
+
+      const rect = progressBarRef.current.getBoundingClientRect();
+      const offsetX = e.clientX - rect.left; // Позиция клика относительно прогресс-бара
+      const newProgress = Math.max(0, Math.min(1, offsetX / rect.width)); // Ограничиваем значение от 0 до 1
+      const newTime = newProgress * duration; // Новое время видео
+
+      if (videoRef.current) {
+        videoRef.current.currentTime = newTime; // Устанавливаем новое время
+        setCurrentTime(newTime); // Обновляем состояние текущего времени
+        console.log("Сработал handleProgressClick ", newTime);
+      } else {
+        console.log("Не сработал handleProgressClick");
+      }
+    },
+    [duration, videoRef]
+  );
+
+  /* const handleProgressClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    updateProgress(e.clientX, e.currentTarget);
+  }; */
+
+  const handleTouchProgressClick = (e: React.TouchEvent<HTMLDivElement>) => {
+    const touch = e.touches[0] || e.changedTouches[0];
+    updateProgress(touch.clientX, e.currentTarget);
+  };
+
+  // Функция для обновления прогресса
+  const updateProgress = (clientX: number, currentTarget: EventTarget) => {
+    const progressBar = currentTarget as HTMLDivElement;
+    const rect = progressBar.getBoundingClientRect();
+    const offsetX = clientX - rect.left; // Позиция клика или касания относительно прогресс-бара
+    const newProgress = Math.max(0, Math.min(1, offsetX / rect.width)); // Ограничиваем значение от 0 до 1
+    const newTime = newProgress * duration; // Новое время видео
+
     if (videoRef.current) {
       videoRef.current.currentTime = newTime; // Устанавливаем новое время
       setCurrentTime(newTime); // Обновляем состояние текущего времени
     }
   };
 
-  const handleMouseDown = () => {
+  /* const handleMouseDown = () => {
     setIsDragging(true);
   };
 
@@ -119,13 +169,14 @@ const useVideoPlayer = (video: VideoHoverInterface, onBack?: () => void) => {
     if (isDragging) {
       handleProgressClick(e);
     }
-  };
+  }; */
 
   // Событие нажатия мышкой
   const handleMouseEnter = () => {
     if (videoRef.current) {
       setShowInfo(true);
       showHeader();
+      setshouldShowHeader(false);
     }
   };
 
@@ -135,8 +186,10 @@ const useVideoPlayer = (video: VideoHoverInterface, onBack?: () => void) => {
     "OtherHover-on-off",
     "lineProgress",
     "videoOtherLineProgress",
+    "videoRilsLineProgress",
     "video-footerPrev",
     "video-footerPrev2",
+    "videoRils-footerPrev2",
   ];
 
   // Обработчик mouseleave
@@ -147,6 +200,8 @@ const useVideoPlayer = (video: VideoHoverInterface, onBack?: () => void) => {
     if (!target) {
       setShowInfo(false);
       hideHeader();
+      setshouldShowHeader(true);
+      console.log("Сработал heiHeader() при функции handleMouseLeave 1");
       return;
     }
 
@@ -158,15 +213,69 @@ const useVideoPlayer = (video: VideoHoverInterface, onBack?: () => void) => {
           target.closest(`.${className}`) !== null // Проверяем родителей
       );
 
-      if (isInteractive) {
+      const isInsideContentShow =
+        target.closest(".contentShow") !== null ||
+        target.id === "OtherHoverMain" ||
+        target.id === "OtherRilsMain" ||
+        target.id === "videoRils";
+
+      if (isInteractive || isInsideContentShow) {
         setShowInfo(true);
         showHeader();
+        setshouldShowHeader(false);
         return; // Ничего не делаем, если курсор на интерактивном элементе
+      } else {
+        setShowInfo(false); // Скрываем информацию, если ничего не сработало
+        hideHeader();
+        setshouldShowHeader(true);
       }
     }
 
-    setShowInfo(false); // Скрываем информацию, если ничего не сработало
+    /* setShowInfo(false); // Скрываем информацию, если ничего не сработало
     hideHeader();
+    console.log("Сработал heiHeader() при функции handleMouseLeave 2"); */
+  };
+
+  const handleMouseOut = (event: React.MouseEvent) => {
+    const target = event.relatedTarget as HTMLElement;
+
+    // Если target не существует, просто скрываем информацию
+    if (!target) {
+      setShowInfo(false);
+      hideHeader();
+      setshouldShowHeader(true);
+      console.log("Сработал heiHeader() при функции handleMouseLeave 1");
+      return;
+    }
+
+    if (target instanceof HTMLElement) {
+      const isInteractive = interactiveClasses.some(
+        (className) =>
+          target.classList.contains(className) ||
+          target.closest(`.${className}`) !== null // Проверяем родителей
+      );
+
+      const isInsideContentShow =
+        target.closest(".contentShow") !== null ||
+        target.id === "OtherHoverMain" ||
+        target.id === "OtherRilsMain" ||
+        target.id === "videoRils";
+
+      if (isInteractive || isInsideContentShow) {
+        setShowInfo(true);
+        showHeader();
+        setshouldShowHeader(false);
+        return; // Ничего не делаем, если курсор на интерактивном элементе
+      } else {
+        setShowInfo(false); // Скрываем информацию, если ничего не сработало
+        hideHeader();
+        setshouldShowHeader(true);
+      }
+    }
+
+    /* setShowInfo(false); // Скрываем информацию, если ничего не сработало
+    hideHeader();
+    console.log("Сработал heiHeader() при функции handleMouseLeave 2"); */
   };
 
   // Собыытие нажатия пальчиками
@@ -204,10 +313,42 @@ const useVideoPlayer = (video: VideoHoverInterface, onBack?: () => void) => {
   const forHeader = (e: React.TouchEvent) => {
     if (e.target && showInfo) {
       hideHeader();
+      setshouldShowHeader(true);
+      console.log(
+        "Сработал heiHeader() при функции forHeader handleTouchStart"
+      );
     } else {
       showHeader();
+      setshouldShowHeader(false);
     }
   };
+
+/*   const hideContent = () => {
+    setShowInfo(false);
+    hideHeader();
+    setshouldShowHeader(true);
+  };
+ */
+  /* useEffect(() => {
+    if (isPlaying) {
+      setShowInfo(true);
+      showHeader();
+      setshouldShowHeader(false);
+
+      if (!showInfo || !shouldShowHeader) {
+        hideTimeout = setTimeout(() => {
+          hideContent();
+        }, 5000);
+        console.log("Таймер начался снова", hideTimeout)
+      }
+    } else {
+      if (hideTimeout) clearTimeout(hideTimeout);
+    }
+
+    return () => {
+      if (hideTimeout) clearTimeout(hideTimeout);
+    };
+  }, [isPlaying, hideTimeout]); */
 
   // Изменения под safari и ios (ios не тестировал еще)
   const handlePlayPause = () => {
@@ -350,6 +491,25 @@ const useVideoPlayer = (video: VideoHoverInterface, onBack?: () => void) => {
     playVideo();
   }, []);
 
+  const handleBackClick = () => {
+    if (window.history) {
+      window.history.back();
+    } else {
+      window.location.href = "/portfolio/kino";
+    }
+    showHeader();
+    setshouldShowHeader(false);
+  };
+
+  // Показываем header при выходи полностью из кмоомпонента!
+  useEffect(() => {
+    return () => {
+      if (shouldShowHeader) {
+        showHeader();
+      }
+    };
+  }, [showHeader, shouldShowHeader]);
+
   return {
     video,
     onBack,
@@ -357,7 +517,7 @@ const useVideoPlayer = (video: VideoHoverInterface, onBack?: () => void) => {
     isPlaying,
     setIsPlaying,
     progress,
-    isDragging,
+    /* isDragging, */
     duration,
     currentTime,
     showInfo,
@@ -369,6 +529,7 @@ const useVideoPlayer = (video: VideoHoverInterface, onBack?: () => void) => {
     isSafariIosSupported,
     handleMouseEnter,
     handleMouseLeave,
+    handleMouseOut,
     forHeader,
     handleTouchStart,
     handlePlayPause,
@@ -379,9 +540,12 @@ const useVideoPlayer = (video: VideoHoverInterface, onBack?: () => void) => {
     handleVideoEnded,
     formatTime,
     handleProgressClick,
-    handleMouseDown,
+    handleTouchProgressClick,
+    progressBarRef,
+    /* handleMouseDown,
     handleMouseUp,
-    handleMouseMove,
+    handleMouseMove, */
+    handleBackClick,
   };
 };
 export default useVideoPlayer;

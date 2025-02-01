@@ -9,13 +9,15 @@
 
 #OtherRilsMain {
   height: 100vh;
-  position: relative;
+  min-height: 100vh;
+  max-height: 100vh;
+  position: absolute;
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
+  justify-content: end;
   align-content: center;
   align-items: center;
-  padding-bottom: 115px;
+  bottom: 110px;
   width: 74vw;
   margin-left: 1.5vw;
 
@@ -46,6 +48,7 @@
   align-items: center;
   justify-content: center;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  z-index: 9999999999999999999999999999999;
 }
 
 .videoRils-descFooter {
@@ -64,7 +67,7 @@
   width: auto;
   max-width: 400px;
   min-width: 350px;
-  margin-left: 120px;
+  margin-left: 90px;
   text-align: center;
   font-weight: 400;
   font-size: 18px;
@@ -73,7 +76,7 @@
   color: rgba(255, 255, 255, 1);
 }
 
-@media (width < 1055px) {
+@media screen and (max-width: 1055px) {
   .videoRils-descFooter {
     margin-top: 7vh;
   }
@@ -143,7 +146,6 @@
   align-items: end;
   align-self: flex-end;
   justify-content: flex-start;
-  height: 100px;
 }
 
 .videoRils-footerPrev2 {
@@ -166,10 +168,10 @@
   align-items: center;
 }
 
-@media ((orientation: portrait) and (max-width: 656px)) {
+@media screen and ((orientation: portrait) and (max-width: 656px)) {
   /* 656px */
   #OtherRilsMain {
-    padding-bottom: 30px;
+    bottom: 70px;
     width: 92vw;
   }
 
@@ -181,14 +183,14 @@
   .videoRilsInformation-container {
     width: clamp(280px, 85vw, 330px);
     margin-top: 45px;
-    @media (orientation: portrait) and (width < 340px) {
+    @media screen and (orientation: portrait) and (max-width: 340px) {
       width: inherit;
     }
   }
 
   .videoRils-title {
     width: inherit;
-    margin-top: 30px;
+    margin-top: 60px;
     align-items: end;
     margin-right: 0px;
     text-align: end;
@@ -198,11 +200,7 @@
     margin-top: 5px;
   }
 
-  .video-footerPrev2 {
-    /* align-self: center; */
-  }
-
-  @media (orientation: portrait) and (width < 481px) {
+  @media screen and ((orientation: portrait) and (max-width: 481px)) {
     #OtherRilsMain {
       width: 91vw;
     }
@@ -234,9 +232,9 @@
   }
 }
 
-@media (orientation: landscape) and (max-width: 1240px) and (max-height: 500px) {
+@media screen and ((orientation: landscape) and (max-width: 1240px) and (max-height: 500px)) {
   #OtherRilsMain {
-    padding-bottom: 40px;
+    bottom: 30px;
   }
   .OtherHover-on-off {
     margin-left: 30px;
@@ -252,7 +250,7 @@
   }
 }
 
-@media (orientation: landscape) and (width < 656px) {
+@media screen and ((orientation: landscape) and (max-width: 656px)) {
   .videoRils-title {
     width: inherit;
     margin-top: 0;

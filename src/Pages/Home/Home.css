@@ -5,12 +5,6 @@
   overflow: hidden;
 }
 
-/* @media (max-width: 1050px) or (min-height: 1100px) {
-  .home-background {
-    margin-top: -16vh;
-  }
-} */
-
 .left-half,
 .right-half {
   position: fixed;
@@ -89,7 +83,8 @@
   pointer-events: auto;
 }
 
-@media (orientation: portrait) and (max-width: 481px) {
+
+@media screen and ((orientation: portrait) and (max-width: 481px)) {
   /* 331px */
   .home-background {
     position: relative;
@@ -165,11 +160,8 @@
   }
 }
 
-@media (orientation: landscape) and (width < 1240px), (height < 500px) {
+@media screen and ((orientation: landscape) and (max-width: 1240px) and (max-height: 500px)) {
   .home-container {
     padding-top: 30vh;
   }
-  /* .home-container {
-    padding-top: 50vh;
-  } */
 }

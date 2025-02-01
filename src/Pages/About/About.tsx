@@ -10,7 +10,7 @@ import tg from "../../Assets/About/link5.png";
 import OurClients from "../OurClients/OurClients";
 import Call from "../Call/Call";
 import WhoAreWe from "../WhoAreYou/WhoAreWe"; */
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { ComponentsInterface } from "./Components";
 
 interface AboutProps {
@@ -19,7 +19,6 @@ interface AboutProps {
 
 const About: React.FC<AboutProps> = ({ components }) => {
   const [currentIndex, setCurrentIndex] = useState<number>(0);
-  console.log(currentIndex);
   // для высоты .about-content-container
   /* const [containerHeight, setContainerHeight] = useState(0); */
   const activeComponentRef = useRef<HTMLDivElement>(null);
@@ -54,13 +53,13 @@ const About: React.FC<AboutProps> = ({ components }) => {
   }; */
 
   const handleNextSlide = () => {
-   /*  setCurrentIndex((prevIndex) =>
+    /*  setCurrentIndex((prevIndex) =>
       prevIndex === components.length - 1 ? 0 : prevIndex + 1
     );
       navigate(`/aboutus/${components[currentIndex].route}`); */
     if (currentIndex < components.length - 1) {
       const newIndex = currentIndex + 1;
-      setCurrentIndex(newIndex)
+      setCurrentIndex(newIndex);
       navigate(`/aboutus/${components[newIndex].route}`);
     }
   };
@@ -105,6 +104,21 @@ const About: React.FC<AboutProps> = ({ components }) => {
     }
   }, [currentIndex]); */
 
+ /*  const handleBackClick = () => {
+    const canGoBack = window.history.length > 1;
+
+    if (canGoBack) {
+      window.history.back();
+      console.log("История есть, история: ", window.history);
+    } else {
+      // Вводим таймер, чтобы позволить браузеру обработать событие
+      setTimeout(() => {
+        window.location.href = "/";
+      }, 100); // небольшая задержка
+      console.log("Истории нет: ", window.history);
+    }
+  }; */
+
   return (
     <>
       <div
@@ -135,7 +149,6 @@ const About: React.FC<AboutProps> = ({ components }) => {
                 <h2 className="title-who">{component.title}</h2>
               </div>
               <div>{component.component({})}</div>
-              
             </div>
           ))}
         </div>
@@ -157,10 +170,6 @@ const About: React.FC<AboutProps> = ({ components }) => {
           {" "}
           <div>
             <div className="about-link-mobile">
-              {/* <button onClick={handleCall} style={{ all: "unset" }}>
-                <img src={phone} alt="линк" />
-              </button> */}
-              {/* <a href="tel:+79661309045"></a> */}
               <a href="tel:+79038924705">
                 <img src={phone} alt="линк" />
               </a>
@@ -176,7 +185,8 @@ const About: React.FC<AboutProps> = ({ components }) => {
             </div>
             <div className="about-btn-mobile">
               <button
-                onClick={() => (window.location.href = "/")}
+                /* onClick={() => (window.location.href = "/")} */
+                onClick={() => window.location.href = "/"}
                 className="footer-prev-desctop"
               >
                 <div className="circle">←</div> <span>Назад</span>
@@ -209,8 +219,7 @@ const About: React.FC<AboutProps> = ({ components }) => {
           </div>
           <div className="info-links">
             <a href="/portfolio">Портфолио</a>
-            {/* <Link to="/aboutus/svyazhitec_s_nami">Контакты</Link> */}
-            <a href="/aboutus/svyazhitec_s_nami">Контакты</a>
+            <Link to="/aboutus/svyazhitec_s_nami">Контакты</Link>
           </div>
         </div>
       </div>

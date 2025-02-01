@@ -7,8 +7,8 @@ import useVideoPlayer from "../useVideoPlayer";
 
 interface VideoRilsHoverProps {
   video: VideoHoverInterface;
-  onBack: () => void;
-  currentCat: string;
+  onBack?: () => void;
+  currentCat?: string;
 }
 
 const VideoRilsHover: React.FC<VideoRilsHoverProps> = ({ video, onBack }) => {
@@ -24,22 +24,20 @@ const VideoRilsHover: React.FC<VideoRilsHoverProps> = ({ video, onBack }) => {
     isSafariIosSupported,
     handleMouseEnter,
     handleMouseLeave,
+    handleMouseOut,
     handleTouchStart,
     handleUserInteraction,
     handleButtonClick,
     formatTime,
     handleProgressClick,
-    handleMouseDown,
+    handleTouchProgressClick,
+    progressBarRef,
+    /* handleMouseDown,
     handleMouseUp,
-    handleMouseMove,
+    handleMouseMove, */
+    handleBackClick,
   } = useVideoPlayer(video, onBack);
   const [mobile, setMobile] = useState<boolean>(false);
-
-  const handleBackClick = () => {
-    if (onBack) {
-      onBack(); // Проверяем, что onBack определен
-    }
-  };
 
   useEffect(() => {
     const updateMobileOrDesctop = () => {
@@ -62,12 +60,15 @@ const VideoRilsHover: React.FC<VideoRilsHoverProps> = ({ video, onBack }) => {
         <div className="videoRilsInformation-container-double">
           <div>Продолжительность:</div>
           <div
+            ref={progressBarRef}
             className="videoRilsLineProgress"
             style={{ cursor: "pointer" }}
             onClick={handleProgressClick}
-            onMouseDown={handleMouseDown}
+            /* onMouseDown={handleMouseDown}
             onMouseUp={handleMouseUp}
-            onMouseMove={handleMouseMove}
+            onMouseMove={handleMouseMove} */
+            onTouchStart={handleTouchProgressClick}
+            onTouchMove={handleTouchProgressClick}
           >
             <div
               style={{
@@ -90,12 +91,15 @@ const VideoRilsHover: React.FC<VideoRilsHoverProps> = ({ video, onBack }) => {
           <div className="videoRilsInformation-container">
             <div>Продолжительность:</div>
             <div
+              ref={progressBarRef}
               className="videoRilsLineProgress"
               style={{ cursor: "pointer" }}
               onClick={handleProgressClick}
-              onMouseDown={handleMouseDown}
+              /* onMouseDown={handleMouseDown}
               onMouseUp={handleMouseUp}
-              onMouseMove={handleMouseMove}
+              onMouseMove={handleMouseMove} */
+              onTouchStart={handleTouchProgressClick}
+              onTouchMove={handleTouchProgressClick}
             >
               <div
                 style={{
@@ -130,12 +134,15 @@ const VideoRilsHover: React.FC<VideoRilsHoverProps> = ({ video, onBack }) => {
         <div className="videoRilsInformation-container-double">
           <div>Продолжительность:</div>
           <div
+            ref={progressBarRef}
             className="videoRilsLineProgress"
             style={{ cursor: "pointer" }}
             onClick={handleProgressClick}
-            onMouseDown={handleMouseDown}
+            /* onMouseDown={handleMouseDown}
             onMouseUp={handleMouseUp}
-            onMouseMove={handleMouseMove}
+            onMouseMove={handleMouseMove} */
+            onTouchStart={handleTouchProgressClick}
+            onTouchMove={handleTouchProgressClick}
           >
             <div
               style={{
@@ -164,6 +171,7 @@ const VideoRilsHover: React.FC<VideoRilsHoverProps> = ({ video, onBack }) => {
       className="video-containerRils"
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
+      onMouseOut={handleMouseOut}
       onTouchStart={handleTouchStart}
       onClick={handleUserInteraction}
     >
@@ -187,7 +195,7 @@ const VideoRilsHover: React.FC<VideoRilsHoverProps> = ({ video, onBack }) => {
           id="OtherRilsMain"
           className={showInfo ? "showInfo" : "notShowInfo"}
         >
-          <button onClick={handleButtonClick} className="OtherHover-on-off">
+          <button onClick={handleButtonClick} onTouchMove={handleButtonClick} className="OtherHover-on-off">
             <span>{isPlaying ? "❚❚" : "▶"}</span>
           </button>
 

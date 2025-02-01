@@ -1,10 +1,12 @@
 #isVisible {
   opacity: 1;
   transition: opacity 1s ease-in-out;
+  z-index: 9999999999999999999;
 }
 #notVisible {
   opacity: 0;
   transition: opacity 1s ease-in-out;
+  z-index: 9999999999999999999;
 }
 
 .header-container {
@@ -77,7 +79,7 @@
   padding-bottom: 4px;
 }
 
-@media (max-width: 1050px) {
+@media screen and (max-width: 1050px) {
   .header-container {
     grid-template-columns: auto auto;
     align-items: center;
@@ -97,7 +99,7 @@
   }
 }
 
-@media (orientation: portrait) and (max-width: 656px) {
+@media screen and (orientation: portrait) and (max-width: 656px) {
   /* 656px */
   /* 331px */
   .header-container {
@@ -114,7 +116,7 @@
     margin-top: 26px;
   }
 
-  @media (orientation: portrait) and (width < 481px) and (width > 30px) {
+  @media screen and (orientation: portrait) and (max-width: 481px) and (min-width: 30px) {
     .header-button {
       width: 140px;
       font-size: 9px;
@@ -148,17 +150,25 @@
 
     .headerTitle-container {
       display: none;
+      pointer-events: unset;
+    }
+
+    .header-container {
+      grid-template-columns: auto 2fr auto;
     }
   }
 }
 
-@media (orientation: landscape) and (max-width: 1240px) and (max-height: 500px) {
+@media screen and (orientation: landscape) and (max-width: 656px) and (max-height: 380px) {
+  .header-container {
+    grid-template-columns: auto 2fr auto;
+  }
+}
+
+@media screen and (orientation: landscape) and (max-width: 1240px) and (max-height: 500px) {
   .header-container {
     z-index: 999;
-    /* display: grid;
-    grid-template-columns: auto auto; */ /* почему-то так поставил изначально ??? */
     align-items: center;
-    /* overflow: auto; */
     color: white;
     width: 92vw;
     margin-left: 28px;
@@ -169,7 +179,7 @@
     text-align: start;
   }
 
-  @media (orientation: landscape) and (width < 481px) {
+  @media screen and (orientation: landscape) and (max-width: 481px) {
     .logoword {
       width: 73px;
       height: auto;
@@ -196,5 +206,15 @@
       letter-spacing: 2px;
       margin: 0;
     }
+  }
+}
+
+@media screen and (((orientation: landscape) and (max-width: 910px) and (max-height: 600px)) or ((orientation: portrait) and (max-width: 656px))) {
+  .header-title {
+    display: none;
+  }
+
+  .header-container {
+    grid-template-columns: auto 2fr auto;
   }
 }
